@@ -54,7 +54,7 @@ This project is built using the MERN Stack:<br>
 - SuperAdmin: who will be able to see the anonymous details aswell, to make it free from spammers and abusive compliants.<br>
 <h2>Liscence</h2>
 This project is licensed under the MIT License.<br>
-<h2>Developed By</h2><br>
+<h2>Developed By</h2>
 <b>Yartik</b><br>
 B.Tech CSE | JMIETI<br>
 Passionate about using technology to solve real student problems and build meaningful systems.<br>

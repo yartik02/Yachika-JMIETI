@@ -1,7 +1,7 @@
 # Yachika@JMIETI : Smart Grievance Redressal System <br>
 Yachika@JMIETI is a smart complaint management system designed for students and faculty at JMIETI. The system streamlines how students can raise issues related to academics, infrastructure, or hostel facilities, while ensuring transparency, anonymity (where required), and accountability.
 It is a web-based platform that allows students to submit complaints digitally, track their status in real-time, and receive updates. Admin have his own dashboards to manage, respond, and resolve complaints efficiently. <br>
-<hr>
+
 <h2>Key Features</h2><br>
 <b>1. Centralized Complaint System</b><br>
 Students can submit all types of complaints — academic, faculty, hostel, infrastructure, or campus-related — through one platform.
@@ -33,7 +33,7 @@ The Admin can:
 Students will recieve the notifications when admin changes the status of the complaint to any of the status.<br>
 <b>7. Rating & Feedback</b><br>
 As the complaint of the student resolves, they will recieve a Rating and feedback form that they are requested to fill according to their satisfaction of the resolution.<br>
-<hr>
+
 <h2>Technology Stack</h2><br>
 This project is built using the MERN Stack:
 - <b>Frontend:</b> React.js, Bootstrap (for responsive UI)
@@ -41,17 +41,17 @@ This project is built using the MERN Stack:
 - <b>Database:</b> MongoDB (using Mongoose for schema modeling)
 - <b>Authentication:</b> JWT (JSON Web Tokens)
 - <b>Encryption of Passwords:</b> Bcrypt <br>
-<hr>
+
 <h2>Future Enhancements</h2><br>
 - Auto-assign complaints to respective departments
 - Notification system using SMS/Email
 - AI-based issue categorization
 - Mobile App (React Native)
 - SuperAdmin: who will be able to see the anonymous details aswell, to make it free from spammers and abusive compliants.<br>
-<hr>
+
 <h2>Liscence</h2><br>
 This project is licensed under the MIT License.<br>
-<hr>
+
 <h2>Developed By</h2><br>
 <b>Yartik</b>
 B.Tech CSE | JMIETI

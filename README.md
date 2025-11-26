@@ -4,7 +4,7 @@ It is a web-based platform that allows students to submit complaints digitally, 
 <h2>Key Features</h2>
 <b>1. Centralized Complaint System</b><br>
 Students can submit all types of complaints — academic, faculty, hostel, infrastructure, or campus-related — through one platform.
-Everything goes directly to the Admin for review.<br>
+Everything goes directly to the Admin for review.<br><br>
 
 <b>2. Anonymous Submission</b><br>
 Students can choose to hide their identity using a simple checkbox while submitting a complaint.
@@ -55,6 +55,6 @@ This project is built using the MERN Stack:<br>
 <h2>Liscence</h2>
 This project is licensed under the MIT License.<br>
 <h2>Developed By</h2><br>
-<b>Yartik</b>
+<b>Yartik</b><br>
 B.Tech CSE | JMIETI<br>
 Passionate about using technology to solve real student problems and build meaningful systems.<br>

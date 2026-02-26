@@ -1,0 +1,159 @@
+:root {
+  /* --dark-bg: #111827; Dark Slate Blue */
+  --dark-bg: #050a2b; /* Dark Slate Blue */
+  --dark-card-bg: #1F2937; /* Lighter Slate */
+  --dark-text: #E5E7EB; /* Light Gray */
+  --dark-accent: #38BDF8; /* Sky Blue */
+  --dark-accent-glow: 0 0 15px 0px rgba(56, 189, 248, 0.6);
+}
+
+.dark-how-it-works-section {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  padding: 100px 0;
+  text-align: center;
+}
+
+.dark-how-it-works-section h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 60px;
+}
+
+
+.timeline-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  background-color: var(--dark-card-bg);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.timeline-item {
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+}
+
+.timeline-item.left {
+  left: 0;
+}
+
+.timeline-item.right {
+  left: 50%;
+}
+
+.timeline-dot {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--dark-accent);
+  border: 3px solid var(--dark-bg);
+  top: 40px; 
+  border-radius: 50%;
+  box-shadow: var(--dark-accent-glow);
+  z-index: 1;
+}
+
+.timeline-card {
+  background: var(--dark-card-bg);
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid #374151;
+  text-align: left;
+}
+
+
+.timeline-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The triangle pointer on the card */
+.timeline-card::after {
+  content: " ";
+  position: absolute;
+  top: 28px;
+  border: 10px solid transparent;
+}
+
+.timeline-item.left .timeline-card::after {
+  right: -20px;
+  border-left-color: var(--dark-card-bg);
+}
+.timeline-item.right .timeline-card::after {
+  left: -20px;
+  border-right-color: var(--dark-card-bg);
+}
+
+.timeline-card h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-accent);
+}
+.timeline-card p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #9CA3AF;
+  line-height: 1.6;
+}
+
+/* ==============================================
+  RESPONSIVE: Collapse to a single-sided timeline
+==============================================
+*/
+@media (max-width: 768px) {
+  .timeline-container::after {
+    left: 20px; 
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 0;
+  }
+
+  .timeline-item.left, .timeline-item.right {
+    left: 0; 
+  }
+  
+  .timeline-dot {
+    left: 10px; 
+  }
+  
+  .timeline-item.left .timeline-card::after,
+  .timeline-item.right .timeline-card::after {
+    left: -20px;
+    right: auto;
+    border-right-color: var(--dark-card-bg);
+    border-left-color: transparent;
+  }
+
+  .timeline-card{
+    margin-bottom: 3%;
+  }
+}
+
+@media (min-width:768px) {
+
+  .timeline-item.left .timeline-dot {
+  right: -10px;
+}
+.timeline-item.right .timeline-dot {
+  left: -10px;
+}
+}

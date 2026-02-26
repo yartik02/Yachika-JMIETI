@@ -1,0 +1,82 @@
+.contact-section {
+  background-color: #f8faff;
+  font-family: 'Poppins', sans-serif;
+}
+
+.sticky-form-wrapper {
+  position: sticky;
+  top: 20%;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.219);
+}
+
+/* --- Scrollable Info Styling (Right Column) --- */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.9rem;
+}
+.contact-details {
+  display: flex;
+  flex-direction: column;
+}
+/* Info Card (Immediate Help) */
+.info-card {
+  background: #eef2ff;
+  border-left: 5px solid #4f46e5;
+  padding: 30px;
+  margin-bottom: 40px;
+}
+/*.info-card h5 { font-weight: 700; }
+.info-card p { color: #6c757d; font-size: 0.95rem; } */
+.info-card ul { padding-left: 20px; font-size: 0.9rem; color: #4338ca; }
+
+/* Social Links */
+.social-links { display: flex; gap: 15px; }
+.social-icon {
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  background: #eef2ff;
+  color: #4f46e5;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+.social-icon:first-child:hover {
+  background-color: #4f46e5;
+  transform: translateY(-3px);
+}
+.social-icon:first-child:hover svg,
+.social-icon:nth-child(2):hover svg,
+.social-icon:nth-child(3):hover svg,
+.social-icon:nth-child(4):hover svg,
+.social-icon:nth-child(5):hover svg{
+  fill: #fff;
+}
+.social-icon:nth-child(2):hover {
+  background-color: #050a2b;
+  transform: translateY(-3px);
+}
+.social-icon:nth-child(3):hover {
+  background-color: #ff66a6ff;
+  transform: translateY(-3px);
+}
+.social-icon:nth-child(4):hover {
+  background-color: #4f46e5;
+  transform: translateY(-3px);
+}
+.social-icon:nth-child(5):hover {
+  background-color: #ff1111ff;
+  transform: translateY(-3px);
+}
+
+/* --- Responsive Stacking for Mobile --- */
+@media (max-width: 991.98px) {
+  .sticky-form-wrapper {
+    position: static; /* Disables the sticky effect on mobile */
+    margin-bottom: 40px;
+  }
+}

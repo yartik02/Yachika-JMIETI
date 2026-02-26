@@ -1,0 +1,178 @@
+/* --- Establish the "Zen Garden" Color Palette --- */
+:root {
+    --sky-bg: transparent;
+    --soil-bg: #090f3d;
+    --stone-bg: #f4f4f4;
+    --text-dark: #96959c;
+    --text-light: #8b899a;
+    --border-color: #dcd9d5;
+
+    /* Status Colors */
+    --pending-color: #e58a47;
+    --resolved-color: #55a86a;
+    --rejected-color: #b02727;
+    --progress-color: #2c3db9;
+}
+
+/* --- Main Component Styles --- */
+.garden-shell {
+    background-color: var(--sky-bg);
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden; /* Hide horizontal scroll */
+}
+
+.header-zen {
+    color: var(--text-dark);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.subheader-zen {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.stones-grid {
+    gap: 0.8rem;
+}
+
+.stone-card {
+    background-color: var(--stone-bg);
+    animation: popIn 0.5s ease-out forwards;
+    transition: transform 0.3s ease;
+}
+
+.stone-card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.393);
+    /* background-color: #090f3d; */
+    transition: transform 0.3s ease, box-shadow 0.1s ease;
+}
+
+.stone-icon{
+    opacity: 0.8;
+}
+
+.stone-icon:hover {
+    transform: scale(1.15);
+    opacity: 1;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+
+}
+
+@media (min-width: 768px) {
+    .stone-title {
+        font-size: 1.25rem;
+    }
+    .stone-body {
+        font-size: 0.95rem;
+    }
+    .complainBody{
+        text-wrap: wrap;
+        white-space:wrap;
+        overflow-x: none;
+    }
+    .complainBody::-webkit-scrollbar {
+      display: none;
+    }
+    
+}
+
+@media (max-width: 770px) {
+    .stone-title {
+        font-size: 1rem;
+    }
+    .stone-body {
+        font-size: 0.75rem;
+    }
+    .tags{
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    .complainBody{
+        text-wrap: wrap;
+        white-space:wrap;
+        overflow-x: auto;
+    }
+    .settingsText{
+        font-size: 0.8rem;
+    }
+}
+
+.priority-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+}
+.priority-high { background-color: #fee2e2; color: #b91c1c; }
+.priority-medium { background-color: #ffedd5; color: #c2410c; }
+.priority-low { background-color: #dcfce7; color: #15803d; }
+
+
+.status-indicator {
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.status-pending .status-dot { background-color: var(--pending-color); }
+.status-resolved .status-dot { background-color: var(--resolved-color); }
+.status-rejected .status-dot { background-color: var(--rejected-color); }
+.status-progress .status-dot { background-color: var(--progress-color); }
+
+.empty-garden p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+.empty-garden span {
+    color: var(--text-light);
+}
+
+/* --- Animation --- */
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.dropdown-arrow {
+    transition: transform 0.2s ease-in-out;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.dropdown-option {
+    cursor: pointer;
+}
+
+.dropdown-option:hover {
+    background-color: #f0f0f0;
+}
+
+.menus {
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.complaint{
+    border: 1px solid rgba(219, 219, 219, 0.712);
+}
+
+.complaint.active-complaint {
+  border: 2px solid #0c3f8b;
+  transition: all 0.1s ease;
+}

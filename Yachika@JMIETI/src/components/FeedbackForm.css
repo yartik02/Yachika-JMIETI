@@ -1,0 +1,22 @@
+.star-rating button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 2px; /* Keep this */
+  line-height: 1; /* Keep this */
+  transition: color 0.2s ease, transform 0.1s ease; /* Add transform */
+}
+
+/* Add a slight grow effect on hover for better feedback */
+.star-rating button:hover {
+  transform: scale(1.1);
+}
+
+.star-on {
+  color: #ffc107; /* Bootstrap's 'warning' yellow */
+}
+
+.star-off {
+  color: #e0e0e0; /* A light gray */
+}

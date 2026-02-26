@@ -1,0 +1,164 @@
+.sorting-section {
+    background-color: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.search-input {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 0.5rem 1rem 0.5rem 2.5rem; 
+    border-radius: 8px;
+    width: 100%;
+}
+
+.search-input:focus {
+    border-color: #090f3d;
+    box-shadow: 0 0 0 0.2rem rgba(173, 181, 189, 0.25);
+    outline: none;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+/* Add these styles to your existing CSS file */
+
+.dropdown-arrow {
+    transition: transform 0.2s ease-in-out;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.dropdown-option {
+    cursor: pointer;
+    display: flex; /* Make it a flex container to align text and icon */
+    justify-content: space-between; /* Space out text and icon */
+    align-items: center; /* Vertically align items */
+}
+
+.dropdown-option:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style for the selected option */
+.dropdown-option.selected-option {
+    background-color: #e9e9e9ab; /* Light gray background for selected item */
+    font-weight: 500; /* Make text a bit bolder */
+    color: #343a40; /* Slightly darker text color */
+}
+
+/* Ensure the .menus div is positioned correctly */
+.menus {
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+.export-btn {
+    background-color: #6266691a;
+    border: 2px solid #6266691a;
+    font-weight: 400;
+    transition: all 0.2s ease;
+}
+.export-btn:hover {
+    background-color: #ffffff;
+    border: 2px solid #626669a4;
+    color: #5d5d5d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.clickedComp{
+  min-height: 60vh;
+  position: sticky;
+  top: 8rem;
+  border: 2px solid #24329d;
+  background-color: #7585ff16;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.164);
+}
+
+.value{
+    font-size: 1.25rem;
+}
+
+.catagory{
+    font-size: 0.7rem;
+}
+
+.btn1{
+    background-color: #24329d;
+    border: 2px solid #24329d;
+    color: #ffffff;
+}
+
+.btn2{
+    background-color: #00a63e;
+    border: 2px solid #00a63e;
+    color: #ffffff;
+}
+.btn3{
+    background-color: #cc2b3b;
+    border: 2px solid #cc2b3b;
+    color: #ffffff;
+}
+
+.btn1:hover{
+    background-color: #24329d39;
+    color: #24329d;
+    transition: all 0.2s ease;
+}
+
+.btn2:hover{
+    background-color: #00a63d20;
+    color: #00a63e;
+    transition: all 0.2s ease;
+}
+.btn3:hover{
+    background-color: #cc2b3b2d;
+    color: #cc2b3b;
+    transition: all 0.2s ease;
+}
+
+.backImg{
+    width: 50%;
+}
+
+.header{
+    font-size: 1.8rem;
+}
+
+
+@media (max-width:770px) {
+    .para{
+        font-size: 0.6rem;
+    }
+    .value{
+        font-size: 0.8rem;
+    }
+    .complaint-details{
+        display: none;
+    }
+    .pageBtn{
+        display: none;
+    }
+    .backImg{
+    width: 75%;
+    }
+
+    .header{
+    font-size: 1.05rem;
+    }
+    
+    .formText{
+        font-size: 0.8rem;
+    }
+}

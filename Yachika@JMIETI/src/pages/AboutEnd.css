@@ -1,0 +1,36 @@
+/* -- Root variables for the CTA theme -- */
+:root {
+  --cta-bg: linear-gradient(105deg, #bcc8ec 0%, #edf2ff 100%); /* Soft blue/violet background */
+  --cta-button-gradient: linear-gradient(90deg, #6366f1 0%, #a65cf6 100%); /* Indigo to Purple gradient */
+  --cta-button-shadow: 0 10px 25px -5px rgba(255, 255, 255, 0.4);
+  --cta-button-hover-shadow: 0 5px 30px 5px rgba(0, 0, 0, 0.263);
+}
+
+.xtra{
+  transition: all 0.3s ease;
+}
+
+.cta-card {
+  background: var(--cta-bg);
+}
+
+.cta-button {
+  background: var(--cta-button-gradient);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 16px 32px;
+  
+  box-shadow: var(--cta-button-shadow);
+  cursor: pointer;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px) scale(1.02); /* Lifts the button on hover */
+  box-shadow: var(--cta-button-hover-shadow);
+  transition: all 0.2s ease;
+}
+
+.cta-button svg {
+  width: 25px;
+  height: 25px;
+}

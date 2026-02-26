@@ -1,0 +1,109 @@
+.mission-section {
+  position: relative;
+  padding: 100px 0; /* More vertical padding */
+  background: #4258ff10; /* Very light, almost white background */
+  overflow: hidden; /* Crucial for containing the wave */
+  color: #343a40; /* Darker text for contrast */
+}
+
+.mission-section::before {
+  content: '';
+  position: absolute;
+  top: -10%; 
+  left: -15%;
+  width: 130%;
+  height: 120%;
+  background: linear-gradient(145deg, #ced9ff, #e0e9fe); 
+  border-radius: 45% 55% 50% 50% / 50% 50% 50% 50%;
+  transform: rotate(5deg);
+  opacity: 0.6;
+  animation: waveAnimation 8s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes waveAnimation {
+  0% {
+    border-radius: 45% 55% 50% 50% / 50% 50% 50% 50%;
+    transform: translateY(0) rotate(5deg);
+  }
+  100% {
+    border-radius: 50% 50% 55% 45% / 55% 45% 50% 50%;
+    transform: translateY(-20px) rotate(3deg);
+  }
+}
+
+.mission-card {
+  position: relative; 
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.mission-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.264);
+}
+
+
+.mission-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px; 
+  height: 70%;
+  background: linear-gradient(to bottom, #6a82fb, #1a257d); 
+  border-radius: 4px;
+}
+
+
+.icon-wrapper {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, #6674de, #1a257d); 
+  border-radius: 18px; 
+  box-shadow: 0 8px 20px rgba(161, 196, 253, 0.4);
+  flex-shrink: 0;
+}
+
+.icon-wrapper svg {
+  width: 40px;
+  height: 40px;
+  stroke: white; 
+  stroke-width: 1.5;
+}
+
+
+.mission-card h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #343a40;
+  width: fit-content;
+}
+
+.mission-card p {
+  font-family: 'Open Sans', sans-serif; /*Readable body font*/
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+
+.image-wrapper {
+  position: relative;
+  border-radius: 30px; 
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.525);
+  transform: rotateZ(-2deg); 
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  z-index: 1;
+}
+
+.image-wrapper:hover {
+  transform: rotateZ(3deg) scale(1.03); 
+  /* box-shadow: 0 30px 60px rgba(0, 0, 0, 0.453); */
+}
+
+.image-wrapper img {
+    border-radius: 30px; 
+}

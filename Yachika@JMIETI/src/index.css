@@ -1,0 +1,498 @@
+* {
+  font-family: "Poppins", sans-serif;
+  user-select: none;
+}
+
+:root,body{
+  width: 100vw;
+}
+body{
+  overflow: scroll;
+}
+
+/* For Chrome, Safari, Edge */
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+nav{
+  background-color: #f2f5fe;
+  position: sticky;
+  top: 0%;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.207);
+  z-index: 5;
+  width: 100vw;
+}
+
+nav .nav-items{
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-items::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20%;
+  width: 0%;
+  height: 4%;
+  transition: 0.3s ease;
+  background-color: #1a257d;
+}
+.nav-items:hover::after {
+  width: 60%;
+}
+
+.login_btn{
+  background-color: #1a257d;
+  color: white;
+  font-weight: 500;
+  border: 2px solid #1a257d;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.login_btn:hover{
+  background-color: transparent;
+  border: 2px solid #1a257d;
+  color: #1a257d;
+}
+
+.login_btn2{
+  background-color: #cc2b3b;
+  color: #e0e1dd;
+  font-weight: 500;
+  border: 1px solid #cc2b3b;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-decoration: none;
+}
+.login_btn2:hover{
+  background-color: transparent;
+  color: #cc2b3b;
+}
+
+.menuItems:hover {
+  background-color: rgb(83, 83, 83);
+  color: white;
+  transition: 0.2s step-start;
+}
+
+.home{
+  width: 99vw;
+}
+.home picture img{
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+}
+
+.home .btn1:hover{
+  background-color: transparent;
+  border: 2px solid #065064;
+  transition: 0.3s ease;
+  color: #065064;
+  cursor: pointer;
+}
+.menu{
+  border:none
+}
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(90deg, #1638af 0%, #9e39f6 100%);
+}
+
+.xtra:hover{
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.207);
+}
+
+.icons .icon{
+  opacity: 0.6;
+}
+.icons .icon:hover{
+  opacity: 1;
+}
+.icon:first-child:hover svg{
+  fill: rgb(53, 53, 255);
+}
+.icon:nth-child(2):hover svg{
+  fill: rgb(255, 117, 140);
+}
+.icon:nth-child(3):hover svg{
+  fill: rgb(255, 255, 255);
+}
+.icon:nth-child(4):hover svg{
+  fill: rgb(69, 69, 255);
+}
+.icon:last-child:hover svg{
+  fill: red;
+}
+
+footer{
+  background-color: #090f3d;
+}
+
+.footer-item {
+  opacity: 0.8;
+}
+.footer-item:hover {
+  opacity: 1;
+}
+.footer a:hover{
+  color: #1a257d;
+}
+
+.login, .si{
+  overflow-y: visible;
+}
+.login::-webkit-scrollbar {
+  display: none;
+}
+
+.login .logo{
+  width: 82px;
+  height: 80px;
+  background-color: #0f1b5f;
+  box-shadow: none !important;
+  image-rendering: pixelated; 
+  backface-visibility: hidden;
+  transform: rotate(-45deg);
+}
+
+.login .logo p{
+  transform: rotate(45deg);
+}
+
+.login svg:hover, .back:hover{
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.xtra{
+  transition: all 0.3s ease;
+}
+
+.xtraText {
+  color: #1a257d;
+  font-weight: 600;
+  text-decoration: none;
+}
+.xtraText:hover {
+  color: #243eff;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.form-control{
+  padding: 2%;
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0.318);
+  border: none;
+  border-radius: 0%;
+  border-bottom: 4px solid transparent;
+  transition: all 0.3s ease;
+}
+.form-control:focus{
+  background-color: transparent;
+  outline: none; 
+  box-shadow: none;
+  border-bottom: 4px solid #0f1b5f;
+}
+.form-control ::placeholder{
+  color: rgba(191, 191, 191, 0.549);
+}
+
+form select:focus{
+  outline: none; 
+  box-shadow: none;
+  border: none;
+}
+
+.backImg{
+  background-color: rgba(255, 255, 255, 0.2); /* transparent layer */
+  backdrop-filter: blur(10px); /* this actually blurs background behind */
+  -webkit-backdrop-filter: blur(10px); /* for Safari support */
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.form-control:active{
+  background-color: rgba(190, 190, 190, 0);
+}
+
+.complaintForm .form-check-input{
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.form-check-input:focus {
+  box-shadow: none;
+  border: 1px solid green;
+  transition: all 0.3s ease;
+}
+
+.complaintForm .check, .form-check-input, .form-check-label{
+  cursor: pointer;
+}
+
+.form-check-input[type="radio"]:checked {
+  background-color: #202c87;
+  border-color: transparent;
+  transform: scale(1.3);
+  transition: all 0.3s ease;
+}
+.form-check-input[type="radio"]:checked +.gender-label {
+  margin-left: 15px;
+  color: #142585;
+  font-weight: 600;
+  transition: margin-left 0.3s ease, color 0.3s ease;
+}
+
+.complaintForm .form-check-input:checked{
+  background-color: rgb(0, 113, 0);
+  border-color: transparent;
+  transform: scale(1.2);
+  transition: all 0.3s ease;
+}
+
+.complaintForm .form-check-input:checked .check{
+  background-color: rgba(0, 0, 0, 0.245);
+} 
+
+
+.studentdashboard::-webkit-scrollbar {
+  display: none;
+}
+
+.profile{
+  display: none;
+}
+.ProfileimgAdmin:active {
+  transform: scale(0.9);
+  transition: transform 0.1s ease-in-out;
+}
+.AdminMain{
+  display: flex;
+}
+.ProfileimgAdmin:active .profile{
+  display: inline;
+}
+
+.AdminMain .btngrp button{
+  font-weight: normal;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+#closebtn{
+  display: none;
+  transform: scale(1.3);
+}
+
+
+.btngrp button:focus{
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.1s ease;
+}
+
+.myCompBtn{
+  background-color: black;
+  color: white;
+  border: 2px solid black;
+  cursor: pointer;
+  font-size:0.85rem;
+}
+.myCompBtn:hover{
+  background-color: rgb(218, 218, 218);
+  color: black;
+  border: 2px solid black;
+  transform: scale(1.03);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.207);
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+@media (max-width: 900px) {
+  .logo,.nav-items, .menuItems{
+    font-size: 0.5rem;
+  }
+  .logoimg{
+    width:50px;
+    height: 50px;
+  }
+  .menu {
+    display: flex;
+  }
+
+  nav li {
+    display: none;
+  }
+  .home .btn1{
+  position: absolute;
+  top:42.20%;
+  left: 7.9%;
+  font-size: 0.6rem;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  background-color: #065064;
+  border:2px solid #065064;
+  color: white;
+  cursor: pointer;
+}
+.missionRow, .texts{
+  width: 100%;
+}
+.texts{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.studentDashboard .head h4{
+  font-size: 0.98rem;
+}
+.btngrp button span {
+  display: none;
+}
+.AdminLayout, .sideMenu{
+  display: none
+}
+}
+
+@media (min-width: 770px) {
+  .menu {
+    display: none;
+  }
+
+  nav li {
+    display: flex;
+  }
+  .home .btn1{
+  position: absolute;
+  top:45.65%;
+  left: 5.4%;
+  padding: 0.5%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  background-color: #065064;
+  border:2px solid #065064;
+  color: white;
+  cursor: pointer;
+}
+.missionRow, .texts{
+  width: 75%;
+}
+.texts p{
+  width:60%;
+}
+.studentDashboard head{
+  font-size: 1.5rem;
+}
+
+}
+
+@media (max-width: 290px) {
+  nav .logo{
+    display: none;
+  }
+  .menu{
+    display: flex;
+    margin-left: auto;
+  }
+}
+
+.sideMenu{
+  width: 5vw;
+  background-color: #090f3d;
+  position: sticky;
+  top: 10%;
+  left: 0;
+}
+.sideMenu:hover{
+  width: 15vw;
+  transition: all 0.3s ease;
+}
+.sideMenu:hover .sideMenuText{
+  display:grid;
+}
+
+.sideMenu:hover .adminView{
+  width: 80%;
+}
+
+.adminView{
+  width: 90vw;
+}
+
+.AdminLayout li:hover{
+  background-color: rgba(255, 255, 255, 0.177);
+  transition: all 0.3s ease;
+}
+.AdminLayout{
+  position: sticky;
+  top: 15%;
+}
+
+.AdminLayout .sideMenuText{
+  display: none;
+}
+
+.adminGetData, .allStudents, .contectedBy{
+  display: none;
+}
+
+.eyebody{
+  background-color: white;
+}
+
+.eyebody:hover{
+  background-color: black;
+  fill: white;
+  transition: all 0.2s ease;
+}
+
+.deleteBtn{
+  border: 2px solid #dc3545;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}
+
+.deleteBtn::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  background-color: #065064;
+  transform: translateX(-50%);
+  bottom: 20%;
+  width: 0%;
+  height: 4%;
+  transition: 0.3s ease;
+}
+.deleteBtn:hover .deleteBtn::after{
+  content: "Delete Student";
+  position: absolute;
+  left: 50%;
+  background-color: #065064;
+  transform: translateX(-50%);
+  bottom: 20%;
+  width: 0%;
+  height: 4%;
+  transition: 0.3s ease;
+}
+
+.deleteBtn:hover{
+  background-color: transparent;
+  color: #dc3545;
+  transition: all 0.2s ease;
+}
+.allStudents .deleteBtn:hover svg{
+  fill: #dc3545;
+  transform: scale(1.2);
+  transition: fill 0.2s ease, transform 0.5s ease;
+}

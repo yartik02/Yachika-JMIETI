@@ -1,0 +1,102 @@
+.policy-section-heading {
+  font-weight: 600;
+  color: var(--bs-dark);
+  padding-bottom: 0.75rem;
+  /* Creates a more prominent, modern underline */
+  border-bottom: 3px solid var(--bs-primary-border-subtle); 
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+/* --- InfoCard Component --- */
+.policy-card {
+  border-radius: 0.75rem; /* Softer corners */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.policy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* --- UsageStep Component --- */
+.usage-step {
+  position: relative;
+}
+
+.usage-step-number {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  width: 35px; /* Give it space */
+  text-align: center;
+}
+  
+.usage-step-text {
+  /* The vertical timeline */
+  border-left: 2px solid var(--bs-primary-border-subtle);
+  padding-top: 2px;
+  line-height: 1.6;
+}
+
+/* --- General Readability --- */
+.text-body-secondary {
+  line-height: 1.7; /* More spacing for easier reading */
+}
+
+.contactText{
+    font-size: 0.8rem;
+}
+
+.goToSectionDropdown{
+  display: none;
+}
+.sectionBig{
+  display: inherit;
+}
+
+@media (max-width:770px) {
+    .usage-step{
+        display: flex;
+        align-items: center;
+        background-color: #1573ff0a;
+        border-radius: 10px;
+    }
+
+    .usage-step-text {
+      /* The vertical timeline */
+      border-left: 2px solid var(--bs-primary-border-subtle);
+      padding-top: 2px;
+      margin-left: 10px;
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .alert-heading, .card-title, .policy-section-heading{
+        font-size: 1.1rem;
+    }   
+    .alertPara, .card-text, .policy-text, .contactText{
+        font-size: 0.8rem;
+    }
+    .listText{font-size:0.6rem}
+    .nextLineText{
+        display: flex;
+        align-items:flex-start;
+    }
+
+    .goToSectionDropdown{
+      display: block;
+    }
+    .sectionBig{
+      display: none;
+    }
+}

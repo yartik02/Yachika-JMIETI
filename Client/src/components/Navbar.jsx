@@ -59,7 +59,7 @@ function Navbar() {
             <Link
               to={
                 isAdmin
-                  ? `/dashboard/${user.role.toLowercase()}`
+                  ? `/dashboard/${user.role.toLowerCase()}`
                   : `/studentDashboard/${user.rollno}`
               }
               className="text-decoration-none text-dark"

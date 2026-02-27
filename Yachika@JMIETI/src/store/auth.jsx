@@ -21,12 +21,15 @@ export const AuthProvider = ({ children }) => {
     const userAuthentication = useCallback(async () => {
         if (!token) return; // Don't run if no token
         try {
-            const response = await fetch("http://localhost:5000/api/auth/user", {
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/auth/user`,
+              {
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
             if (response.ok) {
                 const data = await response.json();
                 setUser(data.userData);
@@ -39,12 +42,15 @@ export const AuthProvider = ({ children }) => {
     const refetchComplaints = useCallback(async () => {
         if (!token) return;
         try {
-            const response = await fetch("http://localhost:5000/api/admin/allComplaints", {
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/allComplaints`,
+              {
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
             if (response.ok) {
                 const data = await response.json();
                 setAllComplaints(data);

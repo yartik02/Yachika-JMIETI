@@ -4,7 +4,7 @@ import "./forgetPassword.css";
 import { toast } from "react-toastify";
 import backIMg from "../assets/backgroundIMageComplaintForm.png"
 
-const API_BASE = "http://localhost:5000/api/auth";
+const API_BASE = `${import.meta.env.API_BASE_URL}/api/auth`;
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

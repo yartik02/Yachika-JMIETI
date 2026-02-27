@@ -20,17 +20,20 @@ const FeedbackForm = ({ complaintId }) => {
         }
         setIsSubmitting(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/feedbackForm/${complaintId}`, {
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/feedbackForm/${complaintId}`,
+              {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    rating: rating,
-                    feedback: feedback
-                })
-            });
+                  rating: rating,
+                  feedback: feedback,
+                }),
+              },
+            );
 
             if (response.ok) {
                 toast.success("Thank you for your feedback!");

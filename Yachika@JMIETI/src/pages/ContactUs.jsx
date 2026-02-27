@@ -153,16 +153,19 @@ function Contact() {
     }
 
         try {
-          const response = await fetch("http://localhost:5000/api/auth/contactUs", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: formData.name,
-              email: formData.email,
-              subject: formData.subject,
-              message: formData.message
-            }),
-          });
+          const response = await fetch(
+            `${import.meta.env.API_BASE_URL}/api/auth/contactUs`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: formData.name,
+                email: formData.email,
+                subject: formData.subject,
+                message: formData.message,
+              }),
+            },
+          );
     
           // First, check if the response was successful. THEN parse the JSON.
           // console.log(response);

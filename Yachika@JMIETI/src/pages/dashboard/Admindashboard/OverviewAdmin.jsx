@@ -9,10 +9,13 @@ const Overview = () => {
 
     const getRecentComplaints = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/admin/getRecentComplaints", {
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/getRecentComplaints`,
+              {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
-            });
+              },
+            );
             const data = await response.json();
             setRecentComplaints(data.map((item, index) => ({ ...item, index })));
         } catch (error) {

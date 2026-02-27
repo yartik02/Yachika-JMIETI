@@ -146,16 +146,16 @@ function ComplaintForm() {
         return;
       }
       const response = await fetch(
-        "http://localhost:5000/api/complaints/complaint-Submission",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(submissionData),
-        }
-      );
+        `${import.meta.env.API_BASE_URL}/api/complaints/complaint-Submission`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(submissionData),
+        },
+      );
 
       if (response.ok) {
         toast.success("Complaint submitted successfully!");

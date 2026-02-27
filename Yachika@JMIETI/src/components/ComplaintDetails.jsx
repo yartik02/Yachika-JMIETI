@@ -53,12 +53,15 @@ function ComplaintDetails({ complaint }) {
         // console.log("button clicked with status:", newStatus, "and id:", id);
         //getting the current complaint by id
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/complaint/${id}`,{
-                    method:"GET",
-                    headers:{
-                        Authorization:`Bearer ${token}`,
-                    }
-                });
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/complaint/${id}`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
                 const data= await response.json();
                 // currComplaint=data[0];
                 
@@ -68,14 +71,17 @@ function ComplaintDetails({ complaint }) {
 
         // update the data in the current complaint
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/complaint/update/${id}`,{
-                method:"PATCH",
-                headers:{
-                    "Content-Type":"application/json",
-                    Authorization:`Bearer ${token}`,
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/complaint/update/${id}`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
-                body:JSON.stringify({status:newStatus})
-            });
+                body: JSON.stringify({ status: newStatus }),
+              },
+            );
             const data= await response.json();
             if(response.ok){
                 toast.success("Status updated successfully!");
@@ -109,18 +115,21 @@ function ComplaintDetails({ complaint }) {
             }        
         setIsSubmitting(true);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/complaint/update/${complaintId}`, {
+            const response = await fetch(
+              `${import.meta.env.API_BASE_URL}/api/admin/complaint/update/${complaintId}`,
+              {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    rating: 0,
-                    feedback: reason,
-                    status: "Rejected"
-                })
-            });
+                  rating: 0,
+                  feedback: reason,
+                  status: "Rejected",
+                }),
+              },
+            );
 
             if (response.ok) {
                 toast.success("Complaint has been rejected with reason!");

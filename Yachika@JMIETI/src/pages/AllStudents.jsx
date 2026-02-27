@@ -8,12 +8,15 @@ const AllStudents = () => {
 
     const getAllStudents = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/admin/allStudents",{
-                    method:"GET",
-                    headers:{
-                        Authorization:`Bearer ${token}`,
-                    }
-                });
+                const response = await fetch(
+                  `${import.meta.env.API_BASE_URL}/api/admin/allStudents`,
+                  {
+                    method: "GET",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  },
+                );
                 const data= await response.json();
                 setallStudents(data);
                 // console.log("All Students:",data);
@@ -32,12 +35,15 @@ const AllStudents = () => {
         try {
             const confirmDelete = window.confirm("Are you sure you want to delete this student?");
         if (!confirmDelete) return;
-        const response = await fetch(`http://localhost:5000/api/admin/student/delete/${studentId}`,{
-            method:"DELETE",
-            headers:{
-                Authorization:`Bearer ${token}`,
-            }
-        })
+        const response = await fetch(
+          `${import.meta.env.API_BASE_URL}/api/admin/student/delete/${studentId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
         toast.success("Student deleted successfully!");
         } catch (error) {
             toast.error("An error occured, try agian later!");

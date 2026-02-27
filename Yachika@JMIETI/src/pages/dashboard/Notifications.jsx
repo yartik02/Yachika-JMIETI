@@ -98,13 +98,13 @@ const Notifications = () => {
     }
     try {
       const response = await fetch(
-        `http://localhost:5000/api/auth/getNotifications?rollno=${user.rollno}`,
+        `${import.meta.env.API_BASE_URL}/api/auth/getNotifications?rollno=${user.rollno}`,
         {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {

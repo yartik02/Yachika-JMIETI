@@ -165,8 +165,8 @@ const sendOtpToMail = async (req, res) => {
     port: 465,
     secure: true, // Use true for port 465, false for port 587
     auth: {
-      user: "kambojyartik@gmail.com",
-      pass: "dbfc tqzf taoi uojc",
+      user: process.env.SMTPUser,
+      pass: process.env.SMTPPassword,
     },
   });
 
@@ -187,7 +187,7 @@ const sendOtpToMail = async (req, res) => {
     console.log("Generated OTP:", otp); // for debugging
 
     const info = await transporter.sendMail({
-      from: '"Yachika@JMIETI" <kambojyartik@gmail.com>',
+      from: '"Yachika@JMIETI"',
       to: email,
       subject: "Hello from Yachika Team.",
       text: "Here is your OTP for verification.", // Plain-text version of the message

@@ -56,7 +56,7 @@ const isAdmin =
           {isLoggedIn && (
             <li className="py-3 nav-items px-3 fs-5 my-auto">
               <Link
-                to={isAdmin ? `/dashboard/${user.role.toLowerCase()}` : `/studentDashboard/${user.rollno}`}
+                to={isAdmin ? `/dashboard/${user.role}` : `/studentDashboard/${user.rollno}`}
                 className="text-decoration-none text-dark"
               >
                 Dashboard

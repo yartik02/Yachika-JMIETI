@@ -187,7 +187,7 @@ const sendOtpToMail = async (req, res) => {
     console.log("Generated OTP:", otp); // for debugging
 
     const info = await transporter.sendMail({
-      from: '"Yachika@JMIETI"',
+      from: '"Yachika@JMIETI"<kambojyartik@gmail.com>',
       to: email,
       subject: "Hello from Yachika Team.",
       text: "Here is your OTP for verification.", // Plain-text version of the message

@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
+import.meta.env.VITE_ADMIN_MAIL;
+import.meta.env.VITE_SUPER_ADMIN_MAIL;
 
 function Menu({ navData }) {
   const { user } = useAuth();
   const isLoggedIn = !!user;
   const isAdmin =
     user &&
-    (user.email === process.env.AdminMail||
-      user.email === process.env.SuperAdminMail)
-      ? true
-      : false;
+    (user.email === import.meta.env.VITE_ADMIN_MAIL ||
+      user.email === import.meta.env.VITE_SUPER_ADMIN_MAIL);
 
   return (
     <>

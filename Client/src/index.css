@@ -191,7 +191,7 @@ footer{
 .form-control{
   padding: 2%;
   font-weight: 400;
-  background-color: rgba(255, 255, 255, 0.318);
+  background-color: rgba(189, 189, 189, 0.062);
   border: none;
   border-radius: 0%;
   border-bottom: 4px solid transparent;
@@ -495,4 +495,12 @@ form select:focus{
   fill: #dc3545;
   transform: scale(1.2);
   transition: fill 0.2s ease, transform 0.5s ease;
+}
+
+
+/* signup otpInputs */
+
+.otpInputs:focus{
+  transform: translateY(-5px) scale(1.06);
+  transition: all 0.2s ease-in-out;
 }

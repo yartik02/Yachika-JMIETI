@@ -7,7 +7,7 @@ const ContectedUsers = () => {
   const getAllContacts = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.API_BASE_URL}http://localhost:5000/api/admin/allContactUsMessages`,
+        `${import.meta.env.VITE_API_BASE_URL}http://localhost:5000/api/admin/allContactUsMessages`,
         {
           method: "GET",
           headers: {

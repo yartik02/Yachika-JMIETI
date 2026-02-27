@@ -154,7 +154,7 @@ function Contact() {
 
         try {
           const response = await fetch(
-            `${import.meta.env.API_BASE_URL}/api/auth/contactUs`,
+            `${import.meta.env.VITE_API_BASE_URL}/api/auth/contactUs`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },

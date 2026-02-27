@@ -9,7 +9,7 @@ const AllStudents = () => {
     const getAllStudents = async () => {
             try {
                 const response = await fetch(
-                  `${import.meta.env.API_BASE_URL}/api/admin/allStudents`,
+                  `${import.meta.env.VITE_API_BASE_URL}/api/admin/allStudents`,
                   {
                     method: "GET",
                     headers: {
@@ -36,7 +36,7 @@ const AllStudents = () => {
             const confirmDelete = window.confirm("Are you sure you want to delete this student?");
         if (!confirmDelete) return;
         const response = await fetch(
-          `${import.meta.env.API_BASE_URL}/api/admin/student/delete/${studentId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/student/delete/${studentId}`,
           {
             method: "DELETE",
             headers: {

@@ -98,7 +98,7 @@ const Notifications = () => {
     }
     try {
       const response = await fetch(
-        `${import.meta.env.API_BASE_URL}/api/auth/getNotifications?rollno=${user.rollno}`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/getNotifications?rollno=${user.rollno}`,
         {
           method: "GET",
           headers: {

@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         if (!token) return; // Don't run if no token
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/auth/user`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/auth/user`,
               {
                 method: "GET",
                 headers: {
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         if (!token) return;
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/allComplaints`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaints`,
               {
                 method: "GET",
                 headers: {

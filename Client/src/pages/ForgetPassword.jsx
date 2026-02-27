@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./ForgetPassword.css";
 import { toast } from "react-toastify";
 
-const API_BASE = `${import.meta.env.API_BASE_URL}/api/auth`;
+const API_BASE = `${import.meta.env.VITE_API_BASE_URL}/api/auth`;
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

@@ -21,7 +21,7 @@ const FeedbackForm = ({ complaintId }) => {
         setIsSubmitting(true);
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/feedbackForm/${complaintId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/feedbackForm/${complaintId}`,
               {
                 method: "PATCH",
                 headers: {

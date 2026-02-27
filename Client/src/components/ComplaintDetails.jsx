@@ -54,7 +54,7 @@ function ComplaintDetails({ complaint }) {
         //getting the current complaint by id
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/complaint/${id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/complaint/${id}`,
               {
                 method: "GET",
                 headers: {
@@ -72,7 +72,7 @@ function ComplaintDetails({ complaint }) {
         // update the data in the current complaint
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/complaint/update/${id}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/complaint/update/${id}`,
               {
                 method: "PATCH",
                 headers: {
@@ -116,7 +116,7 @@ function ComplaintDetails({ complaint }) {
         setIsSubmitting(true);
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/complaint/update/${complaintId}`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/complaint/update/${complaintId}`,
               {
                 method: "PATCH",
                 headers: {

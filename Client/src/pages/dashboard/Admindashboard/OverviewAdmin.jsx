@@ -10,7 +10,7 @@ const Overview = () => {
     const getRecentComplaints = async () => {
         try {
             const response = await fetch(
-              `${import.meta.env.API_BASE_URL}/api/admin/getRecentComplaints`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/getRecentComplaints`,
               {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },

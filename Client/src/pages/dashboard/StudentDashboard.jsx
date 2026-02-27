@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import maleimg from "../../assets/Boyimg_avatar.png";
 import male2img from "../../assets/new male avatar.jpg";
 import femaleimg from "../../assets/Girl_img_avatar.png";
-import othersimg from "../../assets/Others avatar.avif";
+import othersimg from "../../assets/others avatar.avif";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../store/auth";
 import HomeStudent from "./HomeStudent";

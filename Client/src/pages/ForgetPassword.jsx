@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ForgetPassword.css";
 import { toast } from "react-toastify";
-import backIMg from "../assets/backgroundIMageComplaintForm.png"
 
 const API_BASE = `${import.meta.env.API_BASE_URL}/api/auth`;
 

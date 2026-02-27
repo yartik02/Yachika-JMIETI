@@ -11,7 +11,6 @@ import errorMiddleware from "./src/middlewares/error-middleware.js";
 
 const app = express();
 
-// ... (rest of your cors and middleware code is perfect) ...
 const corsOptions = {
     origin:"*",
     methods: ["GET","POST","PUT","DELETE", "PATCH", "HEAD"],

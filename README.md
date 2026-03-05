@@ -72,24 +72,23 @@ Due to this, the server may enter sleep mode after inactivity. When the server w
 After the server becomes active, the APIs respond normally.</p>
 
 <h2>Screenshots</h2>
-## Home:
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/6e48c366-fd73-4b0d-8529-7839ad7e2476" />
-##Student Dashboard:
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/aef84e80-19da-412a-b6a9-b3ec48aeb905" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/af2b7bee-c154-468c-99bb-dcc465de9ec2" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/c47f8bb6-25b4-4da5-975a-c74a4511fd64" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ea4bbac1-4f18-479a-ae95-4d67bea15540" />
-## Admin Dashboard:
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/634d52b2-7a0f-47a7-a281-6f69225bf969" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/bb948c7d-65a1-4471-8d9d-2746dc282ae7" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/ccd53f14-b1cb-45ca-bf52-b4c5cc75eec3" />
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/5d7efd0c-d12c-4d55-a6f9-b7ac490c21ee" />
-## Signup:
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/fd7780a1-a36f-4bd7-95dc-b97e5923bd28" />
-##OTP Verification:
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/5df9f3aa-c1ef-4a59-9bfb-e9e0e9072b94" />
-## Login:
-<img width="900" alt="image" src="https://github.com/user-attachments/assets/abfc78e9-0f19-4350-86f7-42118b310b92" />
+## Home:<br>
+<img width=60% alt="image" src="https://github.com/user-attachments/assets/6e48c366-fd73-4b0d-8529-7839ad7e2476" />
+##Student Dashboard:<br>
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/aef84e80-19da-412a-b6a9-b3ec48aeb905" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/af2b7bee-c154-468c-99bb-dcc465de9ec2" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/c47f8bb6-25b4-4da5-975a-c74a4511fd64" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/ea4bbac1-4f18-479a-ae95-4d67bea15540" />
+## Admin Dashboard:<br>
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/634d52b2-7a0f-47a7-a281-6f69225bf969" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/bb948c7d-65a1-4471-8d9d-2746dc282ae7" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/ccd53f14-b1cb-45ca-bf52-b4c5cc75eec3" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/5d7efd0c-d12c-4d55-a6f9-b7ac490c21ee" />
+## Signup:<br>
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/fd7780a1-a36f-4bd7-95dc-b97e5923bd28" />
+<img width=40% alt="image" src="https://github.com/user-attachments/assets/5df9f3aa-c1ef-4a59-9bfb-e9e0e9072b94" />
+## Login:<br>
+<img width=60% alt="image" src="https://github.com/user-attachments/assets/abfc78e9-0f19-4350-86f7-42118b310b92" />
 
 
 <h2>Future Enhancements</h2>

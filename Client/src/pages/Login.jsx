@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/auth.jsx";
 import Signup from "./SignUp.jsx";
 
-
 export default function Signin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -19,11 +18,19 @@ export default function Signin() {
   };
 
   const inputData = [
-    { type: "email", placeholder: "Enter your Email...", name: "email", label: "E-mail" },
-    { type: "password", placeholder: "Enter your Password...", name: "password", label: "Password" },
+    {
+      type: "email",
+      placeholder: "Enter your Email...",
+      name: "email",
+      label: "E-mail",
+    },
+    {
+      type: "password",
+      placeholder: "Enter your Password...",
+      name: "password",
+      label: "Password",
+    },
   ];
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,76 +42,95 @@ export default function Signin() {
     }
 
     const { email, password } = formData;
-    try{
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        }),
-      });
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        },
+      );
       // console.log("hello");
-      
+
       // console.log("Response :", response);
-      
+
       if (response.ok) {
         const res_data = await response.json();
         // console.log("Response data:", res_data);
-        
+
         storeTokenInLocalStorage(res_data.token);
         // console.log("User data:", res_data);
 
-        if(res_data.role === "admin" || res_data.role === "superAdmin"){
+        if (res_data.role === "admin") {
           return (
             toast.success(`Welcome ${res_data.adminName}, Login successful!`),
             setTimeout(() => {
-            navigate(`/dashboard/${res_data.role.toLowerCase()}`);
+              navigate(`/dashboard/admin`);
             }, 1000),
             setFormData({ email: "", password: "" })
-        );
-        }
-        else{
-          toast.success(`Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos 💪!`);
+          );
+        } else if (res_data.role === "superAdmin") {
+          return (
+            toast.success(`Welcome ${res_data.adminName}, Login successful!`),
+            setTimeout(() => {
+              navigate(`/dashboard/superAdmin`);
+            }, 1000),
+            setFormData({ email: "", password: "" })
+          );
+        } else {
+          toast.success(
+            `Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos 💪!`,
+          );
           setTimeout(() => {
             navigate(`/studentDashboard/${res_data.rollno}`);
           }, 1000);
           setFormData({ email: "", password: "" });
           return;
         }
-        
-      }
-      else {
+      } else {
         const errorData = await response.json();
         // console.log("Error Data :", errorData);
-        toast.error(errorData.message || "Invalid Email or Password!");
+        if (
+          errorData.msg &&
+          errorData.msg.toLowerCase().includes("suspended")
+        ) {
+          toast.error("Your account is temporarily suspended.");
+          console.log("Suspension details from backend:", errorData);
+          navigate("/suspended-account", {
+            state: {
+              reason: errorData.reason,
+              expiryDate: errorData.expiresAt,
+            },
+          });
+        } else toast.error(errorData.message || "Invalid Email or Password!");
+        return;
       }
-
-    }catch(err){
+    } catch (err) {
       console.error("Error in form submission: ", err.message);
       toast.error("Server taking a chai break ☕");
-    }finally {
+      return;
+    } finally {
       setLoading(false);
     }
 
     if (loading) {
-    return (
-      <div className="text-center loading my-5">
-        <div className="spinner-border" role="status">
+      return (
+        <div className="text-center loading my-5">
+          <div className="spinner-border" role="status"></div>
+          <p className="">Loading the course details...</p>
         </div>
-        <p className="">Loading the course details...</p>
-      </div>
-    );
-  }
+      );
+    }
 
     toast.error("Invalid Email or Password!");
   };
 
   return (
-    <div
-      className="login row m-0"
-      style={{ minHeight: "100vh" }}
-    >
+    <div className="login row m-0" style={{ minHeight: "100vh" }}>
       {/* Left Section */}
       <div
         className="col-md-6 py-5 d-flex align-items-center justify-content-center p-4 position-relative"
@@ -157,21 +183,26 @@ export default function Signin() {
           <form ref={formRef} onSubmit={handleSubmit} className="w-100">
             <div className="formHeader text-center">
               <p className="fs-4 fw-bold mb-1">Login</p>
-            <p className="text-muted mb-3">Login to your account</p>
+              <p className="text-muted mb-3">Login to your account</p>
             </div>
 
             {inputData.map((data, idx) => (
               <div key={idx} className="mb-3 text-start">
-                <label htmlFor={data.name} className="form-label w-100 d-flex justify-content-between">
-                  <span>{data.label} <span className="text-danger">*</span></span>
-                {data.name === "password" && (
-                  <Link
-                    to="/forget-password"
-                    className="small fw-semibold text-decoration-none opacity-75"
-                  >
-                    Forgot password?
-                  </Link>
-                )}
+                <label
+                  htmlFor={data.name}
+                  className="form-label w-100 d-flex justify-content-between"
+                >
+                  <span>
+                    {data.label} <span className="text-danger">*</span>
+                  </span>
+                  {data.name === "password" && (
+                    <Link
+                      to="/forget-password"
+                      className="small fw-semibold text-decoration-none opacity-75"
+                    >
+                      Forgot password?
+                    </Link>
+                  )}
                 </label>
                 <input
                   id={data.name}

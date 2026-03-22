@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/YachikaLogo.png";
 
-function SideMenu({ menuItems, handleItemClick, activeView }) {
+function SideMenu({ menuItems, handleItemClick, activeView, role }) {
   const [isLogoutHovered, setIsLogoutHovered] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ function SideMenu({ menuItems, handleItemClick, activeView }) {
         {/* Header / Logo */}
         <div className="headerSec d-flex align-items-center px-3 mb-4">
           <img src={logo} alt="Logo" className="img-fluid" width={45} style={{ flexShrink: 0 }} />
-          <p className="text-white sideMenuText ms-3 mb-0 fw-bold fs-5">Admin</p>
+          <p className="text-white sideMenuText ms-0 mb-0 fw-bold" style={{fontSize:"1.2rem"}}>{role}</p>
         </div>
 
         {/* Menu Items */}

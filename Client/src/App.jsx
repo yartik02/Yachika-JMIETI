@@ -21,6 +21,8 @@ import AllStudents from "./pages/AllStudents";
 import PrivacyPolicy from "./pages/PrivacyPolicies";
 import ForgotPassword from "./pages/ForgetPassword";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import SuperAdminDash from "./pages/dashboard/superAdminDash/SuperAdminDash";
+import SuspendedAccount from "./pages/SuspendedAccount";
 
 function App() {
   const location = useLocation();
@@ -29,6 +31,7 @@ function App() {
     location.pathname === "/login" ||
     location.pathname === "/complaintSubmission" ||
     location.pathname.includes("/dashboard") ||
+    location.pathname.includes("/suspended-account") ||
     location.pathname === "/forget-password";
 
   const [loading, setLoading] = useState(true);
@@ -79,12 +82,14 @@ function App() {
             <Route path="/logout" element={<Logout />} />
             <Route path="/forget-password" element={<ForgotPassword />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/suspended-account" element={<SuspendedAccount />} />
             
-            <Route path="/dashboard/:role" element={<AdminDashboard />}>
+            <Route path="/dashboard/admin" element={<AdminDashboard />}>
               <Route path="allStudents" element={<AllStudents />} />
               <Route path="contactedUsers" element={<ContectedUsers />} />
             </Route>
-
+            <Route path="/dashboard/superAdmin" element={<SuperAdminDash />} />
+            
             <Route path="*" element={<Error />} />
           </Routes>
           <ScrollToTopButton />

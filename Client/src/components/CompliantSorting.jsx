@@ -1,4 +1,3 @@
-// SortingControls.js
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import * as XLSX from 'xlsx';
 import './CompliantSorting.css';

@@ -3,11 +3,11 @@ import "./CompliantSorting.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../../src/store/auth";
 
-function ComplaintDetails({ complaint }) {
-  const { token, refetchComplaintsAdmin } = useAuth();
+function ComplaintDetails({ complaint, role }) {
+  const { token, refetchComplaintsAdmin, user } = useAuth();
 
   const [localStatus, setLocalStatus] = useState("");
-  const [localIsForwarded, setLocalIsForwarded] = useState(false);
+  const [localIsReported, setLocalIsReported] = useState(false);
   const [reasonModalShow, setReasonModalShow] = useState(false);
   const [reason, setReason] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +15,7 @@ function ComplaintDetails({ complaint }) {
   useEffect(() => {
     if (complaint) {
       setLocalStatus(complaint.status);
-      setLocalIsForwarded(complaint.isForwarded || false);
+      setLocalIsReported(complaint.isReported || false);
     }
   }, [complaint]);
 
@@ -86,14 +86,14 @@ function ComplaintDetails({ complaint }) {
     }
   };
 
-  const handleForward = async () => {
-    if (isSubmitting || localIsForwarded) return;
-    if (!window.confirm("Are you sure you want to escalate this complaint to the Super Admin?")) return;
+  const handleReport = async () => {
+    if (isSubmitting || localIsReported) return;
+    if (!window.confirm("Are you sure you want to report this complaint to the Super Admin?")) return;
 
     setIsSubmitting(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/admin/complaint/${complaint._id}/escalate`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/${complaint._id}/reportComplaintToSuperAdmin`,
         {
           method: "PATCH",
           headers: {
@@ -104,15 +104,15 @@ function ComplaintDetails({ complaint }) {
       );
 
       if (response.ok) {
-        setLocalIsForwarded(true);
-        toast.warning("Complaint escalated to Super Admin.");
+        setLocalIsReported(true);
+        toast.warning("Complaint reported to Super Admin.");
         await refetchComplaintsAdmin();
       } else {
-        toast.error("Failed to escalate complaint.");
+        toast.error("Failed to report complaint.");
       }
     } catch (error) {
-      console.error("Escalation error:", error);
-      toast.error("Network error while escalating.");
+      console.error("Reporting error:", error);
+      toast.error("Network error while reporting.");
     } finally {
       setIsSubmitting(false);
     }
@@ -207,20 +207,20 @@ function ComplaintDetails({ complaint }) {
           </div>
         )}
 
-        {/* FORWARD COMPLAINT BUTTON (Only shows if not resolved/rejected) */}
-        {!isResolvedOrRejected && (
+        {/* FORWARD COMPLAINT BUTTON (Only shows if not resolved/rejected) and in admin dashboard*/}
+        {user.role === "admin" && !isResolvedOrRejected && (
           <div className="d-flex justify-content-end mb-2 mt-3">
             <button
               className="btnForward rounded-2 btn-sm px-2 py-1 d-flex align-items-center "
-              onClick={handleForward}
-              disabled={isActionDisabled || localIsForwarded}
+              onClick={handleReport}
+              disabled={isActionDisabled || localIsReported}
               style={{ fontSize: "0.75rem" }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-exclamation-triangle me-2" viewBox="0 0 16 16">
                 <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z" />
                 <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
               </svg>
-              {localIsForwarded ? "Reported to Super Admin" : "Report to Super Admin"}
+              {localIsReported ? "Reported to Super Admin" : "Report to Super Admin"}
             </button>
           </div>
         )}

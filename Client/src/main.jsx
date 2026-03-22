@@ -8,11 +8,11 @@ import { AuthProvider } from "./store/auth.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <StrictMode>
+    {/* <StrictMode> */}
       <AuthProvider>
         {/* <Loader /> */}
         <App />
       </AuthProvider>
-    </StrictMode>
+    {/* </StrictMode> */}
   </BrowserRouter>
 );

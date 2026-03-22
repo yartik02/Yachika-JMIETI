@@ -35,6 +35,15 @@ const studentSchema= new mongoose.Schema({
     branch: {
         type: String,
         required: [true, "Branch is required"]
+    },
+    isSuspended: {
+        type: Boolean,
+        default: false,
+    },
+    suspensionDetails: {
+    reason: { type: String, default: "" },
+    expiryDate: { type: Date, default: null },
+    suspendedAt: { type: Date, default: Date.now }
     }
 
 },{timestamps: true}

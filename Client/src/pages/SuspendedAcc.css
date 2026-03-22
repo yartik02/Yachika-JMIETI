@@ -1,0 +1,74 @@
+.suspension-bg {
+  background-color: #f8fafc;
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.horizontal-premium-card{
+    flex-direction: row;
+}
+
+.card-left-pane {
+  background: linear-gradient(145deg, #9f1239, #e11d48);
+  flex: 0 0 35%;
+}
+
+.card-right-pane {
+  flex: 1;
+}
+
+.reason-box {
+  background-color: #fff1f2;
+  border-left: 4px solid #be123c;
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+}
+
+.expiry-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+}
+
+.btn-primary-custom {
+  background-color: #be123c;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary-custom:hover {
+  background-color: #9f1239;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(190, 18, 60, 0.2);
+}
+
+.btn-outline-custom {
+  background-color: transparent;
+  color: #475569;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid #cbd5e1;
+  text-decoration: none;
+}
+
+.btn-outline-custom:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .horizontal-premium-card {
+    flex-direction: column;
+  }
+  .card-left-pane {
+    padding: 2.5rem 1.5rem;
+  }
+  .card-right-pane {
+    padding: 2rem 1.5rem;
+  }
+}

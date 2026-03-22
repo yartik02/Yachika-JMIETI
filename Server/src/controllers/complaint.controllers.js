@@ -2,9 +2,6 @@ import { Complaint } from "../Modals/Complaint-modal.js";
 
 
 const complaintSubmission = async (req, res) => {
-    // console.log("in complaint submission controller");
-    
-    // Destructure only the fields you want from req.body
     const {
         complaintTitle,
         complaintBody,
@@ -14,7 +11,7 @@ const complaintSubmission = async (req, res) => {
         rating,
         feedback,
         isAnonymous,
-        createdByName, // Add fields you expect
+        createdByName, 
         createdByRollno,
         createdByEmail,
         createdByClass,
@@ -40,7 +37,7 @@ const complaintSubmission = async (req, res) => {
     try {
         // const student = req.student;
         // const complaint = req.body;
-        await Complaint.create({
+        const createdComplaint = await Complaint.create({
             complaintTitle,
             complaintBody,
             createdByEmail,

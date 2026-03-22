@@ -10,7 +10,9 @@ import {
   getComplaintById,
   updateComplaintById,
   updateRatingFeedback,
-  reportComplaint
+  reportComplaint,
+  suspendStudent,
+  getDashboardStats
 } from "../controllers/admin-controller.js";
 const router = express.Router();
 import { authMiddleware } from "../middlewares/auth-middleware.js";
@@ -27,5 +29,7 @@ router .route("/complaint/:id") .get(authMiddleware, adminMiddleware, getComplai
 router .route("/complaint/update/:id") .patch(authMiddleware, adminMiddleware, updateComplaintById);
 router.route("/feedbackForm/:id").patch(authMiddleware, updateRatingFeedback);
 router.route("/:id/reportComplaintToSuperAdmin").patch( verifyAdminToken, reportComplaint );
+router.route("/superAdmin/suspendStudent").put(verifyAdminToken, suspendStudent);
+router.route("/getDashboardStats").get(verifyAdminToken, getDashboardStats);
 
 export default router;

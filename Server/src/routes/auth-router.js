@@ -21,7 +21,7 @@ router.route("/").get(home);
 router.route("/signup").post(signup);
 router.route("/login").post(login);
 router.route("/user").get(authMiddleware, user);
-router.route("/complaints").post(complaintSubmission);
+// router.route("/complaints").post(complaintSubmission);
 router.route("/contactUs").post(contactUs);
 router.route("/sendOtpToMail").post(sendOtpToMail);
 router.route("/verifyOtp").post(verifyOtp);

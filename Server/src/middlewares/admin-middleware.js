@@ -47,10 +47,11 @@ const verifyAdminToken = (req, res, next) => {
         // 4. Create the req.user object and assign the strict role
         req.user = { email: userEmail };
 
-        if (userEmail === superAdminEmail) {
-            req.user.role = 'superadmin';
-        } else if (userEmail === adminEmail) {
+        if (userEmail === adminEmail) {
             req.user.role = 'admin';
+        }
+        else if (userEmail === superAdminEmail) {
+            req.user.role = 'superAdmin';
         } else {
             // Reject anyone who holds a valid token but isn't one of the two admins
             return res.status(403).json({ msg: "Access Denied! You do not have admin privileges." });

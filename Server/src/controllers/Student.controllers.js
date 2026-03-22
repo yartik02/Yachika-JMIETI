@@ -64,16 +64,15 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    // console.log("req.body in login:",req.body);
 
     const adminExist = await admin.findOne({ email });
-    // console.log("adminExist:",adminExist);
-
     const studentExist = await student.findOne({ email });
+
     if (!studentExist) {
       if (adminExist) {
+        // Admin password check should ideally be here too
         return res.status(200).json({
-          msg: "Admin login successfull",
+          msg: "Admin login successful",
           token: await adminExist.admingenerateToken(),
           adminID: adminExist._id.toString(),
           adminName: adminExist.name,
@@ -83,21 +82,47 @@ const login = async (req, res) => {
       return res.status(400).json({ msg: "Invalid Credentials" });
     }
 
+    // 1. Verify Password first
     const isMatch = await studentExist.comparePassword(password);
-
     if (!isMatch) {
       return res.status(401).json({ msg: "Invalid email or password" });
     }
 
+    // 2. Suspension Logic Check
+    if (studentExist.isSuspended) {
+      const now = new Date();
+      
+      // Check if the suspension period has actually ended
+      if (studentExist.suspensionDetails.expiryDate && now < studentExist.suspensionDetails.expiryDate) {
+        // STILL SUSPENDED: Send 403 Forbidden
+        return res.status(403).json({
+          msg: "Your account is temporarily suspended.",
+          reason: studentExist.suspensionDetails.reason,
+          expiresAt: studentExist.suspensionDetails.expiryDate,
+          isSuspended: true
+        });
+      } else {
+        // AUTO-LIFT: Expiry date has passed, reset the flags
+        studentExist.isSuspended = false;
+        studentExist.suspensionDetails = { reason: "", expiryDate: null };
+        await studentExist.save(); 
+        // Logic continues to issue token below...
+      }
+    }
+
+    // 3. Successful Login for Student
     res.status(200).json({
       msg: "Student logged in successfully!",
       token: await studentExist.generateToken(),
       studentID: studentExist._id.toString(),
       studentName: studentExist.name,
       rollno: studentExist.rollno,
+      role: studentExist.role || "student" // Good practice to include role
     });
+
   } catch (error) {
-    return res.status(400).json({ msg: "Internal Server Error!", error });
+    console.error("Login Error:", error);
+    return res.status(500).json({ msg: "Internal Server Error!" });
   }
 };
 

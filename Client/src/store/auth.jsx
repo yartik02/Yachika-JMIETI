@@ -144,7 +144,7 @@ export const AuthProvider = ({ children }) => {
             if (response.ok) {
                 const data = await response.json();
                 setAllAdminsComplaints(data);
-                console.log("Complaints data in store:", data);
+                // console.log("Complaints data in store:", data);
             } else {
                 setAllAdminsComplaints([]);
             }

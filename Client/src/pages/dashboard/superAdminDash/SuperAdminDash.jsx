@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import adminPic from "../../../assets/Boyimg_avatar.png";
 import { Error } from "../../Error";
 import { toast } from "react-toastify";
-import Overview from "./OverviewAdmin";
-import ComplaintSection from "./ComplaintSection";
-import Analytics from "./Analytics";
+import Overview from "./OverviewSuperAdmin";
+import ReportedComplaintSection from "./ReportedComplaintSection.jsx";
+import UnResolvedComplaints from "./UnResolvedComplaints.jsx";
 import Settings from "../../../components/Settings";
 import { useAuth } from "../../../store/auth";
 import AllStudents from "../../AllStudents";
@@ -32,11 +32,11 @@ const btngrpData = [
     path: "M80 96C88.8 96 96 103.2 96 112L96 464C96 490.5 117.5 512 144 512L560 512C568.8 512 576 519.2 576 528C576 536.8 568.8 544 560 544L144 544C99.8 544 64 508.2 64 464L64 112C64 103.2 71.2 96 80 96zM208 320C216.8 320 224 327.2 224 336L224 432C224 440.8 216.8 448 208 448C199.2 448 192 440.8 192 432L192 336C192 327.2 199.2 320 208 320zM320 208L320 432C320 440.8 312.8 448 304 448C295.2 448 288 440.8 288 432L288 208C288 199.2 295.2 192 304 192C312.8 192 320 199.2 320 208zM400 256C408.8 256 416 263.2 416 272L416 432C416 440.8 408.8 448 400 448C391.2 448 384 440.8 384 432L384 272C384 263.2 391.2 256 400 256zM512 144L512 432C512 440.8 504.8 448 496 448C487.2 448 480 440.8 480 432L480 144C480 135.2 487.2 128 496 128C504.8 128 512 135.2 512 144z",
   },
   {
-    name: "Complaints",
+    name: "Reported Complaints",
     path: "M243.2 597.6C243.2 597.6 243.2 597.6 243.2 597.6L236.8 602.4C232 606 226.1 608 220 608C204.5 608 192 595.5 192 580L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L360 512C358.3 512 356.6 512.6 355.2 513.6L243.2 597.6zM224 532L224 572L336 488C342.9 482.8 351.3 480 360 480L480 480C515.3 480 544 451.3 544 416L544 192C544 156.7 515.3 128 480 128L160 128C124.7 128 96 156.7 96 192L96 416C96 451.3 124.7 480 160 480L200 480C213.3 480 224 490.7 224 504L224 532z",
   },
   {
-    name: "Analytics",
+    name: "Unresolved Complaints",
     path: "M400 176C400 167.2 407.2 160 416 160L592 160C600.8 160 608 167.2 608 176L608 352C608 360.8 600.8 368 592 368C583.2 368 576 360.8 576 352L576 214.6L363.3 427.3C357.1 433.5 346.9 433.5 340.7 427.3L224 310.6L59.3 475.3C53.1 481.5 42.9 481.5 36.7 475.3C30.5 469.1 30.5 458.9 36.7 452.7L212.7 276.7C218.9 270.5 229.1 270.5 235.3 276.7L352 393.4L553.4 192L416 192C407.2 192 400 184.8 400 176z",
   },
   {
@@ -48,7 +48,7 @@ const btngrpData = [
   },
 ];
 
-function AdminDashboard() {
+function SuperAdminDashboard() {
   const buttonRef = useRef(null);
   const { user } = useAuth();
 
@@ -62,7 +62,7 @@ function AdminDashboard() {
     }
   }, [activeView, showProfile]);
 
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !== "superAdmin") {
     return <Error />;
   }
 
@@ -92,20 +92,20 @@ function AdminDashboard() {
       style={{
         minHeight: "100vh",
         alignItems: "stretch",
-        backgroundColor: "#090f3d", // Matches sidebar to hide the seam
+        backgroundColor: "#005050", // Matches sidebar to hide the seam
       }}
     >
       <SideMenu
         menuItems={menuItems}
         handleItemClick={handleItemClick}
         activeView={activeView}
-        role="Admin"
+        role="SuperAdmin"
       />
 
       {/* Main Dashboard Area - White rounded block */}
       <div
         className="adminView mx-auto py-5 flex-grow-1 bg-white my-3 rounded-start-5"
-        style={{ minWidth: 0, overflowX: "clip" }}
+        style={{ minWidth: 0, overflowX: "visible" }}
       >
         <div
           className="text-center mb-4 d-flex justify-content-between align-items-center"
@@ -113,19 +113,19 @@ function AdminDashboard() {
         >
           <h4
             className="text-start mx-4 fw-light"
-            style={{ color: "#065064", width: "fit-content" }}
+            style={{ color: "#005050", width: "fit-content" }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 640 640"
               width={30}
               height={30}
-              fill="#065064"
+              fill="#005050"
               className="pb-1"
             >
               <path d="M320 312C253.7 312 200 258.3 200 192C200 125.7 253.7 72 320 72C386.3 72 440 125.7 440 192C440 258.3 386.3 312 320 312zM289.5 368L350.5 368C360.2 368 368 375.8 368 385.5C368 389.7 366.5 393.7 363.8 396.9L336.4 428.9L367.4 544L368 544L402.6 405.5C404.8 396.8 413.7 391.5 422.1 394.7C484 418.3 528 478.3 528 548.5C528 563.6 515.7 575.9 500.6 575.9L139.4 576C124.3 576 112 563.7 112 548.6C112 478.4 156 418.4 217.9 394.8C226.3 391.6 235.2 396.9 237.4 405.6L272 544.1L272.6 544.1L303.6 429L276.2 397C273.5 393.8 272 389.8 272 385.6C272 375.9 279.8 368.1 289.5 368.1z" />
             </svg>
-            Admin Dashboard
+            Super Admin Dashboard
           </h4>
 
           {showProfile ? (
@@ -145,7 +145,7 @@ function AdminDashboard() {
                 width: "40px",
                 height: "40px",
                 cursor: "pointer",
-                border: "3px solid #065064",
+                border: "3px solid #007575",
               }}
               title="Profile"
               onClick={() => setShowProfile(true)}
@@ -260,8 +260,8 @@ function AdminDashboard() {
                 {activeTab === "Overview" && (
                   <Overview activetab={goToComplaints} />
                 )}
-                {activeTab === "Complaints" && <ComplaintSection />}
-                {activeTab === "Analytics" && <Analytics />}
+                {activeTab === "Reported Complaints" && <ReportedComplaintSection />}
+                {activeTab === "Unresolved Complaints" && <UnResolvedComplaints />}
                 {activeTab === "Settings" && <Settings />}
               </div>
             </div>
@@ -301,7 +301,7 @@ function AdminDashboard() {
                 className="bg-white p-lg-5 py-sm-3 rounded-4 shadow-sm"
                 style={{ width: "100%", minHeight: "50vh", overflowX: "auto" }}
               >
-                {activeView === "All Students" && <AllStudents  role={user.role}/>}
+                {activeView === "All Students" && <AllStudents role={user.role} />}
                 {activeView === "Contacted By" && <ContectedBy />}
               </div>
             </main>
@@ -312,4 +312,4 @@ function AdminDashboard() {
   );
 }
 
-export default AdminDashboard;
+export default SuperAdminDashboard;

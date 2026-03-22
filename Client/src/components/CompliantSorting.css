@@ -176,7 +176,7 @@
 }
 
 
-/* Optional: Style scrollbar */
+
 .detailedComplain::-webkit-scrollbar {
  width: 3px;
 }

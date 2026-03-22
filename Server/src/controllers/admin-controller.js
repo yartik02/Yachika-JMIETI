@@ -75,29 +75,28 @@ const getAllComplaintsAdmins = async (req, res) => {
   try {
     const complaints = await Complaint.find().sort({ createdAt: -1 }).lean();
 
-    // Safely grab the role, default to 'guest' if something went wrong in middleware
-    const userRole = req.user?.role || "guest"; 
+    // Safely grab the role, default to 'student' if something went wrong in middleware
+    const userRole = req.user?.role || "student";
 
     const securedComplaints = complaints.map((complaint) => {
-      
       // FIX: Secure by Default. If it is anonymous, ONLY the superadmin gets the real data.
-      if (complaint.isAnonymous && userRole !== "superadmin") {
-        
+      if (complaint.isAnonymous && userRole !== "superAdmin") {
         complaint.createdByName = "Anonymous Student";
         complaint.createdByRollno = "Hidden";
         complaint.createdByClass = "Hidden";
         complaint.createdByBranch = "Hidden";
         complaint.createdByEmail = "Hidden";
       }
-      
+
       return complaint;
     });
 
     return res.status(200).json(securedComplaints);
-
   } catch (error) {
     console.error("Error fetching complaints:", error);
-    return res.status(500).json({ message: "Internal server error while fetching complaints." });
+    return res
+      .status(500)
+      .json({ message: "Internal server error while fetching complaints." });
   }
 };
 
@@ -132,10 +131,11 @@ const getRecentComplaints = async (req, res) => {
 
     // 5. Send the secured data
     return res.status(200).json(securedRecentComplaints);
-
   } catch (error) {
     console.error("Error fetching recent complaints:", error);
-    return res.status(500).json({ msg: "Failed to fetch recent complaints", error: error.message });
+    return res
+      .status(500)
+      .json({ msg: "Failed to fetch recent complaints", error: error.message });
   }
 };
 
@@ -186,7 +186,6 @@ const getComplaintById = async (req, res, next) => {
     }
 
     return res.status(200).json(complaintData);
-
   } catch (error) {
     next(error);
   }
@@ -298,7 +297,7 @@ const reportComplaint = async (req, res) => {
     // { new: true } returns the updated document rather than the old one
     const updatedComplaint = await Complaint.findByIdAndUpdate(
       id,
-      { isEscalated: true },
+      { isReported: true },
       { new: true },
     );
 
@@ -318,6 +317,63 @@ const reportComplaint = async (req, res) => {
   }
 };
 
+const suspendStudent = async (req, res) => {
+  try {
+    const { studentId, reason } = req.body;
+
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 7);
+
+    // Find the student and update their suspension status
+    const updatedStudent = await student.findByIdAndUpdate(
+      studentId,
+      {
+        isSuspended: true,
+        suspensionDetails:{
+          reason: reason,
+          expiryDate: expiry,
+          suspendedAt: new Date()
+        }
+      },
+      { new: true },
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    return res.status(200).json({
+      message: "Student successfully suspended.",
+      student: updatedStudent,
+    });
+  } catch (error) {
+    console.error("Suspend Student Error:", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error during suspension." });
+  }
+};
+
+const getDashboardStats = async (req, res) => {
+  try {
+    // 1. Ask MongoDB to just count the matching documents
+    const totalComplaints = await student.countDocuments();
+    const suspendedCount = await student.countDocuments({ isSuspended: true });
+    // const resolvedCount = await student.countDocuments({ status: "Resolved" });
+    // const pendingCount = await student.countDocuments({ status: "Pending" });
+
+    // 2. Send the numbers back
+    res.status(200).json({
+      totalComp: totalComplaints,
+      suspendedStudents: suspendedCount,
+      // resolvedComp: resolvedCount,
+      // pendingComp: pendingCount
+    });
+  } catch (error) {
+    res.status(500).json({ msg: "Failed to fetch stats" });
+  }
+};
+
 export {
   getAllStudents,
   getAllComplaintsAdmins,
@@ -330,4 +386,6 @@ export {
   updateComplaintById,
   updateRatingFeedback,
   reportComplaint,
+  suspendStudent,
+  getDashboardStats
 };

@@ -3,9 +3,6 @@
   user-select: none;
 }
 
-:root,body{
-  width: 100vw;
-}
 body{
   overflow: scroll;
 }
@@ -22,7 +19,6 @@ nav{
   top: 0%;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.207);
   z-index: 5;
-  width: 100vw;
 }
 
 nav .nav-items{
@@ -404,29 +400,6 @@ form select:focus{
     display: flex;
     margin-left: auto;
   }
-}
-
-.sideMenu{
-  width: 5vw;
-  background-color: #090f3d;
-  position: sticky;
-  top: 10%;
-  left: 0;
-}
-.sideMenu:hover{
-  width: 15vw;
-  transition: all 0.3s ease;
-}
-.sideMenu:hover .sideMenuText{
-  display:grid;
-}
-
-.sideMenu:hover .adminView{
-  width: 80%;
-}
-
-.adminView{
-  width: 90vw;
 }
 
 .AdminLayout li:hover{

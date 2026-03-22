@@ -86,7 +86,7 @@ const AllStudents = () => {
                 return <>
                 <div key={idx} className="col-lg-6 col-sm-12 col-md-12 px-4" style={{}}>
                     <div className="card rounded-4 py-sm-4 text-start" style={{backgroundColor:"#e0e1dd42"}}>
-                        <span className="my-auto">
+                        <span className="my-auto px-4">
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">Name:</span> {curStudent.name}</p>
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">Email:</span> {curStudent.email}</p>
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">Roll No:</span> {curStudent.rollno}</p>
@@ -95,8 +95,8 @@ const AllStudents = () => {
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">gender:</span> {curStudent.gender}</p>
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">Created at:</span> {formattedCreatedAt}</p>
                             <p className="m-0" style={{fontSize:"0.9rem"}}><span className="fw-bold me-2">Updated at:</span> {formattedUpdatedAt}</p>
-                            <button className="p-2 px-3 rounded-pill deleteBtn mt-2 ms-2" onClick={()=> deleteStudent(curStudent._id)} style={{fontSize:"0.8rem"}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-trash3-fill me-2 " viewBox="0 0 16 16">
+                            <button className="p-2 px-3 rounded-pill deleteBtn mt-2" onClick={()=> deleteStudent(curStudent._id)} style={{fontSize:"0.8rem"}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" className="bi bi-trash3-fill me-2 " viewBox="0 0 16 16">
                                   <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
                                 </svg>
                             <span className ="text">Delete Student</span>

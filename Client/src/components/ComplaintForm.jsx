@@ -116,29 +116,6 @@ function ComplaintForm() {
       return;
     }
 
-    let submissionData = { ...formData };
-
-    if (formData.isAnonymous) {
-      submissionData = {
-        ...submissionData,
-        createdByName: "Anonymous",
-        createdByRollno: "Anonymous",
-        createdByClass: "Anonymous",
-        createdByBranch: "Anonymous",
-        createdByEmail: "Anonymous",
-      };
-    } else {
-      // Ensure latest user data is used, in case user object updated
-      submissionData = {
-        ...submissionData,
-        createdByName: user.name,
-        createdByRollno: user.rollno,
-        createdByClass: user.className,
-        createdByBranch: user.branch,
-        createdByEmail: user.email,
-      };
-    }
-
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
@@ -153,7 +130,7 @@ function ComplaintForm() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(submissionData),
+          body: JSON.stringify(formData),
         },
       );
 
@@ -225,7 +202,7 @@ function ComplaintForm() {
   };
 
   return (
-    <div className="py-5 complaintForm" style={{ width: "100vw", backgroundImage: `url(${backImage})`, backgroundSize: "cover", }}>
+    <div className="py-5 complaintForm" style={{ backgroundImage: `url(${backImage})`, backgroundSize: "cover", }}>
         <div className="px-5 position-relative">
         <button onClick={() => navigate(-1)} className="rounded-5 position-absolute top-0 start-0 mx-5" style={{ backgroundColor: "transparent", border: "none" }} >
           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#1a257d" className="bi bi-arrow-left back" viewBox="0 0 16 16">

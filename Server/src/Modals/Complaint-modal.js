@@ -98,9 +98,16 @@ const compliantSchema = new mongoose.Schema({
     feedback:{
         type: String,
         default: " "
+    },
+    isReported:{
+        type: Boolean,
+        default: false
     }
 
 }, { timestamps: true });
+
+
+compliantSchema.index({ isReported: 1 });
 
 const Complaint =  mongoose.model("Complaint", compliantSchema);
 export {Complaint}

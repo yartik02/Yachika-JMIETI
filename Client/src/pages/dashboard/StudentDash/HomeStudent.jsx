@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./HomeStudent.css";
-import dashImg from "../../assets/newImgForStudDash.png";
-import OverviewCards from "./OverviewCards";
-import ComplaintCard from "../../pages/dashboard/Admindashboard/ComplaintCard.jsx";
+import dashImg from "../../../assets/newImgForStudDash.png";
+import OverviewCards from "./OverviewCards.jsx";
+import ComplaintCard from "../Admindashboard/ComplaintCard.jsx";
 
 
 const HomeStudent = ({ student , studentComplaints, viewMyComplaintSection}) => {
@@ -33,7 +33,7 @@ const recentComplaints = [...studentComplaints]
   return (
     <section>
       <div className="luminous-banner-wrapper rounded-4 border-5" style={{width:"100%"}}>
-        <div className="luminous-banner row rounded-4 text-center p-lg-5 p-md-5 p-sm-0 mx-auto" style={{width: "100%"}} ref={bannerRef}>
+        <div className="luminous-banner row rounded-4 text-center align-items-center p-lg-5 p-md-5 p-sm-0 mx-auto" style={{width: "100%"}} ref={bannerRef}>
           <div className="banner-content col-12 order-sm-2 mb-3 order-lg-1 col-lg-6 text-lg-start text-sm-center">
             <h2 className="banner-title text-capitalize mb-3">Welcome back, {student.name}!</h2>
             <p className="banner-subtitle mx-0 text-lg-start text-sm-center">
@@ -83,7 +83,7 @@ const recentComplaints = [...studentComplaints]
                 <div className="complaints">
                   {recentComplaints.map((complaint, index) => (
                     <div key={index} className="mb-2" style={{width:"100%"}}>
-                      <ComplaintCard complaint={complaint} viewMyComplaintSection={viewMyComplaintSection}/>
+                      <ComplaintCard complaint={complaint} viewMyComplaintSection ={viewMyComplaintSection}/>
                     </div>
 
                   ))}
@@ -92,7 +92,7 @@ const recentComplaints = [...studentComplaints]
               )
               }
               {studentComplaints.length === 0 ? "" : 
-              <p className="m-0 mt-auto mb-0 text-muted opacity-75" style={{fontSize:"0.8rem"}}>
+              <p className="m-0 mt-auto mb-0 text-muted opacity-75 text-center" style={{fontSize:"0.8rem"}}>
                 To view your all complaints please visit the <strong>My Complaints</strong> tab.
               </p>
               }

@@ -27,7 +27,7 @@ const [selectedValue, setSelectedValue] = useState("Go to Section");
   };
 
   return (
-    <div id='PPs' className="PrivacyPolicies py-5 border position-relative" style={{width:"100vw"}}>
+    <div id='PPs' className="PrivacyPolicies py-5 border position-relative">
 
         <button onClick={() => navigate(-1)} className="rounded-5 backBtn" >
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#1a2786ff" className="bi bi-arrow-left" viewBox="0 0 16 16">

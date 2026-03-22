@@ -16,11 +16,11 @@ const StatBar = ({ percentage, color }) => {
 };
 
 function SimpleAnalytics() {
-  const { allComplaints } = useAuth();
+  const { allAdminsComplaints } = useAuth();
 
   const stats = useMemo(() => {
     const statistics = {
-      total: allComplaints?.length || 0,
+      total: allAdminsComplaints?.length || 0,
       categories: {
         Infrastructure: 0,
         Faculty: 0,
@@ -41,7 +41,7 @@ function SimpleAnalytics() {
       return statistics; 
     }
 
-    for (const complaint of allComplaints) {
+    for (const complaint of allAdminsComplaints) {
       if (complaint.category && statistics.categories.hasOwnProperty(complaint.category)) {
         statistics.categories[complaint.category]++;
       }
@@ -51,7 +51,7 @@ function SimpleAnalytics() {
     }
 
     return statistics;
-  }, [allComplaints]);
+  }, [allAdminsComplaints]);
 
   const getPercentage = (count, total) => {
     if (total === 0) return 0;

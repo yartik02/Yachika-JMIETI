@@ -78,7 +78,7 @@ const ContectedUsers = () => {
                     minHeight: "10vw",
                   }}
                 >
-                  <span className="my-auto">
+                  <span className="my-auto ps-4">
                     <p className="m-0" style={{ fontSize: "0.9rem" }}>
                       <span className="fw-bold me-2">Name:</span> {curMsg.name}
                     </p>

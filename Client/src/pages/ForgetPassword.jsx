@@ -129,7 +129,7 @@ const ForgotPassword = () => {
   return (
     <div
       className="forgot-password-container"
-      style={{ width: "100vw", backgroundColor: "#090f3d" }}
+      style={{ backgroundColor: "#090f3d" }}
     >
       {/* backbtn */}
       <button

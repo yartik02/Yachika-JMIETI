@@ -5,6 +5,7 @@ export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("authToken"));
     const [user, setUser] = useState(null);
     const [allComplaints, setAllComplaints] = useState([]); 
+    const [allAdminsComplaints, setAllAdminsComplaints] = useState([]); 
 
     const storeTokenInLocalStorage = (serverToken) => {
         localStorage.setItem("authToken", serverToken);
@@ -38,12 +39,12 @@ export const AuthProvider = ({ children }) => {
             console.error("Error during user authentication:", error);
         }
     }, [token]);
-    
-    const refetchComplaints = useCallback(async () => {
+
+    const fetchAllComplaints = useCallback(async () => {
         if (!token) return;
         try {
             const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaints`,
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/getAllComplaints`,
               {
                 method: "GET",
                 headers: {
@@ -61,6 +62,51 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error("Error fetching complaints:", error);
             setAllComplaints([]);
+        }
+    }, [token]);
+
+    const refetchComplaints = useCallback(async () => {
+        if (!token) return;
+        try {
+            const response = await fetch(
+              `${import.meta.env.VITE_API_BASE_URL}/api/auth/getAllComplaints`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            if (response.ok) {
+                const data = await response.json();
+                setAllComplaints([...data]);
+                // console.log("Complaints data in store:", data);
+            } else {
+                setAllComplaints([]);
+            }
+        } catch (error) {
+            console.error("Error fetching complaints:", error);
+            setAllComplaints([]);
+        }
+    }, [token]);
+
+    const refetchComplaintsAdmin = useCallback(async () => {
+        if (!token) return;
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaintsAdmins`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}` },
+                },
+            );
+            if (response.ok) {
+                const data = await response.json();
+                // FIX: Update the Admin state, not the student state
+                setAllAdminsComplaints(data); 
+            }
+        } catch (error) {
+            console.error("Error refetching admin complaints:", error);
         }
     }, [token]);
 
@@ -83,13 +129,38 @@ export const AuthProvider = ({ children }) => {
         });
     };
 
-    
+    const getAllComplaintsAdmins = useCallback(async () => {
+        if (!token) return;
+        try {
+            const response = await fetch(
+              `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaintsAdmins`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            if (response.ok) {
+                const data = await response.json();
+                setAllAdminsComplaints(data);
+                console.log("Complaints data in store:", data);
+            } else {
+                setAllAdminsComplaints([]);
+            }
+        } catch (error) {
+            console.error("Error fetching complaints:", error);
+            setAllAdminsComplaints([]);
+        }
+    }, [token]);
+
     useEffect(() => {
         if (token) {
             userAuthentication();
             refetchComplaints(); 
+            getAllComplaintsAdmins();
         }
-    }, [token, userAuthentication, refetchComplaints]); 
+    }, [token, userAuthentication, refetchComplaints, getAllComplaintsAdmins]); 
 
     return(
         <AuthContext.Provider value={{ 
@@ -98,8 +169,11 @@ export const AuthProvider = ({ children }) => {
             user, 
             token, 
             allComplaints,
-            refetchComplaints, 
-            updateComplaintLocally
+            refetchComplaints,
+            refetchComplaintsAdmin,
+            getAllComplaintsAdmins,
+            updateComplaintLocally,
+            allAdminsComplaints,
         }}>
             {children}
         </AuthContext.Provider>

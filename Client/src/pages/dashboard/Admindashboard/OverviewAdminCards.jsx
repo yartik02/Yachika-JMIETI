@@ -4,19 +4,18 @@ import { useAuth } from "../../../store/auth";
 
 
 function OverviewAdmin() {
-  const { allComplaints } = useAuth();
+  const { allAdminsComplaints } = useAuth();
+const totalComp= allAdminsComplaints?.length || 0;
 
-const totalComp= allComplaints?.length || 0;
-
-const pendingComp = allComplaints.filter(complaint => 
+const pendingComp = allAdminsComplaints.filter(complaint => 
     complaint.status && complaint.status.toLowerCase() === 'pending'
 );
 
-const resolvedComp = allComplaints.filter(complaint => 
+const resolvedComp = allAdminsComplaints.filter(complaint => 
     complaint.status && complaint.status.toLowerCase() === 'resolved'
 );
 
-const highPriorityComp = allComplaints.filter(complaint => 
+const highPriorityComp = allAdminsComplaints.filter(complaint => 
     complaint.priority && complaint.priority.toLowerCase() === 'high' && complaint.status!=="Resolved" && complaint.status!=="Rejected"
 );
 

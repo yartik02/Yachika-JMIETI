@@ -22,7 +22,7 @@ const HowWorks = () => {
     <section
       className="dark-how-it-works-section mx-auto"
       id="howItWorks"
-      style={{ width: "100vw", zIndex:3 }}
+      style={{ zIndex:3 }}
     >
       <div className="container">
         <div className="texts mx-auto">

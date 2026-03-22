@@ -170,3 +170,25 @@
   font-size: 0.7rem;
 }
 }
+
+
+.notification-menu-container {
+  position: relative;
+}
+
+.dropdown-item {
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+  border: none;
+  background: transparent;
+}
+
+.dropdown-item:hover {
+  background-color: #dd00001a; /* Light red on hover */
+}
+
+/* Ensure dots change color on hover */
+.notification-menu-container .btn:hover {
+  color: #1a257d;
+  background-color: #f8f9fa;
+}

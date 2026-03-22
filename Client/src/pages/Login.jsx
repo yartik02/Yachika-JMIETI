@@ -89,7 +89,7 @@ export default function Signin() {
 
     if (loading) {
     return (
-      <div className="text-center loading my-5" style={{width: "100vw"}}>
+      <div className="text-center loading my-5">
         <div className="spinner-border" role="status">
         </div>
         <p className="">Loading the course details...</p>
@@ -103,7 +103,7 @@ export default function Signin() {
   return (
     <div
       className="login row m-0"
-      style={{ width: "100vw", minHeight: "100vh" }}
+      style={{ minHeight: "100vh" }}
     >
       {/* Left Section */}
       <div
@@ -155,8 +155,10 @@ export default function Signin() {
           style={{ background: "#fff" }}
         >
           <form ref={formRef} onSubmit={handleSubmit} className="w-100">
-            <p className="fs-4 fw-bold mb-1">Login</p>
+            <div className="formHeader text-center">
+              <p className="fs-4 fw-bold mb-1">Login</p>
             <p className="text-muted mb-3">Login to your account</p>
+            </div>
 
             {inputData.map((data, idx) => (
               <div key={idx} className="mb-3 text-start">

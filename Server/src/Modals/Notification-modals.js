@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const NotificationSchema = new mongoose.Schema({
     rollno: {
         type: String,
-        required: [true, "Name is required"]
+        required: [true, "Roll number is required"],
+        index: true // Faster queries for specific students
     },
     message: {
         type: String,
@@ -25,18 +26,23 @@ const NotificationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    // Changed to Date for better querying
     complaintCreatedAt: {
-        type: String,
+        type: Date, 
         required: true
     },
     complaintSubCategory: {
         type: String,
         required: true
     },
+    // Changed to ObjectId for proper linking
     complaintId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Complaints",
         required: true
     },
+    // These might be better left in the Complaint model 
+    // to keep a "Single Source of Truth"
     rating: {
         type: Number,
         enum: [0, 1, 2, 3, 4, 5],
@@ -44,10 +50,13 @@ const NotificationSchema = new mongoose.Schema({
     },
     feedback: {
         type: String,
-        default: " "
-    }
-    
+        default: ""
+    },
 }, { timestamps: true });
 
-const NotificationMsg =  mongoose.model("Notifications", NotificationSchema);
-export {NotificationMsg};
+// Ensure the index is created correctly. 
+// Note: If you change 2592000 later, you MUST drop the index manually in the DB.
+NotificationSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2592000 });
+
+const NotificationMsg = mongoose.model("Notifications", NotificationSchema);
+export { NotificationMsg };

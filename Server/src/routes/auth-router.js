@@ -10,6 +10,9 @@ import {
   sendOtpToMail,
   verifyOtp,
   forgetPassword,
+  clearNotifications,
+  markNotificationsAsRead,
+  getAllComplaints
 } from "../controllers/Student.controllers.js";
 import { authMiddleware } from "../middlewares/auth-middleware.js";
 import { complaintSubmission } from "../controllers/complaint.controllers.js";
@@ -24,5 +27,8 @@ router.route("/sendOtpToMail").post(sendOtpToMail);
 router.route("/verifyOtp").post(verifyOtp);
 router.route("/forgot-password/reset-password").post(forgetPassword);
 router.route("/getNotifications").get(authMiddleware, getNotifications);
+router.route("/clearNotifications").delete(authMiddleware, clearNotifications);
+router.route("/markNotificationsAsRead").patch(authMiddleware, markNotificationsAsRead);
+router.route('/getAllComplaints').get(authMiddleware, getAllComplaints)
 
 export default router;

@@ -5,15 +5,8 @@ import '../components/Loader.css';
 const Loader = () => {
     
   return (
-    <section className="loadingspinner border m-0 d-flex justify-content-center align-items-center" style={{width:"100vw", height:"100vh", backgroundColor: "#f2f5fe"}}>
-      {/* <div className="loadingspinner">
-        <div id="square1" />
-        <div id="square2" />
-        <div id="square3" />
-        <div id="square4" />
-        <div id="square5" />
-      </div> */}
-
+    <section className="loadingspinner border m-0 d-flex justify-content-center align-items-center w-100" style={{ height:"100vh", backgroundColor: "#f2f5fe"}}>
+      
       <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" className="pencil">
         <defs>
           <clipPath id="pencil-eraser">

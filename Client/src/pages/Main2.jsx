@@ -33,8 +33,8 @@ const data = [
 ];
 function Main2() {
   return (
-    <section className="main2 py-5 p-lg-5 px-sm-2" style={{ backgroundColor: "#1a267d16" }}>
-      <div className="head my-5 py-lg-5 d-flex flex-column align-items-center">
+    <section className="main2 py-5 p-lg-5 px-sm-2 w-100" style={{ backgroundColor: "#1a267d16" }}>
+      <div className="head my-5 py-lg-5 d-flex flex-column align-items-center text-center">
         <p className="fs-3 fw-bold">Why Choose Yachika@JMIETI?</p>
         <p className="fw-light text-dark w-75 text-muted opacity-75">
           Designed specifically for JMIETI family, our platform ensures your voice is heard and your concerns are addressed promptly and

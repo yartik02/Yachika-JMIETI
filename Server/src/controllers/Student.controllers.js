@@ -5,6 +5,7 @@ import { NotificationMsg } from "../Modals/Notification-modals.js";
 import { generateOtp } from "../utility/otpGenerator.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
+import { Complaint } from "../Modals/Complaint-modal.js";
 
 // temporary in-memory store (use DB / Redis in production)
 const otpStore = new Map();
@@ -261,5 +262,87 @@ const forgetPassword = async (req, res) => {
   return res.status(200).json({ msg: "Password updated successfully!" });
 };
 
+const clearNotifications = async (req, res, next) => {
+  try {
+    const { rollno } = req.query;
 
-export { home, signup, login, user, contactUs, getNotifications, sendOtpToMail, verifyOtp, forgetPassword };
+    if (!rollno) {
+      return res
+        .status(400)
+        .json({ msg: "Roll number is required to clear notifications." });
+    }
+
+    // deleteMany wipes all documents matching the criteria in one operation
+    const result = await NotificationMsg.deleteMany({ rollno: rollno });
+
+    return res.status(200).json({
+      msg: "Notifications cleared successfully",
+      deletedCount: result.deletedCount,
+    });
+  } catch (error) {
+    console.error("Error clearing notifications:", error);
+    next(error);
+  }
+};
+
+const markNotificationsAsRead = async (req, res, next) => {
+    try {
+        const { rollno } = req.query;
+
+        if (!rollno) {
+            return res.status(400).json({ msg: "Roll number is required." });
+        }
+
+        // Update all notifications for this user where isRead is currently false
+        await NotificationMsg.updateMany(
+            { rollno: rollno, isRead: false },
+            { $set: { isRead: true } }
+        );
+
+        return res.status(200).json({ msg: "Notifications marked as read." });
+    } catch (error) {
+        console.error("Error marking notifications as read:", error);
+        next(error);
+    }
+};
+
+const getAllComplaints = async (req, res) => {
+  try {
+    const allComplaints = await Complaint.find();
+    // console.log(allComplaints);
+    const securedRecentComplaints = allComplaints.map((complaint) => {
+      // If it is anonymous, ONLY the superadmin gets the real data
+      if (complaint.isAnonymous) {
+        complaint.createdByName = "Anonymous Student";
+        complaint.createdByRollno = "Hidden";
+        complaint.createdByClass = "Hidden";
+        complaint.createdByBranch = "Hidden";
+        complaint.createdByEmail = "Hidden";
+      }
+      return complaint;
+    });
+
+    if (!securedRecentComplaints || securedRecentComplaints.length === 0) {
+      return res.status(404).json({ msg: "No complaints found" });
+    }
+    return res.status(200).json(securedRecentComplaints);
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    res.status(500).json({ msg: "Internal Server Error, cant fetch complaints" });
+  }
+};
+
+export {
+  home,
+  signup,
+  login,
+  getAllComplaints,
+  user,
+  contactUs,
+  getNotifications,
+  sendOtpToMail,
+  verifyOtp,
+  forgetPassword,
+  clearNotifications,
+  markNotificationsAsRead
+};

@@ -292,7 +292,7 @@ function Signup() {
   return (
     <div
       className="login row m-0"
-      style={{ width: "100vw", minHeight: "100vh" }}
+      style={{ minHeight: "100vh" }}
     >
       {/* --- Left Branding Section --- */}
       <div
@@ -350,10 +350,12 @@ function Signup() {
             {/* --- STEP 1: Registration Form --- */}
             {step === 1 && (
               <div className="fade-enter-active">
-                <p className="fs-4 fw-bold mb-1">Sign-up</p>
-                <p className="text-muted mb-3">
-                  Signup and become a member now!
-                </p>
+                <div className="formHeader text-center">
+                  <p className="fs-4 fw-bold mb-1">Sign-up</p>
+                  <p className="text-muted mb-3">
+                    Signup and become a member now!
+                  </p>
+                </div>
 
                 {inputFields.map((data, idx) => (
                   <div key={idx} className="mb-3 text-start">

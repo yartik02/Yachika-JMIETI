@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Signup from "./pages/SignUp";
-import StudentDashboard from "./pages/dashboard/StudentDashboard";
+import StudentDashboard from "./pages/dashboard/StudentDash/StudentDashboard";
 import AdminDashboard from "./pages/dashboard/Admindashboard/AdminDashboard";
 import ComplaintForm from "./components/ComplaintForm";
 import { ToastContainer, toast, Bounce } from "react-toastify";
@@ -27,6 +27,8 @@ function App() {
   const hideNavbarAndFooter =
     location.pathname === "/signup" ||
     location.pathname === "/login" ||
+    location.pathname === "/complaintSubmission" ||
+    location.pathname.includes("/dashboard") ||
     location.pathname === "/forget-password";
 
   const [loading, setLoading] = useState(true);

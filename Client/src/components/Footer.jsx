@@ -82,7 +82,7 @@ const scrollToTop = () => {
 };
 
   return (
-    <footer className="text-light py-4 " style={{width: "100vw"}}>
+    <footer className="text-light py-4 ">
       <div className="container my-lg-5 ">
         <div className="row text-start">
           {/* Logo + About */}

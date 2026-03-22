@@ -23,10 +23,9 @@ const ComplaintItem = memo(({ complaint, onClick, isActive }) => {
                 className="d-flex text-muted para"
                 style={{ fontSize: "0.8rem", width: "fit-content" }}
             >
-                <p className="m-0 text-nowrap overflow-hidden" style={{ maxWidth: "190px" }}>
+                <p className="m-0 text-truncate" style={{ maxWidth: "290px" }}>
                     {complaint.complaintBody}
                 </p>
-                ...
             </div>
             <div className="stone-footer d-flex flex-sm-row flex-column mt-1"
                 style={{ fontSize: "0.7rem" }}

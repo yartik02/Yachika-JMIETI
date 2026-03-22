@@ -85,8 +85,8 @@ const CoreValues = () => {
 
         <div className="row w-75 mx-auto mb-5 pb-5 g-4">
           {coreData.map((item, idx) => (
-            <div className="col-12 col-md-6 col-lg-4" key={idx}>
-              <div className="bg-white xtra p-4 rounded-4">
+            <div className="col-12 col-md-6 col-lg-4" key={idx} >
+              <div className="bg-white xtra d-flex flex-column align-items-center text-center p-4 rounded-4">
                 <span
                   className="p-3 rounded-4 d-inline-block" 
                   style={{ backgroundColor: item.background }}

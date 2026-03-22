@@ -15,7 +15,7 @@ function SortingControls() {
         Category: "All Categories",
     });
 
-    const { allComplaints } = useAuth(); 
+    const { allAdminsComplaints } = useAuth(); 
 
     const [openDropdown, setOpenDropdown] = useState(null);
     const dropdownContainerRef = useRef(null);
@@ -62,15 +62,15 @@ function SortingControls() {
     const handleExport = useCallback(() => {
         if (confirm("Are you sure you want to export all complaints?")) {
         const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(allComplaints);
+        const ws = XLSX.utils.json_to_sheet(allAdminsComplaints);
         XLSX.utils.book_append_sheet(wb, ws, "Compliants");
         XLSX.writeFile(wb, "Yachika@JMIETI.xlsx");
         }
-    }, [allComplaints]);
+    }, [allAdminsComplaints]);
 
     const filteredComplaints = useMemo(() => {
         // Use an empty array as a fallback
-        let complaintsToFilter = [...(allComplaints || [])]; 
+        let complaintsToFilter = [...(allAdminsComplaints || [])]; 
         
         if (filters.Status !== "All Status") {
             complaintsToFilter = complaintsToFilter.filter(c => c.status === filters.Status);
@@ -94,7 +94,7 @@ function SortingControls() {
         complaintsToFilter.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         return complaintsToFilter;
-    }, [allComplaints, filters, searchTerm]);
+    }, [allAdminsComplaints, filters, searchTerm]);
 
     useEffect(() => {
         setCurrentPage(1); 
@@ -127,10 +127,10 @@ function SortingControls() {
 
     return (
         <section >
-            <div className="row g-lg-3 g-2" ref={dropdownContainerRef}>
+            <div className="row g-2" ref={dropdownContainerRef}>
                 {/* Search Input */}
                 <div className="search-input-wrapper col-lg-4 col-md-12 border-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search search-icon ms-lg-2 ms-md-1" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search search-icon ms-lg-1 ms-md-1" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                     <input

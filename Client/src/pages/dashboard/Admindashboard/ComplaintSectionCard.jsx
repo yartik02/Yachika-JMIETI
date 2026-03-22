@@ -23,10 +23,9 @@ const ComplaintSectionCard = ({ complaint, viewClickedComplaint }) => {
         className="d-flex text-muted"
         style={{ fontSize: "0.8rem", width: "fit-content" }}
       >
-        <p className="m-0 w-50 text-nowrap overflow-hidden">
+        <p className="m-0 w-50 text-nowrap text-truncate" style={{ maxWidth: "290px" }}>
           {complaint.complaintBody}
         </p>
-        ...
       </div>
       <div
         className="stone-footer d-flex flex-sm-row flex-column mt-1"

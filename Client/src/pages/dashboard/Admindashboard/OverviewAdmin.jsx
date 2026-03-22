@@ -41,11 +41,11 @@ const Overview = () => {
             </div>
             
             {/* This SVG creates the beautiful wavy shape */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="m-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="m-0 mb-0">
             <path fill="#090f3d" fillOpacity="1" d="M0,32L26.7,32C53.3,32,107,32,160,26.7C213.3,21,267,11,320,16C373.3,21,427,43,480,90.7C533.3,139,587,213,640,240C693.3,267,747,245,800,208C853.3,171,907,117,960,85.3C1013.3,53,1067,43,1120,69.3C1173.3,96,1227,160,1280,176C1333.3,192,1387,160,1413,144L1440,128L1440,320L1413.3,320C1386.7,320,1333,320,1280,320C1226.7,320,1173,320,1120,320C1066.7,320,1013,320,960,320C906.7,320,853,320,800,320C746.7,320,693,320,640,320C586.7,320,533,320,480,320C426.7,320,373,320,320,320C266.7,320,213,320,160,320C106.7,320,53,320,27,320L0,320Z"></path>
             </svg>
 
-            <main className="garden-content m-0 pt-0 pb-4 px-1 px-lg-5" style={{ backgroundColor:"#090f3d", borderRadius:"0 0 20px 20px"}}>
+            <main className="garden-content m-0 pb-4 px-1 px-lg-5 mt-0 pt-3" style={{ backgroundColor:"#090f3d", borderRadius:"0 0 20px 20px"}}>
                 {recentComplaints.length > 0 ? (
                     <div className="d-flex flex-column mb-4 stones-grid mx-xs-2 mx-lg-0">
                         {recentComplaints.map((complaint) => (

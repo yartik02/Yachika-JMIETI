@@ -32,10 +32,10 @@ const Home = () => {
   }
 
   return (
-    <section className="home container-fluid p-0" style={{ width: "100vw" }}>
+    <section className="home container-fluid p-0 w-100">
       {/* Banner Section */}
       <div className="banner position-relative">
-        <picture className="d-block w-100">
+        <picture className="d-block">
           <source srcSet={bannersm} media="(max-width: 768px)" />
           <img
             src={bannerlg}

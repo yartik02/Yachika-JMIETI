@@ -355,9 +355,6 @@ form select:focus{
 .btngrp button span {
   display: none;
 }
-.AdminLayout, .sideMenu{
-  display: none
-}
 }
 
 @media (min-width: 770px) {
@@ -400,19 +397,6 @@ form select:focus{
     display: flex;
     margin-left: auto;
   }
-}
-
-.AdminLayout li:hover{
-  background-color: rgba(255, 255, 255, 0.177);
-  transition: all 0.3s ease;
-}
-.AdminLayout{
-  position: sticky;
-  top: 15%;
-}
-
-.AdminLayout .sideMenuText{
-  display: none;
 }
 
 .adminGetData, .allStudents, .contectedBy{

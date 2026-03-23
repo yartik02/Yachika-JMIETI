@@ -13,7 +13,7 @@ import { AutoEscalationOfComplaints } from'./src/utility/cronJobs.js'
 const app = express();
 
 const corsOptions = {
-    origin:"*",
+    origin:process.env.FrontEndURL,
     methods: ["GET","POST","PUT","DELETE", "PATCH", "HEAD"],
     credentials:true,
 }

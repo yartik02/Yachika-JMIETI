@@ -113,7 +113,7 @@ function ComplaintForm() {
       !formData.subCategory ||
       !formData.priority
     ) {
-      toast.error("Can’t submit air bro... even AI can’t read minds 😅");
+      toast.error("Fill all the form fields!");
       return;
     }
 
@@ -161,7 +161,7 @@ function ComplaintForm() {
       }
     } catch (error) {
       console.error("Error while submitting complaint: ", error);
-      toast.error("Can’t reach the server — chai break, maybe?");
+      toast.error("Can’t reach the server!");
     }
   };
 

@@ -53,8 +53,10 @@ function SideMenu({ menuItems, handleItemClick, activeView, role }) {
         <Link
           to="/logout"
           className={`text-decoration-none d-flex align-items-center text-white py-3 px-3 rounded-3 w-100 ${
-            isLogoutHovered ? "bg-danger bg-opacity-25 text-danger" : ""
-          }`}
+            isLogoutHovered ? "bg-danger text-danger" : ""
+          }
+          ${ role==='SuperAdmin' ?" bg-opacity-50": " bg-opacity-25"}
+          `}
           onMouseEnter={() => setIsLogoutHovered(true)}
           onMouseLeave={() => setIsLogoutHovered(false)}
           style={{ transition: "all 0.2s ease-in-out" }}

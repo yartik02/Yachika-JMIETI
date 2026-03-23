@@ -172,7 +172,7 @@ function Signup() {
       !formData.confirmPassword
     ) {
       return toast.error(
-        "Oops! Something’s missing — please fill all fields 🐣",
+        "Oops! Something’s missing — please fill all fields",
       );
     }
     if (formData.password !== formData.confirmPassword) {

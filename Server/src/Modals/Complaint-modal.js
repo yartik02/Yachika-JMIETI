@@ -102,6 +102,10 @@ const compliantSchema = new mongoose.Schema({
     isReported:{
         type: Boolean,
         default: false
+    },
+    isUnResolved:{
+        type: Boolean,
+        default: false
     }
 
 }, { timestamps: true });

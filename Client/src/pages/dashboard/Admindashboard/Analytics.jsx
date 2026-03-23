@@ -88,7 +88,7 @@ function SimpleAnalytics() {
         <div className="row">
           {/* Column 1: Categories */}
           <div className="col-lg-6 col-md-12 mb-4">
-            <div className="stat-card p-4 rounded-4">
+            <div className="stat-card p-4 rounded-4 bg-white">
               <h5 className="stat-card-title mb-4 pb-2">By Category</h5>
               {Object.entries(stats.categories).map(([name, count]) => {
                 const percentage = getPercentage(count, stats.total);
@@ -107,7 +107,7 @@ function SimpleAnalytics() {
 
           {/* Column 2: Statuses */}
           <div className="col-lg-6 col-md-12 mb-4">
-            <div className="stat-card p-4 rounded-4">
+            <div className="stat-card p-4 rounded-4 bg-white">
               <h5 className="stat-card-title mb-4 pb-2">By Status</h5>
               {Object.entries(stats.statuses).map(([name, count]) => {
                 const percentage = getPercentage(count, stats.total);

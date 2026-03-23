@@ -117,7 +117,7 @@ const ForgotPassword = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.msg || "Password reset failed");
 
-      toast.success("Password updated successfully!");
+      ("Password updated successfully!");
       setTimeout(() => navigate("/login"), 2000);
     } catch (err) {
       setError(err.message);

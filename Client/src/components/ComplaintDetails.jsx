@@ -124,7 +124,7 @@ function ComplaintDetails({ complaint, role }) {
         className="text-start p-4 detailedComplain my-auto"
         style={{ maxHeight: "77vh", overflowY:"scroll" }}
       >
-        <p className="mb-2 fs-5 fw-light" style={{ fontSize: "1.1rem" }}>
+        <p className="fs-5 fw-light" style={{ fontSize: "1.1rem" }}>
           {complaint.complaintTitle}
         </p>
         

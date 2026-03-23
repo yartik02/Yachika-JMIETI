@@ -35,13 +35,13 @@ const OverviewSuperAdmin = () => {
       <div className="mainBack border bg-white mt-4 rounded-4">
         <div className="p-3">
             <p className="m-0 fw-semibold">Reported Complaints:</p>
-            <p className="m-0">Complaints which are reported by Admin User, and u can view them in the Reported Complaints section.</p>
+            <p className="m-0 text-truncate">Complaints which are reported by Admin User, and u can view them in the Reported Complaints section.</p>
         </div>
       </div>
       <div className="mainBack border bg-white mt-4 rounded-4">
         <div className="p-3">
             <p className="m-0 fw-semibold">Unresolved Complaints:</p>
-            <p className="m-0">Complaints which are not resolved under one week and need to be resolved, and u can view them in the Unresolved Complaints section.</p>
+            <p className="m-0 text-truncate">Complaints which are not resolved under one week and need to be resolved, and u can view them in the Unresolved Complaints section.</p>
         </div>
       </div>
     </section>

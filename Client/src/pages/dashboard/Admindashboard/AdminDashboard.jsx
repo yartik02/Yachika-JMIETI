@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react"; // Removed useEffect and useRef
 import adminPic from "../../../assets/Boyimg_avatar.png";
 import { Error } from "../../Error";
 import { toast } from "react-toastify";
@@ -49,18 +49,11 @@ const btngrpData = [
 ];
 
 function AdminDashboard() {
-  const buttonRef = useRef(null);
   const { user } = useAuth();
 
   const [activeTab, setActiveTab] = useState("Overview");
   const [activeView, setActiveView] = useState(null); // Null means tabs are showing
   const [showProfile, setShowProfile] = useState(false);
-
-  useEffect(() => {
-    if (buttonRef.current && activeView === null && !showProfile) {
-      buttonRef.current.focus();
-    }
-  }, [activeView, showProfile]);
 
   if (!user || user.role !== "admin") {
     return <Error />;
@@ -162,8 +155,6 @@ function AdminDashboard() {
           }}
         >
           {showProfile && (
-            // FIX: Overriding CSS display:none with inline style
-
             <div
               className="row profile text-center"
               style={{ display: "flex" }}
@@ -220,8 +211,6 @@ function AdminDashboard() {
           )}
 
           {!showProfile && activeView === null && (
-            // FIX: Overriding CSS display:none with inline style
-
             <div
               className="AdminMain flex-column"
               style={{ width: "100%", display: "flex" }}
@@ -236,7 +225,7 @@ function AdminDashboard() {
                     className={`btn rounded-5 w-25 p-1 border border-light border-opacity-10 p-0 ${
                       activeTab === btn.name ? "bg-white fw-bold" : ""
                     }`}
-                    ref={index === 0 ? buttonRef : null}
+                    // Ref assignment removed here to fix focus bug
                     style={{ height: "100%", fontSize: "0.8rem" }}
                     onClick={() => handlebtnClick(btn.name)}
                   >
@@ -268,7 +257,6 @@ function AdminDashboard() {
           )}
 
           {!showProfile && activeView !== null && (
-            // FIX: Overriding CSS display:none with inline style display: block
             <main
               className="adminGetData flex-grow-1"
               style={{ width: "100%", display: "block", position: "relative" }}

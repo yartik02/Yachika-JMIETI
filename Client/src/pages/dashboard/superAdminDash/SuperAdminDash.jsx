@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import adminPic from "../../../assets/Boyimg_avatar.png";
 import { Error } from "../../Error";
-import { toast } from "react-toastify";
 import Overview from "./OverviewSuperAdmin";
 import ReportedComplaintSection from "./ReportedComplaintSection.jsx";
 import UnResolvedComplaints from "./UnResolvedComplaints.jsx";
@@ -29,38 +28,47 @@ const menuItems = [
 const btngrpData = [
   {
     name: "Overview",
-    path: "M80 96C88.8 96 96 103.2 96 112L96 464C96 490.5 117.5 512 144 512L560 512C568.8 512 576 519.2 576 528C576 536.8 568.8 544 560 544L144 544C99.8 544 64 508.2 64 464L64 112C64 103.2 71.2 96 80 96zM208 320C216.8 320 224 327.2 224 336L224 432C224 440.8 216.8 448 208 448C199.2 448 192 440.8 192 432L192 336C192 327.2 199.2 320 208 320zM320 208L320 432C320 440.8 312.8 448 304 448C295.2 448 288 440.8 288 432L288 208C288 199.2 295.2 192 304 192C312.8 192 320 199.2 320 208zM400 256C408.8 256 416 263.2 416 272L416 432C416 440.8 408.8 448 400 448C391.2 448 384 440.8 384 432L384 272C384 263.2 391.2 256 400 256zM512 144L512 432C512 440.8 504.8 448 496 448C487.2 448 480 440.8 480 432L480 144C480 135.2 487.2 128 496 128C504.8 128 512 135.2 512 144z",
+    iconPath: (
+      <>
+        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+      </>
+    ),
   },
   {
     name: "Reported Complaints",
-    path: "M243.2 597.6C243.2 597.6 243.2 597.6 243.2 597.6L236.8 602.4C232 606 226.1 608 220 608C204.5 608 192 595.5 192 580L192 512L160 512C107 512 64 469 64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L360 512C358.3 512 356.6 512.6 355.2 513.6L243.2 597.6zM224 532L224 572L336 488C342.9 482.8 351.3 480 360 480L480 480C515.3 480 544 451.3 544 416L544 192C544 156.7 515.3 128 480 128L160 128C124.7 128 96 156.7 96 192L96 416C96 451.3 124.7 480 160 480L200 480C213.3 480 224 490.7 224 504L224 532z",
+    iconPath: (
+      <>
+        <path d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.48 1.48 0 0 1 0-2.098zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z" />
+        <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+      </>
+    ),
   },
   {
     name: "Unresolved Complaints",
-    path: "M400 176C400 167.2 407.2 160 416 160L592 160C600.8 160 608 167.2 608 176L608 352C608 360.8 600.8 368 592 368C583.2 368 576 360.8 576 352L576 214.6L363.3 427.3C357.1 433.5 346.9 433.5 340.7 427.3L224 310.6L59.3 475.3C53.1 481.5 42.9 481.5 36.7 475.3C30.5 469.1 30.5 458.9 36.7 452.7L212.7 276.7C218.9 270.5 229.1 270.5 235.3 276.7L352 393.4L553.4 192L416 192C407.2 192 400 184.8 400 176z",
+    iconPath: (
+      <>
+        <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293z" />
+        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z" />
+      </>
+    ),
   },
   {
     name: "Settings",
-    viewBox: "0 0 16 16",
-    w: "16",
-    h: "16",
-    path: "M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0 M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z",
+    iconPath: (
+      <>
+        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+      </>
+    ),
   },
 ];
 
 function SuperAdminDashboard() {
-  const buttonRef = useRef(null);
   const { user } = useAuth();
 
   const [activeTab, setActiveTab] = useState("Overview");
   const [activeView, setActiveView] = useState(null); // Null means tabs are showing
   const [showProfile, setShowProfile] = useState(false);
-
-  useEffect(() => {
-    if (buttonRef.current && activeView === null && !showProfile) {
-      buttonRef.current.focus();
-    }
-  }, [activeView, showProfile]);
 
   if (!user || user.role !== "superAdmin") {
     return <Error />;
@@ -162,8 +170,6 @@ function SuperAdminDashboard() {
           }}
         >
           {showProfile && (
-            // FIX: Overriding CSS display:none with inline style
-
             <div
               className="row profile text-center"
               style={{ display: "flex" }}
@@ -220,8 +226,6 @@ function SuperAdminDashboard() {
           )}
 
           {!showProfile && activeView === null && (
-            // FIX: Overriding CSS display:none with inline style
-
             <div
               className="AdminMain flex-column"
               style={{ width: "100%", display: "flex" }}
@@ -233,22 +237,21 @@ function SuperAdminDashboard() {
                 {btngrpData.map((btn, index) => (
                   <button
                     key={index}
-                    className={`btn rounded-5 w-25 p-1 border border-light border-opacity-10 p-0 ${
+                    className={`btn rounded-5 w-25 p-1 border border-light border-opacity-10 d-flex align-items-center justify-content-center ${
                       activeTab === btn.name ? "bg-white fw-bold" : ""
                     }`}
-                    ref={index === 0 ? buttonRef : null}
+                    // ref assignment removed entirely
                     style={{ height: "100%", fontSize: "0.8rem" }}
                     onClick={() => handlebtnClick(btn.name)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      viewBox={btn.viewBox || "0 0 640 640"}
-                      width={btn.w || "20"}
-                      height={btn.h || "20"}
+                      viewBox="0 0 16 16"
+                      width="18"
                       fill="black"
                       className="me-lg-1"
                     >
-                      <path d={btn.path} />
+                      {btn.iconPath}
                     </svg>
 
                     <span>{btn.name}</span>
@@ -260,15 +263,18 @@ function SuperAdminDashboard() {
                 {activeTab === "Overview" && (
                   <Overview activetab={goToComplaints} />
                 )}
-                {activeTab === "Reported Complaints" && <ReportedComplaintSection />}
-                {activeTab === "Unresolved Complaints" && <UnResolvedComplaints />}
+                {activeTab === "Reported Complaints" && (
+                  <ReportedComplaintSection />
+                )}
+                {activeTab === "Unresolved Complaints" && (
+                  <UnResolvedComplaints />
+                )}
                 {activeTab === "Settings" && <Settings />}
               </div>
             </div>
           )}
 
           {!showProfile && activeView !== null && (
-            // FIX: Overriding CSS display:none with inline style display: block
             <main
               className="adminGetData flex-grow-1"
               style={{ width: "100%", display: "block", position: "relative" }}
@@ -301,7 +307,9 @@ function SuperAdminDashboard() {
                 className="bg-white p-lg-5 py-sm-3 rounded-4 shadow-sm"
                 style={{ width: "100%", minHeight: "50vh", overflowX: "auto" }}
               >
-                {activeView === "All Students" && <AllStudents role={user.role} />}
+                {activeView === "All Students" && (
+                  <AllStudents role={user.role} />
+                )}
                 {activeView === "Contacted By" && <ContectedBy />}
               </div>
             </main>

@@ -34,11 +34,9 @@ export default function Signin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    //check if the form is empty
     if (!formData.email || !formData.password) {
-      toast.error("Oops! Invalid credentials — maybe a typo? 🤔");
-      return; // Stop the function here
+      toast.error("Oops! Invalid credentials ");
+      return;
     }
 
     const { email, password } = formData;
@@ -83,7 +81,7 @@ export default function Signin() {
           );
         } else {
           toast.success(
-            `Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos 💪!`,
+            `Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos!`,
           );
           setTimeout(() => {
             navigate(`/studentDashboard/${res_data.rollno}`);
@@ -111,7 +109,7 @@ export default function Signin() {
       }
     } catch (err) {
       console.error("Error in form submission: ", err.message);
-      toast.error("Server taking a chai break ☕");
+      toast.error("Server not responding!");
       return;
     } finally {
       setLoading(false);

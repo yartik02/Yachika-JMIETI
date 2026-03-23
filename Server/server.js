@@ -8,6 +8,7 @@ import adminRoute from "./src/routes/admin-router.js";
 import cors from "cors";
 import { connectDB } from "./src/db/connection.js";
 import errorMiddleware from "./src/middlewares/error-middleware.js";
+import { AutoEscalationOfComplaints } from'./src/utility/cronJobs.js'
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use("/api/admin", adminRoute);
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 4000; // It's safer to have a fallback
+
+AutoEscalationOfComplaints();
 
 connectDB().then(() => {
     app.listen(PORT, () => {

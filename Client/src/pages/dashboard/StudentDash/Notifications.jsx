@@ -156,10 +156,10 @@ const Notifications = () => {
       );
       if (res.ok) {
         setAllNotifications([]);
-        toast.success("Notifications cleared");
+        toast.success("Notifications cleared successfully!");
       }
     } catch (err) {
-      toast.error("Failed to clear notifications");
+      toast.error("Failed to clear notifications!");
     } finally {
       setIsClearing(false);
     }
@@ -279,7 +279,7 @@ const Notifications = () => {
                   </div>
 
                   <div className="notification-content m-0">
-                    <p className="notification-message text-start text-lg-center">
+                    <p className="notification-message text-start text-lg-center w-75 mx-auto">
                       {notification.message}
                     </p>
 

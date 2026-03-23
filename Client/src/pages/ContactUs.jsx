@@ -148,7 +148,7 @@ function Contact() {
     // console.log(formData);
 
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast.error("Can’t submit air bro... even AI can’t read minds 😅");
+      toast.error("Can’t submit empty fields, fill all!");
       return;
     }
 

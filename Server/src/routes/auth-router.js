@@ -12,10 +12,10 @@ import {
   forgetPassword,
   clearNotifications,
   markNotificationsAsRead,
-  getAllComplaints
+  getAllComplaints,
+  submitAppeal
 } from "../controllers/Student.controllers.js";
-import { authMiddleware } from "../middlewares/auth-middleware.js";
-import { complaintSubmission } from "../controllers/complaint.controllers.js";
+import { authMiddleware, checkNotSuspended } from "../middlewares/auth-middleware.js";
 
 router.route("/").get(home);
 router.route("/signup").post(signup);
@@ -29,6 +29,9 @@ router.route("/forgot-password/reset-password").post(forgetPassword);
 router.route("/getNotifications").get(authMiddleware, getNotifications);
 router.route("/clearNotifications").delete(authMiddleware, clearNotifications);
 router.route("/markNotificationsAsRead").patch(authMiddleware, markNotificationsAsRead);
-router.route('/getAllComplaints').get(authMiddleware, getAllComplaints)
+router.route('/getAllComplaints').get(authMiddleware, getAllComplaints);
+
+router.route('/submitAppeal').post(authMiddleware, submitAppeal)
+//gemini said to apply the suspended middleware to all routes 
 
 export default router;

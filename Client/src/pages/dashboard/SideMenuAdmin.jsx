@@ -6,14 +6,26 @@ function SideMenu({ menuItems, handleItemClick, activeView, role }) {
   const [isLogoutHovered, setIsLogoutHovered] = useState(false);
 
   return (
-    <section className="sideMenu d-flex flex-column justify-content-between flex-shrink-0"
-      style={{color:"rgb(9, 15, 61)"}}
+    <section
+      className="sideMenu d-flex flex-column justify-content-between flex-shrink-0"
+      style={{ color: "rgb(9, 15, 61)" }}
     >
       <div className="w-100 mt-4">
         {/* Header / Logo */}
         <div className="headerSec d-flex align-items-center px-3 mb-4">
-          <img src={logo} alt="Logo" className="img-fluid" width={45} style={{ flexShrink: 0 }} />
-          <p className="text-white sideMenuText ms-0 mb-0 fw-bold" style={{fontSize:"1.2rem"}}>{role}</p>
+          <img
+            src={logo}
+            alt="Logo"
+            className="img-fluid"
+            width={45}
+            style={{ flexShrink: 0 }}
+          />
+          <p
+            className="text-white sideMenuText ms-0 mb-0 fw-bold"
+            style={{ fontSize: "1.2rem" }}
+          >
+            {role}
+          </p>
         </div>
 
         {/* Menu Items */}
@@ -45,6 +57,39 @@ function SideMenu({ menuItems, handleItemClick, activeView, role }) {
               <span className="sideMenuText text-white ms-3">{item.name}</span>
             </li>
           ))}
+          {role === "SuperAdmin" && (
+            <li
+              className={`menu-item mb-2 p-3 rounded-3 text-nowrap ${
+                activeView === "appealsBtn" ? "active-button" : ""
+              }`}
+              role="button"
+              onClick={() => handleItemClick("appealsBtn")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ flexShrink: 0 }}
+                className="lucide lucide-shield-ellipsis-icon lucide-shield-ellipsis"
+              >
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                <path d="M8 12h.01" />
+                <path d="M12 12h.01" />
+                <path d="M16 12h.01" />
+              </svg>
+              <span className="sideMenuText text-white ms-3">Appeals</span>
+            </li>
+          )}
         </ul>
       </div>
 
@@ -55,7 +100,7 @@ function SideMenu({ menuItems, handleItemClick, activeView, role }) {
           className={`text-decoration-none d-flex align-items-center text-white py-3 px-3 rounded-3 w-100 ${
             isLogoutHovered ? "bg-danger text-danger" : ""
           }
-          ${ role==='SuperAdmin' ?" bg-opacity-50": " bg-opacity-25"}
+          ${role === "SuperAdmin" ? " bg-opacity-50" : " bg-opacity-25"}
           `}
           onMouseEnter={() => setIsLogoutHovered(true)}
           onMouseLeave={() => setIsLogoutHovered(false)}

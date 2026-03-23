@@ -33,7 +33,7 @@ const ContectedUsers = () => {
       style={{ width: "100%" }}
     >
       <p
-        className="text-start fw-light ms-3 mb-0 fs-3 w-100"
+        className="text-start fw-light ms-3 mb-0 fs-3 w-100 d-flex align-items-center"
         style={{ color: "#065064" }}
       >
         <svg

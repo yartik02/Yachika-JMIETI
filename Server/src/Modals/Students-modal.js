@@ -42,8 +42,19 @@ const studentSchema= new mongoose.Schema({
     },
     suspensionDetails: {
     reason: { type: String, default: "" },
-    expiryDate: { type: Date, default: null },
-    suspendedAt: { type: Date, default: Date.now }
+    suspendedAt: { type: Date, default: Date.now },
+    expiresAt: { type: Date, default: null },
+    appeal: {
+    hasAppealed: { type: Boolean, default: false },
+    appealText: { type: String, default: null },
+    submittedAt: { type: Date, default: null },
+    status: { 
+      type: String, 
+      enum: ["None","Pending", "Approved", "Rejected"], 
+      default: "None" 
+    },
+    adminRemarks: { type: String, default: null } // Why the admin accepted/rejected the appeal
+  }
     }
 
 },{timestamps: true}

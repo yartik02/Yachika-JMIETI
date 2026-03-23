@@ -86,40 +86,26 @@ const login = async (req, res) => {
     const isMatch = await studentExist.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ msg: "Invalid email or password" });
+    }    
+
+    //2. check for the suspension
+    if (isMatch &&studentExist.suspensionDetails && studentExist.isSuspended) {
+      return res.status(403).json({
+        message: "Your account is suspended. You cannot perform this action.",
+        token: await studentExist.generateToken()
+      });
+    } else {
+      return res.status(200).json({
+        msg: "Student logged in successfully!",
+        token: await studentExist.generateToken(),
+        studentID: studentExist._id.toString(),
+        studentName: studentExist.name,
+        rollno: studentExist.rollno,
+        role: studentExist.role || "student",
+        isSuspended: studentExist.isSuspended,
+        suspensionDetails: studentExist.suspensionDetails,
+      });
     }
-
-    // 2. Suspension Logic Check
-    if (studentExist.isSuspended) {
-      const now = new Date();
-      
-      // Check if the suspension period has actually ended
-      if (studentExist.suspensionDetails.expiryDate && now < studentExist.suspensionDetails.expiryDate) {
-        // STILL SUSPENDED: Send 403 Forbidden
-        return res.status(403).json({
-          msg: "Your account is temporarily suspended.",
-          reason: studentExist.suspensionDetails.reason,
-          expiresAt: studentExist.suspensionDetails.expiryDate,
-          isSuspended: true
-        });
-      } else {
-        // AUTO-LIFT: Expiry date has passed, reset the flags
-        studentExist.isSuspended = false;
-        studentExist.suspensionDetails = { reason: "", expiryDate: null };
-        await studentExist.save(); 
-        // Logic continues to issue token below...
-      }
-    }
-
-    // 3. Successful Login for Student
-    res.status(200).json({
-      msg: "Student logged in successfully!",
-      token: await studentExist.generateToken(),
-      studentID: studentExist._id.toString(),
-      studentName: studentExist.name,
-      rollno: studentExist.rollno,
-      role: studentExist.role || "student" // Good practice to include role
-    });
-
   } catch (error) {
     console.error("Login Error:", error);
     return res.status(500).json({ msg: "Internal Server Error!" });
@@ -311,24 +297,24 @@ const clearNotifications = async (req, res, next) => {
 };
 
 const markNotificationsAsRead = async (req, res, next) => {
-    try {
-        const { rollno } = req.query;
+  try {
+    const { rollno } = req.query;
 
-        if (!rollno) {
-            return res.status(400).json({ msg: "Roll number is required." });
-        }
-
-        // Update all notifications for this user where isRead is currently false
-        await NotificationMsg.updateMany(
-            { rollno: rollno, isRead: false },
-            { $set: { isRead: true } }
-        );
-
-        return res.status(200).json({ msg: "Notifications marked as read." });
-    } catch (error) {
-        console.error("Error marking notifications as read:", error);
-        next(error);
+    if (!rollno) {
+      return res.status(400).json({ msg: "Roll number is required." });
     }
+
+    // Update all notifications for this user where isRead is currently false
+    await NotificationMsg.updateMany(
+      { rollno: rollno, isRead: false },
+      { $set: { isRead: true } },
+    );
+
+    return res.status(200).json({ msg: "Notifications marked as read." });
+  } catch (error) {
+    console.error("Error marking notifications as read:", error);
+    next(error);
+  }
 };
 
 const getAllComplaints = async (req, res) => {
@@ -353,7 +339,53 @@ const getAllComplaints = async (req, res) => {
     return res.status(200).json(securedRecentComplaints);
   } catch (error) {
     console.error("Error fetching complaints:", error);
-    res.status(500).json({ msg: "Internal Server Error, cant fetch complaints" });
+    res
+      .status(500)
+      .json({ msg: "Internal Server Error, cant fetch complaints" });
+  }
+};
+
+const submitAppeal = async (req, res) => {
+  try {
+    const { appealText } = req.body;
+    const studentId = req.user._id;
+
+    if (!appealText || appealText.trim() === "") {
+      return res.status(400).json({ message: "Appeal text is required." });
+    }
+
+    const studentExist = await student.findById(studentId);
+
+    if (!studentExist.isSuspended) {
+      return res
+        .status(400)
+        .json({ message: "Your account is not currently suspended." });
+    }
+
+    if (studentExist.suspensionDetails.appeal.hasAppealed) {
+      return res
+        .status(400)
+        .json({ message: "You have already submitted an appeal." });
+    }
+
+    // Lock in the appeal
+    studentExist.suspensionDetails.appeal = {
+      hasAppealed: true,
+      appealText: appealText,
+      submittedAt: new Date(),
+      status: "Pending",
+      adminRemarks: null,
+    };
+
+    await studentExist.save();
+
+    res.status(200).json({
+      message: "Appeal submitted successfully.",
+      suspensionDetails: studentExist.suspensionDetails,
+    });
+  } catch (error) {
+    console.error("Submit Appeal Error:", error);
+    res.status(500).json({ message: "Server error while submitting appeal." });
   }
 };
 
@@ -369,5 +401,6 @@ export {
   verifyOtp,
   forgetPassword,
   clearNotifications,
-  markNotificationsAsRead
+  markNotificationsAsRead,
+  submitAppeal,
 };

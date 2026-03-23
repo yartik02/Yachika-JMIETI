@@ -13,23 +13,42 @@ const authMiddleware = async(req, res, next) => {
     const token = authHeader.replace("Bearer ", "");
     
     
-    // console.log("Auth Header:", token);
     const isVerified = jwt.verify(token, process.env.JWT_SECRET_KEY);
     // console.log("Data after verification of token is: \n",isVerified);
     const userData = await student.findOne({ email: isVerified.email }).select({
       password: 0, // Exclude password field
     })|| await admin.findOne({ email: isVerified.email }).select({ password: 0 });
-    // console.log("userData from auth middleware: ", userData);
     
     req.user = userData; // attach user data to request object
     req.token = token;
     req.userId = userData._id;
-
-    // req.student = { _id: decoded.id }; // attach student id
     next();
   } catch (err) {
     res.status(401).json({ msg: "Invalid or expired token", error: err });
   }
 };
 
-export { authMiddleware };
+const checkNotSuspended = async (req, res, next) => {
+
+  const {email} =req.body;
+  
+  try {
+    // Assuming your verifyToken middleware has already attached the user to req.user
+    const studentData = await student.findOne({ email }).select({
+      password: 0,
+    })
+    const adminData= await admin.findOne({ email }).select({ password: 0 });
+
+    if (studentData && studentData.suspensionDetails && studentData.isSuspended) {
+      return res.status(403).json({ 
+        message: "Your account is suspended. You cannot perform this action.",
+        isSuspended: true
+      });
+    }
+    next(); // Not suspended, let them through
+  } catch (error) {
+    res.status(500).json({ message: "Server error checking suspension status." });
+  }
+};
+
+export { authMiddleware, checkNotSuspended };

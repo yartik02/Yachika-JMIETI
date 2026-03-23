@@ -25,9 +25,12 @@ const AllStudents = ({ role }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  
+  // --- SUSPENSION MODAL STATE ---
   const [showSuspendPrompt, setShowSuspendPrompt] = useState(false);
-  const [suspendReason, setSuspendReason] = useState("");
   const [curStudentId, setCurStudentId] = useState(null);
+  const [suspendReason, setSuspendReason] = useState("");
+  const [suspendDuration, setSuspendDuration] = useState("7"); // Default to 1 week
 
   const studentsPerPage = 6;
   const token = localStorage.getItem("authToken");
@@ -96,6 +99,7 @@ const AllStudents = ({ role }) => {
     }
 
     try {
+      // Adjusted route to match your existing or new backend logic
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/superAdmin/suspendStudent`,
         {
@@ -104,20 +108,26 @@ const AllStudents = ({ role }) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ studentId, reason: suspendReason }),
+          // --- FIX: Sending the duration to the backend ---
+          body: JSON.stringify({ 
+            studentId, 
+            reason: suspendReason,
+            durationInDays: suspendDuration 
+          }),
         }
       );
 
       if (response.ok) {
-        toast.success("Student suspended successfully!");
+        toast.success(`Student suspended ${suspendDuration === "permanent" ? "permanently" : "successfully"}!`);
         
-        // --- THE FIX: UPDATE LOCAL STATE INSTANTLY ---
-        // Map through the students. If the ID matches the suspended student, 
-        // return a copy of that student with isSuspended set to true.
+        // --- FIX: Update local state to match the new nested schema ---
         setAllStudents((prevStudents) =>
           prevStudents.map((student) =>
             student._id === studentId
-              ? { ...student, isSuspended: true } 
+              ? { 
+                  ...student, 
+                  suspensionDetails: { ...student.suspensionDetails, isSuspended: true } 
+                } 
               : student
           )
         );
@@ -125,7 +135,8 @@ const AllStudents = ({ role }) => {
         // Reset modal state
         setShowSuspendPrompt(false);
         setSuspendReason("");
-        setCurStudentId(null); // Clean up the ID as well
+        setSuspendDuration("7");
+        setCurStudentId(null);
       } else {
         toast.error("Failed to suspend student.");
       }
@@ -135,7 +146,7 @@ const AllStudents = ({ role }) => {
     }
   };
 
-  // --- 1. SEARCH LOGIC (Memoized to prevent unnecessary recalculations) ---
+  // --- 1. SEARCH LOGIC ---
   const filteredStudents = useMemo(() => {
     if (!searchQuery) return allStudents;
     const query = searchQuery.toLowerCase();
@@ -148,7 +159,7 @@ const AllStudents = ({ role }) => {
     });
   }, [allStudents, searchQuery]);
 
-  // --- 2. PAGINATION LOGIC (Memoized) ---
+  // --- 2. PAGINATION LOGIC ---
   const totalPages = Math.ceil(filteredStudents.length / studentsPerPage) || 1;
   const currentStudents = useMemo(() => {
     const indexOfLastStudent = currentPage * studentsPerPage;
@@ -164,7 +175,6 @@ const AllStudents = ({ role }) => {
     if (currentPage > 1) setCurrentPage(prev => prev - 1);
   };
 
-  // Rendered directly as a variable instead of an inner React component for better performance
   const paginationJSX = (
     <div className="d-flex align-items-center justify-content-center gap-3 mt-3 mb-2">
       <span className="text-muted small text-nowrap d-none d-sm-block">
@@ -224,7 +234,8 @@ const AllStudents = ({ role }) => {
           <div className="text-center mt-2 row m-0" style={{ width: "100%" }}>
             {currentStudents.map((curStudent) => {
               const formattedCreatedAt = formatDateTime(curStudent.createdAt);
-              const formattedUpdatedAt = formatDateTime(curStudent.updatedAt);
+              // Fallback checking for the old schema (isSuspended) or the new schema (suspensionDetails.isSuspended)
+              const isCurrentlySuspended = curStudent.suspensionDetails?.isSuspended || curStudent.isSuspended;
 
               return (
                 <div key={curStudent._id} className="col-lg-6 col-md-6 col-sm-12 p-3">
@@ -267,7 +278,7 @@ const AllStudents = ({ role }) => {
                             Delete
                           </button>
                         )}
-                        {role === "superAdmin" && curStudent.isSuspended !== true && (
+                        {role === "superAdmin" && !isCurrentlySuspended && (
                           <button
                             className="btn btn-outline-danger rounded-4 text-center"
                             onClick={() => {
@@ -279,11 +290,10 @@ const AllStudents = ({ role }) => {
                             Suspend Student
                           </button>
                         )}
-                        {role === "superAdmin" && curStudent.isSuspended === true && (
+                        {role === "superAdmin" && isCurrentlySuspended && (
                           <span
                             className="px-3 py-2 bg-danger rounded-4 text-center text-light"
                             style={{ fontSize: "0.78rem" }}
-                            disabled={true}
                           >
                             Suspended Student
                           </span>
@@ -310,27 +320,43 @@ const AllStudents = ({ role }) => {
         <>
           <div className="modal-backdrop fade show" style={{ zIndex: 1040 }}></div>
           <div className="modal fade show d-block" style={{ zIndex: 1050 }} tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered modal-sm text-center">
+            <div className="modal-dialog modal-dialog-centered modal-mg text-center">
               <div className="modal-content border-0 shadow-lg rounded-4">
                 <div className="modal-body p-4">
                   <h6 className="fw-bold mb-3 text-dark">Confirm Suspension</h6>
-                  <p className="text-muted small mb-2">Please provide a reason for suspending this account.</p>
+                  <p className="text-muted small mb-3">Provide a reason and select the duration.</p>
 
-                  <input
-                    type="text"
-                    className="shadow-none my-3 border rounded-2 form-control form-control-sm"
-                    placeholder="e.g., Violation of guidelines..."
-                    value={suspendReason}
-                    onChange={(e) => setSuspendReason(e.target.value)}
-                    autoFocus
-                  />
+                  <div className="text-start">
+                    <label className="fw-bold small text-muted">Reason</label>
+                    <input
+                      type="text"
+                      className="shadow-none mb-3 mt-1 border rounded-3 form-control form-control-sm"
+                      placeholder="e.g., Violation of guidelines..."
+                      value={suspendReason}
+                      onChange={(e) => setSuspendReason(e.target.value)}
+                      autoFocus
+                    />
+
+                    <label className="fw-bold small text-muted">Duration</label>
+                    <select
+                      className="shadow-none mt-1 border rounded-3 form-select form-select-sm"
+                      value={suspendDuration}
+                      onChange={(e) => setSuspendDuration(e.target.value)}
+                    >
+                      <option value="3">3 Days</option>
+                      <option value="7">1 Week</option>
+                      <option value="30">1 Month</option>
+                      <option value="permanent">Permanent</option>
+                    </select>
+                  </div>
 
                   <div className="d-flex justify-content-center gap-2 mt-4">
                     <button
                       className="btn btn-light shadow-none rounded-3 px-3"
                       onClick={() => {
                         setShowSuspendPrompt(false);
-                        setSuspendReason(""); 
+                        setSuspendReason("");
+                        setSuspendDuration("7"); 
                       }}
                     >
                       Cancel

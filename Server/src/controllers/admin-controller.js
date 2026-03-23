@@ -319,33 +319,44 @@ const reportComplaint = async (req, res) => {
 
 const suspendStudent = async (req, res) => {
   try {
-    const { studentId, reason } = req.body;
+    const { studentId, reason, durationInDays } = req.body;
 
-    const expiry = new Date();
-    expiry.setDate(expiry.getDate() + 7);
-
-    // Find the student and update their suspension status
-    const updatedStudent = await student.findByIdAndUpdate(
-      studentId,
-      {
-        isSuspended: true,
-        suspensionDetails:{
-          reason: reason,
-          expiryDate: expiry,
-          suspendedAt: new Date()
-        }
-      },
-      { new: true },
-    );
-
-    if (!updatedStudent) {
+    const currStudent = await student.findById(studentId);
+    if (!currStudent) {
       return res.status(404).json({ message: "Student not found." });
     }
+    // Calculate the expiration date
+    let expiresAt = null; // Default to permanent
+    
+    if (durationInDays && durationInDays !== "permanent") {
+      const days = parseInt(durationInDays, 10);
+      if (days > 0) {
+        expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + days);
+      }
+    }
+    currStudent.isSuspended = true;
+    currStudent.suspensionDetails = {
+      reason: reason,
+      suspendedAt: new Date(),
+      expiresAt: expiresAt,
+      // Reset the appeal object completely for a fresh start
+      appeal: {
+        hasAppealed: false,
+        appealText: null,
+        submittedAt: null,
+        status: "None",
+        adminRemarks: null
+      }
+    };
 
-    return res.status(200).json({
-      message: "Student successfully suspended.",
-      student: updatedStudent,
+    await currStudent.save();
+
+    res.status(200).json({ 
+      message: `Student successfully suspended ${expiresAt ? `until ${expiresAt.toDateString()}` : "permanently"}.`,
+      suspensionDetails: currStudent.suspensionDetails
     });
+
   } catch (error) {
     console.error("Suspend Student Error:", error);
     return res
@@ -374,6 +385,45 @@ const getDashboardStats = async (req, res) => {
   }
 };
 
+const getPendingAppeals = async (req, res) => {
+  try {
+    const pendingAppeals = await student.find({
+      "isSuspended": true,
+      "suspensionDetails.appeal.status": "Pending"
+    }).select("name email rollno className branch suspensionDetails"); 
+
+    res.status(200).json(pendingAppeals);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch pending appeals." });
+  }
+};
+
+const processAppeal = async (req, res) => {
+  try {
+    const { studentId, action, adminRemarks } = req.body;
+
+    const currStudent = await student.findById(studentId);
+    if (!currStudent) return res.status(404).json({ message: "Student not found." });
+
+    if (action === "Approve") {
+      currStudent.isSuspended = false;
+      currStudent.suspensionDetails.appeal.status = "Approved";
+      currStudent.suspensionDetails.appeal.adminRemarks = adminRemarks || "Appeal approved.";
+    } else if (action === "Reject") {
+      currStudent.suspensionDetails.appeal.status = "Rejected";
+      currStudent.suspensionDetails.appeal.adminRemarks = adminRemarks || "Appeal rejected.";
+    } else {
+      return res.status(400).json({ message: "Invalid action." });
+    }
+
+    await currStudent.save();
+
+    res.status(200).json({ message: `Appeal ${action.toLowerCase()}d successfully.` });
+  } catch (error) {
+    res.status(500).json({ message: "Server error processing appeal." });
+  }
+};
+
 export {
   getAllStudents,
   getAllComplaintsAdmins,
@@ -387,5 +437,7 @@ export {
   updateRatingFeedback,
   reportComplaint,
   suspendStudent,
-  getDashboardStats
+  getDashboardStats,
+  getPendingAppeals,
+  processAppeal
 };

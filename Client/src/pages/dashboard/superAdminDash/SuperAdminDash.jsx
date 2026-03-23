@@ -9,6 +9,7 @@ import { useAuth } from "../../../store/auth";
 import AllStudents from "../../AllStudents";
 import ContectedBy from "../../ContectedBy";
 import SideMenu from "../SideMenuAdmin.jsx";
+import SuspensionAppeals from "../../SuspensionAppeals.jsx";
 
 const menuItems = [
   {
@@ -311,6 +312,7 @@ function SuperAdminDashboard() {
                   <AllStudents role={user.role} />
                 )}
                 {activeView === "Contacted By" && <ContectedBy />}
+                {activeView === "appealsBtn" && <SuspensionAppeals />}
               </div>
             </main>
           )}

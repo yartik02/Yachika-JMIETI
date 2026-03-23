@@ -52,9 +52,6 @@ export default function Signin() {
           }),
         },
       );
-      // console.log("hello");
-
-      // console.log("Response :", response);
 
       if (response.ok) {
         const res_data = await response.json();
@@ -91,23 +88,19 @@ export default function Signin() {
         }
       } else {
         const errorData = await response.json();
-        // console.log("Error Data :", errorData);
         if (
-          errorData.msg &&
-          errorData.msg.toLowerCase().includes("suspended")
+          errorData.message &&
+          errorData.message.toLowerCase().includes("suspended")
         ) {
           toast.error("Your account is temporarily suspended.");
-          console.log("Suspension details from backend:", errorData);
-          navigate("/suspended-account", {
-            state: {
-              reason: errorData.reason,
-              expiryDate: errorData.expiresAt,
-            },
-          });
+          storeTokenInLocalStorage(errorData.token),
+          navigate("/suspended-account");
         } else toast.error(errorData.message || "Invalid Email or Password!");
         return;
       }
     } catch (err) {
+      console.log(err);
+      
       console.error("Error in form submission: ", err.message);
       toast.error("Server not responding!");
       return;

@@ -5,8 +5,9 @@
 
 # Yachika@JMIETI : Smart Grievance Redressal System
 ## Project Overview
-Yachika@JMIETI is a smart complaint management system designed for students and faculty at JMIETI. The system streamlines how students can raise issues related to academics, infrastructure, or hostel facilities, while ensuring transparency, anonymity (where required), and accountability.
-It is a web-based platform that allows students to submit complaints digitally, track their status in real-time, and receive updates. Admin have his own dashboards to manage, respond, and resolve complaints efficiently. <br>
+Yachika@JMIETI is an enterprise-grade, smart complaint management system designed for students at JMIETI. The system digitizes and streamlines how students raise issues related to academics, infrastructure, or hostel facilities, ensuring complete transparency, optional anonymity, and strict accountability.
+
+Built with a secure 3-tier Role-Based Access Control (RBAC) architecture, the platform provides dedicated interfaces for Students, Admins, and SuperAdmins, ensuring complaints are routed, resolved, and escalated efficiently. <br>
 
 <h2>Live Demo</h2>
 <p>
@@ -14,56 +15,52 @@ It is a web-based platform that allows students to submit complaints digitally, 
 Backend API: https://yachika-jmieti.onrender.com</p>
 
 <h2>Key Features</h2>
-<b>1. Centralized Complaint System</b><br>
-Students can submit all types of complaints — academic, faculty, hostel, infrastructure, or campus-related — through one platform.
-Everything goes directly to the Admin for review.<br><br>
+<b>1. 3-Tier Role-Based Access Control (RBAC)</b><br>
+Secure, distinct workflows for three user types:<br>
+- Students: Submit, track, and appeal complaints.<br>
+- Admins: Review, update status, and resolve departmental issues.<br>
+- SuperAdmins: Oversee the entire platform, manage escalated SLA breaches, and handle user moderation/suspensions.<br>
+<br>
 
-<b>2. Anonymous Submission</b><br>
-Students can choose to hide their identity using a simple checkbox while submitting a complaint.
-If selected, their details remain fully anonymous, including from the Admin.<br>
+<b>2. Automated SLA Enforcement & Escalation (Cron Jobs)</b><br>
+- Powered by background Node.js cron jobs, the system enforces strict Service Level Agreements (SLAs).<br>
+- If an Admin fails to resolve or reject a complaint within 7 days, the system automatically flags it as "Unresolved" and escalates it directly to the SuperAdmin dashboard.<br>
 
-<b>3. Admin Assignment Workflow</b><br>
--The Admin receives all complaints and is responsible for:<br>
-- Reviewing issues<br>
-- Assigning them to the correct department<br>
-- This keeps the process simple and centralized.<br>
+<b>3. Advanced Account Moderation & Appeal System</b><br>
+- SuperAdmins have the authority to issue temporary (time-bound) or permanent account suspensions for misuse of the platform.<br>
+- Suspended students are locked out of the main app but are granted access to a dedicated, secure Appeals Portal where they can submit an explanation.<br>
+- SuperAdmins review these appeals via a custom UI to either approve (and instantly restore access) or permanently reject them.<br>
 
-<b>4. Complaint Tracking for Students</b><br>
-Students can monitor the progress of their complaint through clear status steps:<br>
-- Pending<br>
-- In Progress<br>
-- Resolved<br>
-- Rejected <br>
+<b>4. High-Performance Admin & SuperAdmin Dashboards</b><br>
+- Built using React useMemo and useCallback to ensure zero-latency client-side searching, multi-parameter filtering, and seamless pagination.<br>
+- Includes one-click bulk Excel Data Exports for reporting and record-keeping.<br>
+- Real-time analytics dashboards to monitor platform health and complaint resolution rates.<br>
 
-<b>5. Powerful Admin Dashboard</b><br>
-The Admin can:<br>
-- View all complaints<br>
-- Filter by category or status<br>
-- Update progress<br>
-- Export as Excel<br>
-- Analytics Dashboard<br>
-- Maintain anonymity when selected<br>
-- if Rejects, sends the reason to the student as notification <br>
+<b>5. Secure Anonymous Submissions</b><br>
+- Students can choose to hide their identity using a simple checkbox while submitting a complaint.<br>
+- If selected, their details remain cryptographically secure and fully anonymous, even from platform Admins.<br>
 
-<b>6. Notifications</b><br>
-Students will receive notifications when admin changes the status of the complaint to any of the status.<br>
+<b>6. Dynamic Tracking & Notifications</b><br>
+- Students can monitor the progress of their complaints through clear lifecycle stages: Pending → In Progress → Resolved → Rejected.<br>
+- Database-driven notifications alert students instantly when an Admin updates their complaint status or provides rejection reasoning.<br>
 
 <b>7. Rating & Feedback</b><br>
 As the complaint of the student resolves, they will receive a Rating and feedback form that they are requested to fill according to their satisfaction of the resolution.<br>
 
-<b>8. Email Verification</b><br>
-During signup, students must verify their email using an OTP. An OTP is sent to the student's registered email address. The account is created only after successful OTP verification.<br>
+<b>8. Secure OTP Email Verification</b><br>
+To maintain platform integrity, students must verify their identity using a time-sensitive OTP sent to their registered email address before an account is provisioned.<br>
 
 <h2>Technology Stack</h2>
-This project is built using the MERN Stack:<br>
+Developed entirely on the MERN Stack with a focus on modern performance and security standards:<br>
 - <b>Frontend:</b> React.js, Bootstrap (for responsive UI)<br>
 - <b>Backend:</b> Node.js, Express.js<br>
 - <b>Database:</b> MongoDB (using Mongoose for schema modeling)<br>
+- <b>Automation:</b> Node-Cron (for background SLA tasks and temporary ban expirations)<br>
 - <b>Authentication:</b> JWT (JSON Web Tokens)<br>
 - <b>Encryption of Passwords:</b> Bcrypt <br>
 
 <h2>System Flow</h2>
-User → React Frontend → REST API → Node.js/Express Server → MongoDB Database<br>
+Client (React) → REST API (Express) → Auth/Suspension Middleware → Node.js Controllers → MongoDB<br>
 
 <h2>Important Note</h2>
 <h3>⚠️ Backend Hosting</h3>
@@ -96,11 +93,10 @@ After the server becomes active, the APIs respond normally.</p>
 - Notification system using SMS/Email<br>
 - AI-based issue categorization<br>
 - Mobile App (React Native)<br>
-- SuperAdmin: who will be able to see the anonymous details aswell, to make it free from spammers and abusive compliants.<br>
 
 <h2>License</h2>
 This project is licensed under the MIT License.<br>
 <h2>Developed By</h2>
 <b>Yartik</b><br>
 B.Tech CSE | JMIETI<br>
-Passionate about using technology to solve real student problems and build meaningful systems.<br>
+Passionate about using technology to solve real problems and build meaningful systems.<br>

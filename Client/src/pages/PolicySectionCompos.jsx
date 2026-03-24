@@ -36,16 +36,16 @@ function InfoCard({ icon, title, children, variant = 'primary', path }) {
     }
   return (
     <div className="col-lg-6 col-md-6 mb-4 d-flex align-items-stretch">
-      <div className="card policy-card shadow-sm border-1 border-0 w-100">
+      <div className="card policy-card shadow-sm border-1 border-0 w-100 p-3">
         <div className="card-body p-0">
-          <div className={`icon-circle bg-${variant} border-1 border-${variant} bg-opacity-10 text-${variant} mb-3 shadow-sm`}>
+          <div className={`icon-circle bg-${variant} border-1 border-${variant} bg-opacity-10 text-${variant} mb-3 shadow-sm mx-auto`}>
             {/* <i className={`bi ${icon} fs-4`}></i> */}
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill={`${iconColor}`} className={`${icon} m-0`} viewBox="0 0 16 16">
               <path d={path}/>
             </svg>
           </div>
-          <h5 className="card-title fw-semibold">{title}</h5>
-          <p className="card-text text-body-secondary mb-0">{children}</p>
+          <h5 className="card-title fw-semibold text-center">{title}</h5>
+          <p className="card-text text-body-secondary mb-0 text-center">{children}</p>
         </div>
       </div>
     </div>
@@ -59,9 +59,9 @@ function InfoCard({ icon, title, children, variant = 'primary', path }) {
 function UsageStep({ number, children }) {
   return (
     <div className="usage-step d-flex mb-3">
-      <div className="usage-step-number text-primary fw-bold">{number}</div>
-      <div className="usage-step-text ps-4">
-        {children}
+      <div className="usage-step-number text-primary fw-bold border-end border-3 pe-4 border-primary-subtle my-auto">{number}</div>
+      <div className="ps-3 d-flex align-items-center" style={{fontSize:"1rem"}}>
+        <p className='m-0 lh-sm'>{children}</p>
       </div>
     </div>
   );

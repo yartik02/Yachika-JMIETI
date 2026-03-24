@@ -32,7 +32,8 @@ function App() {
     location.pathname === "/complaintSubmission" ||
     location.pathname.includes("/dashboard") ||
     location.pathname.includes("/suspended-account") ||
-    location.pathname === "/forget-password";
+    location.pathname === "/forget-password" ||
+    location.pathname === "/privacy-policy";
 
   const [loading, setLoading] = useState(true);
 

@@ -79,13 +79,13 @@ function AuroraFaq() {
           <div className="col-lg-8">
             {faqData.map((item, index) => (
               <div
-                className={`accordion-item ${
+                className={`accordion-item rounded-4 ${
                   openIndex === index ? "active" : ""
                 }`}
                 key={index}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
-                <div className="accordion-header">
+                <div className={`accordion-header ${openIndex ===index ?" rounded-top-4":"rounded-4 "}`}>
                   <span className="question-text text-start">{item.question}</span>
                   <div className="accordion-icon">
                     <svg

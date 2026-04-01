@@ -79,13 +79,22 @@ function Navbar() {
               Log Out
             </Link>
           ) : (
-            <Link
-              to="/signup"
-              className="py-1 px-2 ms-2 my-auto rounded login_btn"
-              style={{ textDecoration: "none" }}
-            >
-              Sign Up
-            </Link>
+            <>
+              <Link
+                to="/signup"
+                className="py-1 px-2 mx-2 my-auto rounded login_btn"
+                style={{ textDecoration: "none" }}
+              >
+                Sign Up
+              </Link>
+              <Link
+                to="/login"
+                className="py-1 px-2 ms-2 my-auto rounded login_btn"
+                style={{ textDecoration: "none" }}
+              >
+                Log In
+              </Link>
+            </>
           )}
         </li>
 

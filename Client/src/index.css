@@ -3,16 +3,6 @@
   user-select: none;
 }
 
-body{
-  overflow: scroll;
-}
-
-/* For Chrome, Safari, Edge */
-html::-webkit-scrollbar, 
-body::-webkit-scrollbar {
-  display: none;
-}
-
 nav{
   background-color: #f2f5fe;
   position: sticky;

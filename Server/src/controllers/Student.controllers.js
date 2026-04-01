@@ -88,8 +88,22 @@ const login = async (req, res) => {
       return res.status(401).json({ msg: "Invalid email or password" });
     }    
 
+    if (studentExist.isSuspended && studentExist.suspensionDetails) {
+      const expiryDate = studentExist.suspensionDetails.expiresAt 
+        ? new Date(studentExist.suspensionDetails.expiresAt) 
+        : null;
+      const now = new Date();
+
+      // If an expiry date exists and the current time has passed it
+      if (expiryDate && now > expiryDate) {
+        // Lift the suspension
+        studentExist.isSuspended = false;
+        await studentExist.save();
+      }
+    }
+
     //2. check for the suspension
-    if (isMatch &&studentExist.suspensionDetails && studentExist.isSuspended) {
+    if (isMatch && studentExist.suspensionDetails && studentExist.isSuspended) {
       return res.status(403).json({
         message: "Your account is suspended. You cannot perform this action.",
         token: await studentExist.generateToken()

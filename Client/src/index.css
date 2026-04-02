@@ -387,7 +387,19 @@ form select:focus{
     display: flex;
     margin-left: auto;
   }
+  .main1Badge{
+    font-size: 0.75rem;
+  }
+  .login_btn{
+    font-size: 0.9rem;
+  }
 }
+@media (min-width: 290px) {
+  .main1Badge{
+    font-size: 1rem;
+  }
+}
+
 
 .adminGetData, .allStudents, .contectedBy{
   display: none;

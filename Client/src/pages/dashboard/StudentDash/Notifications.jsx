@@ -300,13 +300,17 @@ const Notifications = () => {
                         <span className="fw-semibold">Submitted: </span>
                         {new Date(
                           notification.complaintCreatedAt,
-                        ).toLocaleDateString("en-GB")}
+                        ).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                        })}
                       </div>
                     </div>
 
                     {isResolved &&
                       matchedComplaint &&
-                      !matchedComplaint.feedback && (
+                      matchedComplaint.feedback === " " && (
                         <div className="container bg-white shadow-lg p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
                           <p className="fw-light">
                             Your complaint has been resolved. Please share

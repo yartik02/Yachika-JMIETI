@@ -61,9 +61,6 @@ function Overview({ studentComplaints }) {
                         <div className="d-flex p-4 rounded-4" style={{backgroundColor: stat.color, border:`1px solid ${stat.glowColor}`}}>
                             <span
                                 className="my-auto"
-                                style={{
-                                    // boxShadow: `0 0 10px ${stat.glowColor}`,
-                                }}
                             >
                                 {stat.icon}
                             </span>

@@ -10,11 +10,12 @@ const MyComplaints = ({studentComplaints}) => {
           return new Date(b.createdAt) - new Date(a.createdAt);
         });
     }, [studentComplaints]);
+    
     return (
     <section className="m-0 py-0">
         <div className="head d-flex justify-content-between align-items-center mx-2">
         <h6 className="fw-normal text-start px-2 my-auto ">
-            Mycomplaints ({studentComplaints.length})
+            My complaints ({studentComplaints.length})
         </h6>
             <Link to="/complaintSubmission" className="text-decoration-none">
                 <p className="px-3 py-1 rounded-3 my-auto myCompBtn d-flex align-items-center">

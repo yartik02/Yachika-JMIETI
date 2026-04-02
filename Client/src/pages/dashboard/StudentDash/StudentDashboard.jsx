@@ -46,7 +46,6 @@ function StudentDashboard() {
   const buttonRef = useRef(null);
   const [activeTab, setActiveTab] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const [studentComplaints, setStudentComplaints] = useState([]);
   const getLoading = () => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -67,15 +66,6 @@ function StudentDashboard() {
     }
   }, [user, student]);
 
-  //   useEffect(() => {
-  //   if (allComplaints.length && user?.email) {
-  //     const filtered = allComplaints.filter(
-  //       (complaint) => complaint.createdByEmail === user.email
-  //     );
-  //     setStudentComplaints(filtered);
-  //   }
-  // }, [allComplaints, user]);
-
   const studentComplaints = useMemo(() => {
     if (!allComplaints || !user?.email) return [];
     return allComplaints.filter(
@@ -84,7 +74,6 @@ function StudentDashboard() {
   }, [allComplaints, user?.email]);
 
   useEffect(() => {
-    // getLoading();
     setTimeout(() => {
       if (buttonRef.current) {
         buttonRef.current.focus();
@@ -95,9 +84,7 @@ function StudentDashboard() {
 
   if (!student) {
     return (
-      // <Loader/>
       <Error />
-      // <p className="m-5" style={{fontSize:"1.5rem"}}>No student data found. Please login again.</p>
     );
   }
 
@@ -111,7 +98,6 @@ function StudentDashboard() {
       imgSrc = othersimg;
     }
   }
-  // console.log("Student Complaints:", studentComplaints);
 
   const handlebtnClick = (btnName) => {
     setActiveTab(btnName);

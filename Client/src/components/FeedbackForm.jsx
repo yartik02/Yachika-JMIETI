@@ -61,7 +61,7 @@ const FeedbackForm = ({ complaintId }) => {
     return (
         <form onSubmit={handleSubmit} className="mt-3">
             <div className="mb-2">
-                <span className="fw-semibold me-3">Rate the Results:</span>
+                <span className="fw-semibold me-3">Rate your experience:</span>
                 <div className="star-rating d-inline-block">
               {[...Array(5)].map((star, index) => {
                 const ratingValue = index + 1;

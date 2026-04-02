@@ -166,10 +166,7 @@ function Contact() {
               }),
             },
           );
-    
-          // First, check if the response was successful. THEN parse the JSON.
-          // console.log(response);
-          
+
           if (response.ok) {
             const res_Data = await response.json(); // Parse success data
     
@@ -220,7 +217,7 @@ function Contact() {
             <div className="col-lg-6">
               <div className="sticky-form-wrapper bg-white">
                 <h3 className="fw-bold mb-2">Send us a Message</h3>
-                <p className="form-subtitle w-75 mb-4 text-muted fw-light mx-auto">
+                <p className="form-subtitle mb-4 text-muted fw-light mx-auto lh-0">
                   Fill out the form below and we'll get back to you as soon as
                   possible.
                 </p>
@@ -249,7 +246,6 @@ function Contact() {
                           id={field.id}
                           type={field.type}
                           placeholder={field.placeholder}
-                          // required
                           name={field.name}
                           value={formData[field.name]}
                           onChange={handleChange}
@@ -264,7 +260,6 @@ function Contact() {
                           rows={field.rows}
                           value={formData[field.name]}
                           onChange={handleChange}
-                          // required
                           className="form-control p-3"
                           style={{backgroundColor:"#fafaff"}}
                         />

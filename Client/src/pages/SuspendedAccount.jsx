@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./SuspendedAcc.css";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
@@ -31,6 +31,7 @@ const formatExpiryDate = (isoString) => {
 
 const SuspendedPage = () => {
   const { user, token } = useAuth();
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [appealText, setAppealText] = useState("");
@@ -258,12 +259,14 @@ const SuspendedPage = () => {
                 {hasAppealedLocal ? "Appeal Pending Review" : "Submit Appeal"}
               </button>
 
-              <Link
-                to="/logout"
+              <button
+                onClick={()=>{
+                  navigate("/logout");
+                }}
                 className="btn-outline-custom text-center fw-medium"
               >
                 Return to Home
-              </Link>
+              </button>
             </div>
           </div>
         </div>

@@ -14,6 +14,7 @@ const navData = [
 
 function Navbar() {
   const { user } = useAuth();
+  const isSuspended = user && user.isSuspended === true;
   const isLoggedIn = !!user;
   const isAdmin =
     user &&
@@ -54,7 +55,7 @@ function Navbar() {
         ))}
 
         {/* Conditional Dashboard Link */}
-        {isLoggedIn && (
+        {isLoggedIn && !isSuspended && (
           <li className="py-3 nav-items px-3 fs-5 my-auto">
             <Link
               to={
@@ -71,7 +72,7 @@ function Navbar() {
 
         {/* Conditional Auth Button (Login/Logout) */}
         <li>
-          {isLoggedIn ? (
+          {isLoggedIn && !isSuspended ? (
             <Link
               to="/logout"
               className="py-1 px-2 ms-2 my-auto rounded login_btn2"

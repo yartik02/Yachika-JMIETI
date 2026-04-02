@@ -6,7 +6,7 @@ import OverviewCards from "./OverviewCards.jsx";
 import ComplaintCard from "../Admindashboard/ComplaintCard.jsx";
 
 
-const HomeStudent = ({ student , studentComplaints, viewMyComplaintSection}) => {
+const HomeStudent = ({ student , studentComplaints }) => {
   const bannerRef = useRef(null);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const recentComplaints = [...studentComplaints]
                 <div className="complaints">
                   {recentComplaints.map((complaint, index) => (
                     <div key={index} className="mb-2" style={{width:"100%"}}>
-                      <ComplaintCard complaint={complaint} viewMyComplaintSection ={viewMyComplaintSection}/>
+                      <ComplaintCard complaint={complaint} />
                     </div>
 
                   ))}

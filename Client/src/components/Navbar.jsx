@@ -47,7 +47,7 @@ function Navbar() {
 
         {/* Standard Navigation Links */}
         {navData.map((item) => (
-          <li className="py-3 nav-items px-3 fs-5 my-auto" key={item.name}>
+          <li className="py-3 nav-items px-2 fs-5 my-auto" key={item.name}>
             <Link to={item.path} className="text-decoration-none text-dark">
               {item.name}
             </Link>

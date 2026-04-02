@@ -19,7 +19,7 @@ const MyComplaints = ({studentComplaints}) => {
         </h6>
             <Link to="/complaintSubmission" className="text-decoration-none">
                 <p className="px-3 py-1 rounded-3 my-auto myCompBtn d-flex align-items-center">
-                    <span className="me-1" style={{fontSize:"1.1rem"}}>+</span> New Complaint
+                    <span className="me-1" style={{fontSize:"1.1rem"}}>+</span> <span className="newCompBtn">New Complaint</span>
                 </p>
             </Link>
         </div>

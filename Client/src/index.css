@@ -342,7 +342,7 @@ form select:focus{
 .studentDashboard .head h4{
   font-size: 0.98rem;
 }
-.btngrp button span {
+.btngrp button span, .newCompBtn {
   display: none;
 }
 }

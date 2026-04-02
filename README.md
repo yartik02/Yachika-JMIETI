@@ -17,9 +17,9 @@ Backend API: https://yachika-jmieti.onrender.com</p>
 <h2>Key Features</h2>
 <b>1. 3-Tier Role-Based Access Control (RBAC)</b><br>
 Secure, distinct workflows for three user types:<br>
-- Students: Submit, track, and appeal complaints.<br>
-- Admins: Review, update status, and resolve departmental issues.<br>
-- SuperAdmins: Oversee the entire platform, manage escalated SLA breaches, and handle user moderation/suspensions.<br>
+- Students: Submit & track complaints, rate resolutions and manage appeal.<br>
+- Admins: Review, update status, resolve departmental issues also can report complaints to Super Admin .<br>
+- SuperAdmins: Oversee the entire platform, manage escalated SLA breaches, and handle Student suspensions.<br>
 <br>
 
 <b>2. Automated SLA Enforcement & Escalation (Cron Jobs)</b><br>
@@ -36,13 +36,13 @@ Secure, distinct workflows for three user types:<br>
 - Includes one-click bulk Excel Data Exports for reporting and record-keeping.<br>
 - Real-time analytics dashboards to monitor platform health and complaint resolution rates.<br>
 
-<b>5. Secure Anonymous Submissions</b><br>
-- Students can choose to hide their identity using a simple checkbox while submitting a complaint.<br>
-- If selected, their details remain cryptographically secure and fully anonymous, even from platform Admins.<br>
+<b>5. "Break-Glass" Anonymous Submissions & Abuse Prevention</b><br>
+Students can opt for complete cryptographic anonymity using a simple checkbox while submitting sensitive complaints, shielding their identity entirely from departmental Admins. However, to prevent platform spam, the system includes a "break-glass" mechanism: Admins can manually report abusive/fake complaints to the SuperAdmin, who is then granted visibility into the submitter's identity to issue penalties.<br>
 
 <b>6. Dynamic Tracking & Notifications</b><br>
 - Students can monitor the progress of their complaints through clear lifecycle stages: Pending → In Progress → Resolved → Rejected.<br>
 - Database-driven notifications alert students instantly when an Admin updates their complaint status or provides rejection reasoning.<br>
+- To prevent database bloat and maintain query speed, the system employs an automated background purge that deletes notifications older than 30 days, while also giving students manual "Clear All" UI controls.<br>
 
 <b>7. Rating & Feedback</b><br>
 As the complaint of the student resolves, they will receive a Rating and feedback form that they are requested to fill according to their satisfaction of the resolution.<br>
@@ -96,6 +96,7 @@ After the server becomes active, the APIs respond normally.</p>
 
 <h2>License</h2>
 This project is licensed under the MIT License.<br>
+
 <h2>Developed By</h2>
 <b>Yartik</b><br>
 B.Tech CSE | JMIETI<br>

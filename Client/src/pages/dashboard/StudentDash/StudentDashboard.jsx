@@ -46,12 +46,6 @@ function StudentDashboard() {
   const buttonRef = useRef(null);
   const [activeTab, setActiveTab] = useState(null);
   const [loading, setLoading] = useState(true);
-  const getLoading = () => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-    return () => clearTimeout(timer);
-  };
   const { user } = useAuth();
   useEffect(() => {
     if (user && !student) {
@@ -110,10 +104,6 @@ function StudentDashboard() {
     { label: "Department", value: student.branch },
     { label: "Email", value: student.email },
   ];
-
-  const viewMyComplaints = () => {
-    setActiveTab("MyComplaint");
-  };
 
   return (
     <div className="my-5 studentDashboard mx-auto">
@@ -187,7 +177,6 @@ function StudentDashboard() {
               <HomeStudent
                 student={student}
                 studentComplaints={studentComplaints}
-                viewMyComplaintSection={viewMyComplaints}
               />
             )}
             {activeTab === "MyComplaints" && (

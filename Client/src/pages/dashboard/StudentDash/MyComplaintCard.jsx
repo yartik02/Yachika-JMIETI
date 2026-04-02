@@ -37,7 +37,7 @@ const MyComplaintCard = ({ complaint }) => {
         </div>
       </div>
 
-      <div className="complaintFoot my-1 d-flex flex-lg-row flex-column align-items-center justify-content-between">
+      <div className="complaintFoot my-1 d-flex flex-lg-row flex-column align-items-lg-center justify-content-between">
         <div className="complainBody text-start d-flex text-truncate overflow-scroll text-muted">
           {complaint.complaintBody}
         </div>
@@ -45,7 +45,7 @@ const MyComplaintCard = ({ complaint }) => {
         <div className="stone-footer d-flex flex-sm-row flex-column">
           <div
             className="text-muted border border-secondary border-opacity-25 bg-secondary bg-opacity-10 py-1 px-2 rounded-2"
-            style={{ fontSize: "0.8rem" }}
+            style={{ fontSize: "0.8rem", width: "fit-content" }}
           >
             <strong>Category: </strong>
             <span>

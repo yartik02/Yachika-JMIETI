@@ -71,6 +71,10 @@ const login = async (req, res) => {
     if (!studentExist) {
       if (adminExist) {
         // Admin password check should ideally be here too
+        const isAdminMatch = await adminExist.comparePassword(password);
+        if (!isAdminMatch) {
+          return res.status(401).json({ msg: "Invalid email or password" });
+        }
         return res.status(200).json({
           msg: "Admin login successful",
           token: await adminExist.admingenerateToken(),
@@ -209,9 +213,6 @@ const sendOtpToMail = async (req, res) => {
     const expiresAt = Date.now() + 5 * 60 * 1000;
 
     otpStore.set(email, { otp, expiresAt });
-
-    console.log("Generated OTP:", otp); // for debugging
-
     const info = await transporter.sendMail({
       from: '"Yachika@JMIETI"<kambojyartik@gmail.com>',
       to: email,

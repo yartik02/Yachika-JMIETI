@@ -261,7 +261,7 @@ const AllStudents = ({ role }) => {
                             <span className="fw-bold me-2">Registered:</span> {formattedCreatedAt}
                           </p>
 
-                        {role === "admin" && (
+                        {role === "Admin" && (
                           <button
                             className="btn btn-outline-danger rounded-pill d-flex align-items-center"
                             onClick={() => deleteStudent(curStudent._id)}
@@ -273,7 +273,7 @@ const AllStudents = ({ role }) => {
                             Delete
                           </button>
                         )}
-                        {role === "superAdmin" && !isCurrentlySuspended && (
+                        {role === "SuperAdmin" && !isCurrentlySuspended && (
                           <button
                             className="btn btn-outline-danger rounded-4 text-center"
                             onClick={() => {
@@ -285,7 +285,7 @@ const AllStudents = ({ role }) => {
                             Suspend Student
                           </button>
                         )}
-                        {role === "superAdmin" && isCurrentlySuspended && (
+                        {role === "SuperAdmin" && isCurrentlySuspended && (
                           <span
                             className="px-3 py-2 bg-danger rounded-4 text-center text-light"
                             style={{ fontSize: "0.78rem" }}

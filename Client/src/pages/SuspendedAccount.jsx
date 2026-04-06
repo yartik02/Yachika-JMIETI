@@ -44,7 +44,7 @@ const SuspendedPage = () => {
   
   // Track the actual status to display (None, Pending, Rejected)
   const [localAppealStatus, setLocalAppealStatus] = useState(
-    user?.suspensionDetails?.appeal?.status || "None"
+    user?.suspensionDetails.appeal.status || "None"
   );
 
   // Fallback values

@@ -55,7 +55,7 @@ function AdminDashboard() {
   const [activeView, setActiveView] = useState(null); // Null means tabs are showing
   const [showProfile, setShowProfile] = useState(false);
 
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !== "Admin") {
     return <Error />;
   }
 

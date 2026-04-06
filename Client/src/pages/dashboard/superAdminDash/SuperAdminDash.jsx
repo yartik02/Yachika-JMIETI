@@ -71,7 +71,7 @@ function SuperAdminDashboard() {
   const [activeView, setActiveView] = useState(null); // Null means tabs are showing
   const [showProfile, setShowProfile] = useState(false);
 
-  if (!user || user.role !== "superAdmin") {
+  if (!user || user.role !== "SuperAdmin") {
     return <Error />;
   }
 

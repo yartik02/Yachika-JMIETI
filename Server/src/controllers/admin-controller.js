@@ -23,7 +23,7 @@ const AdminSignup = async (req, res) => {
     });
     res.status(200).json({
       msg: "Admin signed up successfully!",
-      token: adminCreated.admingenerateToken(),
+      token: await adminCreated.admingenerateToken(),
       userID: adminCreated._id.toString(),
     });
   } catch (error) {

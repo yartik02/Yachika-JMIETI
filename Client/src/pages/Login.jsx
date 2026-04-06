@@ -60,7 +60,7 @@ export default function Signin() {
         storeTokenInLocalStorage(res_data.token);
         // console.log("User data:", res_data);
 
-        if (res_data.role === "admin") {
+        if (res_data.role === "Admin") {
           return (
             toast.success(`Welcome ${res_data.adminName}, Login successful!`),
             setTimeout(() => {
@@ -68,7 +68,7 @@ export default function Signin() {
             }, 1000),
             setFormData({ email: "", password: "" })
           );
-        } else if (res_data.role === "superAdmin") {
+        } else if (res_data.role === "SuperAdmin") {
           return (
             toast.success(`Welcome ${res_data.adminName}, Login successful!`),
             setTimeout(() => {

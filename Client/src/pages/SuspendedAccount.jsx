@@ -209,7 +209,7 @@ const SuspendedPage = () => {
             </div>
 
             {/* --- APPEAL STATUS BOX --- */}
-            {localAppealStatus !== "None" && (
+            {(localAppealStatus !== "None" || hasAppealedLocal)  && (
               <div className={`mb-4 ${localAppealStatus === "Pending" ? "status-box-pending" : "status-box-rejected"}`}>
                 <div className="d-flex align-items-center mb-1">
                   {localAppealStatus === "Pending" ? (

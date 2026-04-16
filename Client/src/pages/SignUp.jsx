@@ -25,12 +25,49 @@ const Icons = {
       <path d="m16 19 2 2 4-4" />
     </svg>
   ),
+  Eye: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#6c757d"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+  EyeOff: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#6c757d"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m15 18-.722-3.25" />
+      <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+      <path d="m20 15-1.726-2.05" />
+      <path d="m4 15 1.726-2.05" />
+      <path d="m9 18 .722-3.25" />
+    </svg>
+  ),
 };
 
 function Signup() {
   const navigate = useNavigate();
   const { storeTokenInLocalStorage } = useAuth();
   const dropdownContainerRef = useRef(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // --- Step & OTP State ---
   const [step, setStep] = useState(1);
@@ -176,9 +213,7 @@ function Signup() {
       !formData.password ||
       !formData.confirmPassword
     ) {
-      return toast.error(
-        "Oops! Something’s missing — please fill all fields",
-      );
+      return toast.error("Oops! Something’s missing — please fill all fields");
     }
     if (formData.password !== formData.confirmPassword) {
       return toast.error("Passwords do not match!");
@@ -295,10 +330,7 @@ function Signup() {
   };
 
   return (
-    <div
-      className="login row m-0"
-      style={{ minHeight: "100vh" }}
-    >
+    <div className="login row m-0" style={{ minHeight: "100vh" }}>
       {/* --- Left Branding Section --- */}
       <div
         className="col-md-6 py-5 d-flex align-items-center justify-content-center p-4 position-relative"
@@ -342,9 +374,7 @@ function Signup() {
 
       {/* --- Right Form Section --- */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-sm-5">
-        <div
-          className="border rounded-4 p-4 bg-white shadow-lg w-100 "
-        >
+        <div className="border rounded-4 p-4 bg-white shadow-lg w-100 ">
           <form
             onSubmit={step === 1 ? handleSendOTP : handleFinalSubmit}
             method="POST"
@@ -362,43 +392,78 @@ function Signup() {
                 </div>
 
                 <div className="row g-2">
-                  {inputFields.map((data, idx) => (
-                  <div key={idx} className={` ${data.class}`}>
-                    <input
-                      id={data.name}
-                      type={data.type}
-                      placeholder={data.placeholder}
-                      name={data.name}
-                      value={formData[data.name]}
-                      onChange={handleChange}
-                      className="form-control p-3"
-                    />
-                  </div>
-                ))}
+                  {inputFields.map((data, idx) => {
+                    // Determine if the current input is one of the password fields and if it should be shown
+                    const isPassword = data.name === "password";
+                    const isConfirm = data.name === "confirmPassword";
+
+                    let currentType = data.type;
+                    if (isPassword)
+                      currentType = showPassword ? "text" : "password";
+                    if (isConfirm)
+                      currentType = showConfirmPassword ? "text" : "password";
+
+                    return (
+                      <div key={idx} className={`${data.class}`}>
+                        <div className="position-relative">
+                          <input
+                            id={data.name}
+                            type={currentType}
+                            placeholder={data.placeholder}
+                            name={data.name}
+                            value={formData[data.name]}
+                            onChange={handleChange}
+                            className="form-control p-3 pe-5"
+                          />
+
+                          {/* Render Eye Icon for Password fields */}
+                          {(isPassword || isConfirm) && (
+                            <span
+                              className="position-absolute top-50 translate-middle-y end-0 pe-3"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                if (isPassword) setShowPassword(!showPassword);
+                                if (isConfirm)
+                                  setShowConfirmPassword(!showConfirmPassword);
+                              }}
+                            >
+                              {isPassword
+                                ? showPassword
+                                  ? Icons.EyeOff
+                                  : Icons.Eye
+                                : showConfirmPassword
+                                  ? Icons.EyeOff
+                                  : Icons.Eye}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className="my-3 text-start">
                   <label>Gender:</label>
                   <div className="options d-flex gap-5">
                     {genders.map((option, idx) => (
-                    <div key={idx} className="form-check">
-                      <input
-                        type="radio"
-                        name="gender"
-                        value={option}
-                        id={`gender${idx}`}
-                        checked={formData.gender === option}
-                        onChange={handleChange}
-                        className="form-check-input"
-                      />
-                      <label
-                        className="form-check-label gender-label"
-                        htmlFor={`gender${idx}`}
-                      >
-                        {option}
-                      </label>
-                    </div>
-                  ))}
+                      <div key={idx} className="form-check">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value={option}
+                          id={`gender${idx}`}
+                          checked={formData.gender === option}
+                          onChange={handleChange}
+                          className="form-check-input"
+                        />
+                        <label
+                          className="form-check-label gender-label"
+                          htmlFor={`gender${idx}`}
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
                   </div>
                 </div>
 

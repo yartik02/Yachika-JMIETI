@@ -1,17 +1,55 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../assets/YachikaLogo.png";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/auth.jsx";
-import Signup from "./SignUp.jsx";
+
+const Icons = {
+  Eye: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#6c757d"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+  EyeOff: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#6c757d"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m15 18-.722-3.25" />
+      <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+      <path d="m20 15-1.726-2.05" />
+      <path d="m4 15 1.726-2.05" />
+      <path d="m9 18 .722-3.25" />
+    </svg>
+  ),
+};
 
 export default function Signin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const formRef = useRef(null);
-  const { user, storeTokenInLocalStorage } = useAuth();
+  const { storeTokenInLocalStorage } = useAuth();
   const [loading, setLoading] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,14 +131,14 @@ export default function Signin() {
           errorData.message.toLowerCase().includes("suspended")
         ) {
           toast.error("Your account is temporarily suspended.");
-          storeTokenInLocalStorage(errorData.token),
-          navigate("/suspended-account");
+          (storeTokenInLocalStorage(errorData.token),
+            navigate("/suspended-account"));
         } else toast.error(errorData.message || "Invalid Email or Password!");
         return;
       }
     } catch (err) {
       console.log(err);
-      
+
       console.error("Error in form submission: ", err.message);
       toast.error("Server not responding!");
       return;
@@ -167,44 +205,63 @@ export default function Signin() {
 
       {/* Right Section */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-5">
-        <div
-          className="border rounded-4 p-4 shadow-lg w-100 bg-white"
-        >
+        <div className="border rounded-4 p-4 shadow-lg w-100 bg-white" >
           <form ref={formRef} onSubmit={handleSubmit} className="w-100">
             <div className="formHeader text-center">
               <p className="fs-4 fw-bold mb-1">Login</p>
               <p className="text-muted mb-3">Login to your account</p>
             </div>
 
-            {inputData.map((data, idx) => (
-              <div key={idx} className="mb-3 text-start">
-                <label
-                  htmlFor={data.name}
-                  className="form-label w-100 d-flex justify-content-between"
-                >
-                  <span>
-                    {data.label}<span className="text-danger">*</span>
-                  </span>
-                  {data.name === "password" && (
-                    <Link
-                      to="/forget-password"
-                      className="small fw-semibold text-decoration-none"
+            {inputData.map((data, idx) => {
+              const isPassword = data.name === "password";
+
+              let currentType = data.type;
+              if (isPassword) currentType = showPassword ? "text" : "password";
+
+              return (
+                <div key={idx} className="mb-3 text-start">
+                  <label
+                    htmlFor={data.name}
+                    className="form-label w-100 d-flex justify-content-between"
+                  >
+                    <span>
+                      {data.label}
+                      <span className="text-danger">*</span>
+                    </span>
+                    {data.name === "password" && (
+                      <Link
+                        to="/forget-password"
+                        className="small fw-semibold text-decoration-none"
+                      >
+                        Forgot password?
+                      </Link>
+                    )}
+                  </label>
+                  <div className="position-relative">
+                  <input
+                    id={data.name}
+                    type={currentType}
+                    placeholder={data.placeholder}
+                    name={data.name}
+                    value={formData[data.name]}
+                    onChange={handleChange}
+                    className="form-control p-3 pe-5"
+                  />
+                  {isPassword && (
+                    <span
+                      className="position-absolute top-50 translate-middle-y end-0 pe-3"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        if (isPassword) setShowPassword(!showPassword);
+                      }}
                     >
-                      Forgot password?
-                    </Link>
+                      {isPassword && showPassword ? Icons.EyeOff : Icons.Eye}
+                    </span>
                   )}
-                </label>
-                <input
-                  id={data.name}
-                  type={data.type}
-                  placeholder={data.placeholder}
-                  name={data.name}
-                  value={formData[data.name]}
-                  onChange={handleChange}
-                  className="form-control"
-                />
-              </div>
-            ))}
+                  </div>
+                </div>
+              );
+            })}
 
             <div className="text-center">
               <button type="submit" className="btn px-4 mt-3 login_btn w-100">

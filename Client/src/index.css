@@ -177,7 +177,8 @@ footer{
 .form-control{
   padding: 2%;
   font-weight: 400;
-  background-color: rgba(189, 189, 189, 0.062);
+  min-height: 49px;
+  background-color: rgba(202, 202, 202, 0.096);
   border: none;
   border-radius: 0%;
   border-bottom: 4px solid transparent;
@@ -190,7 +191,7 @@ footer{
   border-bottom: 4px solid #0f1b5f;
 }
 .form-control ::placeholder{
-  color: rgba(191, 191, 191, 0.549);
+  color: rgba(255, 0, 0, 0.549);
 }
 
 form select:focus{

@@ -76,30 +76,35 @@ function Signup() {
       type: "text",
       name: "name",
       placeholder: "Enter your full name",
+      class: "col-6",
     },
     {
       label: "Roll No",
       type: "text",
       name: "rollno",
       placeholder: "Enter your Roll Number",
+      class: "col-6",
     },
     {
       label: "College Email",
       type: "email",
       name: "email",
       placeholder: "Enter College Email",
+      class: "col-12",
     },
     {
       label: "Password",
       type: "password",
       name: "password",
       placeholder: "Create Password",
+      class: "col-6",
     },
     {
       label: "Confirm Password",
       type: "password",
       name: "confirmPassword",
       placeholder: "Confirm Password",
+      class: "col-6",
     },
   ];
 
@@ -338,8 +343,7 @@ function Signup() {
       {/* --- Right Form Section --- */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-sm-5">
         <div
-          className="border rounded-3 p-4 my-5 shadow-lg w-100"
-          style={{ background: "#fff" }}
+          className="border rounded-4 p-4 bg-white shadow-lg w-100 "
         >
           <form
             onSubmit={step === 1 ? handleSendOTP : handleFinalSubmit}
@@ -357,8 +361,9 @@ function Signup() {
                   </p>
                 </div>
 
-                {inputFields.map((data, idx) => (
-                  <div key={idx} className="mb-3 text-start">
+                <div className="row g-2">
+                  {inputFields.map((data, idx) => (
+                  <div key={idx} className={` ${data.class}`}>
                     <input
                       id={data.name}
                       type={data.type}
@@ -366,14 +371,16 @@ function Signup() {
                       name={data.name}
                       value={formData[data.name]}
                       onChange={handleChange}
-                      className="form-control"
+                      className="form-control p-3"
                     />
                   </div>
                 ))}
+                </div>
 
-                <div className="mb-3 text-start">
+                <div className="my-3 text-start">
                   <label>Gender:</label>
-                  {genders.map((option, idx) => (
+                  <div className="options d-flex gap-5">
+                    {genders.map((option, idx) => (
                     <div key={idx} className="form-check">
                       <input
                         type="radio"
@@ -392,6 +399,7 @@ function Signup() {
                       </label>
                     </div>
                   ))}
+                  </div>
                 </div>
 
                 <div className="dropdowns" ref={dropdownContainerRef}>

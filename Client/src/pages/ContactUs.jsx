@@ -246,6 +246,7 @@ function Contact() {
                           id={field.id}
                           type={field.type}
                           placeholder={field.placeholder}
+                          rows="2"
                           name={field.name}
                           value={formData[field.name]}
                           onChange={handleChange}

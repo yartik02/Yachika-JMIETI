@@ -18,16 +18,15 @@
   background: var(--cta-button-gradient);
   font-size: 1.1rem;
   font-weight: 600;
-  padding: 16px 32px;
-  
+  padding: 16px 32px;  
   box-shadow: var(--cta-button-shadow);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .cta-button:hover {
   transform: translateY(-3px) scale(1.02); /* Lifts the button on hover */
   box-shadow: var(--cta-button-hover-shadow);
-  transition: all 0.2s ease;
 }
 
 .cta-button svg {

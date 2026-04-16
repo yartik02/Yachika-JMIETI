@@ -168,8 +168,7 @@ export default function Signin() {
       {/* Right Section */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-5">
         <div
-          className="border rounded-3 p-4 shadow-lg w-100"
-          style={{ background: "#fff" }}
+          className="border rounded-4 p-4 shadow-lg w-100 bg-white"
         >
           <form ref={formRef} onSubmit={handleSubmit} className="w-100">
             <div className="formHeader text-center">
@@ -184,12 +183,12 @@ export default function Signin() {
                   className="form-label w-100 d-flex justify-content-between"
                 >
                   <span>
-                    {data.label} <span className="text-danger">*</span>
+                    {data.label}<span className="text-danger">*</span>
                   </span>
                   {data.name === "password" && (
                     <Link
                       to="/forget-password"
-                      className="small fw-semibold text-decoration-none opacity-75"
+                      className="small fw-semibold text-decoration-none"
                     >
                       Forgot password?
                     </Link>
@@ -202,27 +201,19 @@ export default function Signin() {
                   name={data.name}
                   value={formData[data.name]}
                   onChange={handleChange}
-                  // required
                   className="form-control"
                 />
               </div>
             ))}
 
             <div className="text-center">
-              <button type="submit" className="btn px-4 mt-3 login_btn">
+              <button type="submit" className="btn px-4 mt-3 login_btn w-100">
                 Login
               </button>
             </div>
 
             <p className="mt-3 text-center">
               Don’t have an account?&nbsp;
-              {/* <span
-                className="xtraText"
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate("/signup")}
-              >
-                Sign up
-              </span> */}
               <Link to="/signup" className="xtraText">
                 Sign up
               </Link>

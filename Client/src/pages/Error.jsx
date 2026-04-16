@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 export const Error = () => {
     return (
-        <section className="d-flex justify-content-center align-items-center my-3" style={{flexDirection: "column"}}>
-            <div className="main m-md-5 m-lg-5 m-0 border rounded-4 shadow p-3 text-center d-flex flex-column justify-content-center align-items-center">
+        <section className="d-flex justify-content-center align-items-center" style={{flexDirection: "column", minHeight: "100vh", backgroundColor: "#f2f5fe"}}>
+            <div className="main bg-white m-md-5 m-lg-5 m-0 border rounded-4 shadow p-5 w-75 text-center d-flex flex-column justify-content-center align-items-center">
                 <h1 className="text-gradient fw-bold mb-0 errorTXT">404</h1>
                 <p className="text-muted m-0 fw-semibold errorTAG" >SORRY! PAGE NOT FOUND</p>
                 <p className="text-muted m-0 w-75 w-sm-100 errorPARA">

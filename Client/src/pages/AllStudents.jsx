@@ -200,7 +200,7 @@ const AllStudents = ({ role }) => {
         </p>
 
         {/* SEARCH BAR */}
-        <div className="border rounded-3 bg-secondary bg-opacity-10 d-flex align-items-center mx-auto" style={{ maxWidth: "400px", width: "100%" }}>
+        <div className="border rounded-3 bg-light bg-opacity d-flex align-items-center mx-auto" style={{ maxWidth: "400px", width: "100%" }}>
           <div className="input-group-text border-0 bg-transparent text-muted ps-3 p-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
@@ -257,7 +257,7 @@ const AllStudents = ({ role }) => {
                       <hr className="my-2 opacity-25" />
 
                       <div className="bottom d-flex align-items-center justify-content-between">
-                          <p className="m-0 text-muted" style={{ fontSize: "0.85rem" }}>
+                          <p className="m-0 text-muted text-truncate " style={{ fontSize: "0.85rem" }}>
                             <span className="fw-bold me-2">Registered:</span> {formattedCreatedAt}
                           </p>
 
@@ -275,7 +275,7 @@ const AllStudents = ({ role }) => {
                         )}
                         {role === "SuperAdmin" && !isCurrentlySuspended && (
                           <button
-                            className="btn btn-outline-danger rounded-4 text-center"
+                            className="btn btn-outline-danger text-truncate rounded-4 text-center"
                             onClick={() => {
                               setShowSuspendPrompt(true);
                               setCurStudentId(curStudent._id);
@@ -287,7 +287,7 @@ const AllStudents = ({ role }) => {
                         )}
                         {role === "SuperAdmin" && isCurrentlySuspended && (
                           <span
-                            className="px-3 py-2 bg-danger rounded-4 text-center text-light"
+                            className="px-3 py-2 bg-danger text-truncate rounded-4 text-center text-light"
                             style={{ fontSize: "0.78rem" }}
                           >
                             Suspended Student

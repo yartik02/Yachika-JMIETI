@@ -80,8 +80,8 @@ const getAllComplaintsAdmins = async (req, res) => {
 
     const securedComplaints = complaints.map((complaint) => {
       // FIX: Secure by Default. If it is anonymous, ONLY the superadmin gets the real data.
-      if (complaint.isAnonymous && userRole !== "superAdmin") {
-        complaint.createdByName = "Anonymous Student";
+      if (complaint.isAnonymous && userRole !== "SuperAdmin") {
+        complaint.createdByName = "Anonymous";
         complaint.createdByRollno = "Hidden";
         complaint.createdByClass = "Hidden";
         complaint.createdByBranch = "Hidden";
@@ -119,8 +119,8 @@ const getRecentComplaints = async (req, res) => {
     // 4. Apply the Secure by Default masking logic
     const securedRecentComplaints = recentComplaints.map((complaint) => {
       // If it is anonymous, ONLY the superadmin gets the real data
-      if (complaint.isAnonymous && userRole !== "superadmin") {
-        complaint.createdByName = "Anonymous Student";
+      if (complaint.isAnonymous && userRole !== "SuperAdmin") {
+        complaint.createdByName = "Anonymous";
         complaint.createdByRollno = "Hidden";
         complaint.createdByClass = "Hidden";
         complaint.createdByBranch = "Hidden";
@@ -177,8 +177,8 @@ const getComplaintById = async (req, res, next) => {
     }
 
     const userRole = req.user?.role || "guest";
-    if (complaintData.isAnonymous && userRole !== "superadmin") {
-      complaintData.createdByName = "Anonymous Student";
+    if (complaintData.isAnonymous && userRole !== "SuperAdmin") {
+      complaintData.createdByName = "Anonymous";
       complaintData.createdByRollno = "Hidden";
       complaintData.createdByClass = "Hidden";
       complaintData.createdByBranch = "Hidden";
@@ -370,15 +370,11 @@ const getDashboardStats = async (req, res) => {
     // 1. Ask MongoDB to just count the matching documents
     const totalComplaints = await student.countDocuments();
     const suspendedCount = await student.countDocuments({ isSuspended: true });
-    // const resolvedCount = await student.countDocuments({ status: "Resolved" });
-    // const pendingCount = await student.countDocuments({ status: "Pending" });
 
     // 2. Send the numbers back
     res.status(200).json({
       totalComp: totalComplaints,
       suspendedStudents: suspendedCount,
-      // resolvedComp: resolvedCount,
-      // pendingComp: pendingCount
     });
   } catch (error) {
     res.status(500).json({ msg: "Failed to fetch stats" });
@@ -402,25 +398,61 @@ const processAppeal = async (req, res) => {
   try {
     const { studentId, action, adminRemarks } = req.body;
 
-    const currStudent = await student.findById(studentId);
-    if (!currStudent) return res.status(404).json({ message: "Student not found." });
+    // 1. Validate inputs before hitting the DB
+    if (!studentId || !action) {
+      return res.status(400).json({ message: "Student ID and action are required." });
+    }
 
+    const currStudent = await student.findById(studentId);
+    if (!currStudent) {
+      return res.status(404).json({ message: "Student not found." });
+    }
+
+    // 2. Guard clause to prevent TypeError crashes
+    if (!currStudent.suspensionDetails || !currStudent.suspensionDetails.appeal) {
+      return res.status(400).json({ message: "No active appeal found for this student." });
+    }
+
+    // 3. Mutate the state
     if (action === "Approve") {
       currStudent.isSuspended = false;
       currStudent.suspensionDetails.appeal.status = "Approved";
       currStudent.suspensionDetails.appeal.adminRemarks = adminRemarks || "Appeal approved.";
+      // await NotificationMsg.create({
+      //     rollno: currStudent.rollno,
+      //     message: adminRemarks || "Your appeal has been approved by the Administration. Please ensure you adhere to platform guidelines moving forward.",
+      //     title: "Appeal Approved"
+      //   });
     } else if (action === "Reject") {
       currStudent.suspensionDetails.appeal.status = "Rejected";
       currStudent.suspensionDetails.appeal.adminRemarks = adminRemarks || "Appeal rejected.";
     } else {
-      return res.status(400).json({ message: "Invalid action." });
+      return res.status(400).json({ message: "Invalid action. Must be 'Approve' or 'Reject'." });
     }
 
+    // 4. Save the primary entity FIRST
     await currStudent.save();
 
-    res.status(200).json({ message: `Appeal ${action.toLowerCase()}d successfully.` });
+    // 5. Trigger side-effects AFTER successful save
+    if (action === "Approve") {
+      try {
+        await NotificationMsg.create({
+          rollno: currStudent.rollno,
+          message: adminRemarks || "Your appeal has been approved by the Administration. Please ensure you adhere to platform guidelines moving forward.",
+          title: "Appeal Approved"
+        });
+      } catch (notifError) {
+        // Log notification failures, but don't fail the primary request
+        console.error(`Failed to send notification to rollno ${currStudent.rollno}:`, notifError);
+      }
+    }
+
+    return res.status(200).json({ message: `Appeal ${action.toLowerCase()}d successfully.` });
+    
   } catch (error) {
-    res.status(500).json({ message: "Server error processing appeal." });
+    // 6. Stop swallowing errors
+    console.error("Error processing student appeal:", error);
+    return res.status(500).json({ message: "Server error processing appeal." });
   }
 };
 

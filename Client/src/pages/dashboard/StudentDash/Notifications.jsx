@@ -58,6 +58,25 @@ const THEMES = {
       </svg>
     ),
   },
+  appeal: {
+    theme: "success",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="25"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    ),
+  },
   default: {
     theme: "default",
     icon: (
@@ -166,12 +185,13 @@ const Notifications = () => {
   };
 
   // 2. Logic to get theme based on message (Safe string comparison)
-  const getThemeConfig = (message) => {
+  const getThemeConfig = (message, title) => {
     const msg = message.toLowerCase();
     if (msg.includes("resolved")) return THEMES.resolved;
     if (msg.includes("working") || msg.includes("progress"))
       return THEMES.progress;
     if (msg.includes("rejected")) return THEMES.rejected;
+    if (title.toLowerCase().includes("appeal approved")) return THEMES.appeal
     return THEMES.default;
   };
 
@@ -245,7 +265,7 @@ const Notifications = () => {
             </div>
           ) : allNotifications.length > 0 ? (
             allNotifications.map((notification) => {
-              const { theme, icon } = getThemeConfig(notification.message);
+              const { theme, icon } = getThemeConfig(notification.message, notification.title);
               const isResolved = notification.message
                 .toLowerCase()
                 .includes("resolved");
@@ -258,6 +278,10 @@ const Notifications = () => {
               const matchedComplaint = allComplaints?.find(
                 (c) => c._id === notification.complaintId,
               );
+
+              const currNotiIsAppeal = notification.title
+                .toLowerCase()
+                .includes("appeal");
 
               return (
                 <div
@@ -274,96 +298,111 @@ const Notifications = () => {
                     {formatTimeAgo(notification.createdAt)}
                   </span>
 
-                  <div className={`notification-icon-wrapper theme-${theme}`}>
+                  <div className={`notification-icon-wrapper me-0 theme-${theme}`}>
                     {icon}
                   </div>
 
-                  <div className="notification-content m-0">
-                    <p className="notification-message text-start text-lg-center w-75 mx-auto">
-                      {notification.message}
-                    </p>
+                  {!currNotiIsAppeal && (
+                    <div className="notification-content m-0">
+                      <p className="notification-message text-start text-lg-center w-75 mx-auto">
+                        {notification.message}
+                      </p>
 
-                    <div className="row container bg-secondary ms-0 bg-opacity-10 p-1 rounded-3 w-100 mt-2 text-sm-start g-3">
-                      <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
-                        <span className="fw-semibold">Title: </span>
-                        {notification.complaintTitle}
+                      <div className="row container bg-secondary ms-0 bg-opacity-10 p-1 rounded-3 w-100 mt-2 text-sm-start g-3">
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                          <span className="fw-semibold">Title: </span>
+                          {notification.complaintTitle}
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                          <span className="fw-semibold">Category: </span>
+                          {notification.complaintCategory}
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                          <span className="fw-semibold">Priority: </span>
+                          {notification.complaintPriority}
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notification-context my-auto text-muted">
+                          <span className="fw-semibold">Submitted: </span>
+                          {new Date(
+                            notification.complaintCreatedAt,
+                          ).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </div>
                       </div>
-                      <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
-                        <span className="fw-semibold">Category: </span>
-                        {notification.complaintCategory}
-                      </div>
-                      <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
-                        <span className="fw-semibold">Priority: </span>
-                        {notification.complaintPriority}
-                      </div>
-                      <div className="col-lg-3 col-md-6 col-sm-12 text-start notification-context my-auto text-muted">
-                        <span className="fw-semibold">Submitted: </span>
-                        {new Date(
-                          notification.complaintCreatedAt,
-                        ).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </div>
-                    </div>
 
-                    {isResolved &&
-                      matchedComplaint &&
-                      matchedComplaint.feedback === " " && (
-                        <div className="container bg-white shadow-lg p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
-                          <p className="fw-light">
-                            Your complaint has been resolved. Please share
-                            feedback.
+                      {isResolved &&
+                        matchedComplaint &&
+                        matchedComplaint.feedback === " " && (
+                          <div className="container bg-white shadow-lg p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
+                            <p className="fw-light">
+                              Your complaint has been resolved. Please share
+                              feedback.
+                            </p>
+                            <FeedbackForm
+                              complaintId={notification.complaintId}
+                            />
+                          </div>
+                        )}
+
+                      {isRejected && matchedComplaint && (
+                        <div className="rejection rounded-3 p-2 mt-2 bg-danger bg-opacity-10 border border-danger">
+                          <p className="m-0 text-start fw-semibold text-danger">
+                            Reason for rejection
                           </p>
-                          <FeedbackForm
-                            complaintId={notification.complaintId}
-                          />
+                          <p className="m-0 text-start">
+                            {matchedComplaint.feedback}
+                          </p>
                         </div>
                       )}
 
-                    {isRejected && matchedComplaint && (
-                      <div className="rejection rounded-3 p-2 mt-2 bg-danger bg-opacity-10 border border-danger">
-                        <p className="m-0 text-start fw-semibold text-danger">
-                          Reason for rejection
-                        </p>
-                        <p className="m-0 text-start">
-                          {matchedComplaint.feedback}
-                        </p>
-                      </div>
-                    )}
-
-                    {feedbackReplyNotification && matchedComplaint && (
-                      <div className="container bg-info-subtle p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
-                        <p className="fw-light mb-0">
-                          We have received your feedback and rating. here is
-                          what you provided:
-                        </p>
-                        <div className="feedback-reply">
-                          <p
-                            className="m-0 text-start"
-                            style={{ fontSize: "0.9rem" }}
-                          >
-                            {" "}
-                            <span className="fw-semibold">
-                              Your Feedback:
-                            </span>{" "}
-                            {matchedComplaint.feedback}
+                      {feedbackReplyNotification && matchedComplaint && (
+                        <div className="container bg-info-subtle p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
+                          <p className="fw-light mb-0">
+                            We have received your feedback and rating. here is
+                            what you provided:
                           </p>
-                          <p
-                            className="m-0 text-start"
-                            style={{ fontSize: "0.9rem" }}
-                          >
-                            {" "}
-                            <span className="fw-semibold">
-                              Your rating:
-                            </span>{" "}
-                            {matchedComplaint.rating}
-                          </p>
+                          <div className="feedback-reply">
+                            <p
+                              className="m-0 text-start"
+                              style={{ fontSize: "0.9rem" }}
+                            >
+                              {" "}
+                              <span className="fw-semibold">
+                                Your Feedback:
+                              </span>{" "}
+                              {matchedComplaint.feedback}
+                            </p>
+                            <p
+                              className="m-0 text-start"
+                              style={{ fontSize: "0.9rem" }}
+                            >
+                              {" "}
+                              <span className="fw-semibold">
+                                Your rating:
+                              </span>{" "}
+                              {matchedComplaint.rating}
+                            </p>
+                          </div>
                         </div>
+                      )}
+                    </div>
+                  )}
+                  {currNotiIsAppeal && (
+                    <div className="notification-content m-0 d-flex flex-column align-items-center gap-1">
+                      <p className="notification-message text-start text-lg-center w-75 mx-auto">
+                        {notification.title}!
+                      </p>
+                      <div className="my-auto text-muted notification-message bg-success bg-opacity-10 py-1 px-2 px-lg-4 py-lg-2 rounded" style={{minWidth:"50%", maxWidth:"75%"}} >
+                        <span className="fw-semibold me-2 text-success">
+                          Admin Remarks:{" "}
+                        </span>
+                        {notification.message}
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               );
             })

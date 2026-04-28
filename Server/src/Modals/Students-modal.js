@@ -10,6 +10,7 @@ const studentSchema= new mongoose.Schema({
     },
     rollno: {
         type: Number,
+        unique: true,
         required: [true, "Roll Number is required"],
     },
     email: {

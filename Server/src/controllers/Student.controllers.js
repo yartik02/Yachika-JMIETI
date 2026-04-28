@@ -339,7 +339,7 @@ const getAllComplaints = async (req, res) => {
     const securedRecentComplaints = allComplaints.map((complaint) => {
       // If it is anonymous, ONLY the superadmin gets the real data
       if (complaint.isAnonymous) {
-        complaint.createdByName = "Anonymous Student";
+        complaint.createdByName = "Anonymous";
         complaint.createdByRollno = "Hidden";
         complaint.createdByClass = "Hidden";
         complaint.createdByBranch = "Hidden";

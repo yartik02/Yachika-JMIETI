@@ -4,7 +4,7 @@ const NotificationSchema = new mongoose.Schema({
     rollno: {
         type: String,
         required: [true, "Roll number is required"],
-        index: true // Faster queries for specific students
+        index: true
     },
     message: {
         type: String,
@@ -16,30 +16,34 @@ const NotificationSchema = new mongoose.Schema({
     },
     complaintTitle: {
         type: String,
-        required: true
+        default:""
+        // required: true
     },
     complaintPriority: {
         type: String,
-        required: true
+        default:""
+        // required: true
     },
     complaintCategory: {
         type: String,
-        required: true
+        default:""
+        // required: true
     },
     // Changed to Date for better querying
     complaintCreatedAt: {
         type: Date, 
-        required: true
+        // required: true
     },
     complaintSubCategory: {
         type: String,
-        required: true
+        default:""
+        // required: true
     },
     // Changed to ObjectId for proper linking
     complaintId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Complaints",
-        required: true
+        // required: true
     },
     // These might be better left in the Complaint model 
     // to keep a "Single Source of Truth"
@@ -52,6 +56,10 @@ const NotificationSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    title:{
+        type: String,
+        default:""
+    }
 }, { timestamps: true });
 
 // Ensure the index is created correctly. 

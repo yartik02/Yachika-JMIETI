@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SuspendedAcc.css";
 import { useAuth } from "../store/auth";
@@ -37,15 +37,21 @@ const SuspendedPage = () => {
   const [appealText, setAppealText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Track local appeal state so UI updates immediately without refreshing
+  // Track local appeal state so UI updates immediately without refreshing  
   const [hasAppealedLocal, setHasAppealedLocal] = useState(
     user?.suspensionDetails?.appeal?.hasAppealed || false
   );
   
-  // Track the actual status to display (None, Pending, Rejected)
   const [localAppealStatus, setLocalAppealStatus] = useState(
-    user?.suspensionDetails.appeal.status || "None"
+    user?.suspensionDetails?.appeal?.status || "None"
   );
+
+  useEffect(() => {
+    if (user?.suspensionDetails?.appeal) {
+      setHasAppealedLocal(user.suspensionDetails.appeal.hasAppealed || false);
+      setLocalAppealStatus(user.suspensionDetails.appeal.status || "None");
+    }
+  }, [user]);
 
   // Fallback values
   const backendMessage = "Your account access has been restricted by the administration. Remember you can only appeal once.";
@@ -95,7 +101,7 @@ const SuspendedPage = () => {
       setIsSubmitting(false);
     }
   };
-
+    
   return (
     <>
       <div className="suspension-bg min-vh-100 d-flex justify-content-center align-items-center px-3 py-4">

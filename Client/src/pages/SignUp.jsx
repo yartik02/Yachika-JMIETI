@@ -233,8 +233,7 @@ function Signup() {
       setIsSendingOtp(true);
       const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-      // Generate OTP
-      // Send Email
+      // Generate OTP and Send Email
       const mailRes = await fetch(`${API_BASE}/api/auth/sendOtpToMail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -244,10 +243,14 @@ function Signup() {
         }),
       });
 
-      if (!mailRes.ok) throw new Error("Failed to send email");
-
-      toast.success("OTP sent to your email!");
-      setStep(2); // Move to OTP Verification Step
+      // if (!mailRes.ok) throw new Error("Failed to send email");
+      if (mailRes.ok) {
+        toast.success("OTP sent to your email!");
+        setStep(2); // Move to OTP Verification Step
+      } else {
+        const errorData = await mailRes.json();
+        toast.error(<p className="m-0 ">{errorData.msg}</p>);
+      }
     } catch (err) {
       console.error(err);
       toast.error("Failed to send OTP. Please try again.");
@@ -317,11 +320,39 @@ function Signup() {
         navigate("/login");
       } else {
         const errorData = await response.json();
+        console.log(errorData.error);
+        
+        if (errorData.error.includes("ROLL_NUMBER_EXISTS")) {
+        console.log(
+          "Student with this Roll number already exist either check your roll number or complain into the admin cell!",
+        );
+
+        toast.error(
+          <div className="d-flex flex-column">
+            <strong>SignUp failed</strong>
+            <p className="m-0" style={{ fontSize: "0.95rem" }}>
+              Student with this roll number already exist,
+            </p>
+            <p className="m-0" style={{ fontSize: "0.8rem" }}>
+              Check your Roll no or complain in admin cell!
+            </p>
+          </div>,
+          {
+            style: {
+              width: "fit-content",
+            },
+          },
+        );
+        return;
+      }
         toast.error(
           errorData.msg || "Sign up failed. Please check your details.",
         );
       }
     } catch (err) {
+      console.log("err here:",err);
+      
+      
       console.error("Error during signup:", err);
       toast.error(err.message || "Sign up failed. A network error occurred.");
     } finally {

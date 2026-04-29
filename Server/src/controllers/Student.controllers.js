@@ -6,9 +6,7 @@ import { generateOtp } from "../utility/otpGenerator.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import { Complaint } from "../Modals/Complaint-modal.js";
-
-// temporary in-memory store (use DB / Redis in production)
-const otpStore = new Map();
+import Otp from "../Modals/Otp-modal.js";
 
 const home = async (req, res) => {
   try {
@@ -51,6 +49,14 @@ const signup = async (req, res) => {
   } catch (error) {
     console.error("🔥 Signup error:", error.message);
     console.error(error.stack);
+    if (error.code === 11000) {
+    return res.status(400).json({
+      error: "ROLL_NUMBER_EXISTS",
+      message: "Student with this roll number already exists!",
+    });
+  }
+    
+    await Otp.deleteOne({ email });
     res.status(500).json({
       msg: "Internal Server Error!",
       error: error.message, // clean error text
@@ -90,11 +96,11 @@ const login = async (req, res) => {
     const isMatch = await studentExist.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ msg: "Invalid email or password" });
-    }    
+    }
 
     if (studentExist.isSuspended && studentExist.suspensionDetails) {
-      const expiryDate = studentExist.suspensionDetails.expiresAt 
-        ? new Date(studentExist.suspensionDetails.expiresAt) 
+      const expiryDate = studentExist.suspensionDetails.expiresAt
+        ? new Date(studentExist.suspensionDetails.expiresAt)
         : null;
       const now = new Date();
 
@@ -110,7 +116,7 @@ const login = async (req, res) => {
     if (isMatch && studentExist.suspensionDetails && studentExist.isSuspended) {
       return res.status(403).json({
         message: "Your account is suspended. You cannot perform this action.",
-        token: await studentExist.generateToken()
+        token: await studentExist.generateToken(),
       });
     } else {
       return res.status(200).json({
@@ -189,7 +195,15 @@ const getNotifications = async (req, res, next) => {
 
 const sendOtpToMail = async (req, res) => {
   const { name, email } = req.body;
+  console.log("contoller hitted!");
+  
 
+  const studentExist = await student.findOne({ email});
+  console.log(Boolean(studentExist));
+  if(Boolean(studentExist)){
+    return res.status(500).json({msg:"Student with this email alraedy exist!"})
+  }
+  
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
@@ -201,18 +215,19 @@ const sendOtpToMail = async (req, res) => {
   });
 
   try {
-    // const { email } = req.body;
 
     if (!email) {
       return res.status(400).json({ msg: "Email is required" });
     }
+    // Delete any existing OTPs for this email to prevent spam/duplicates
+    await Otp.deleteMany({ email: email });
 
-    const otp = generateOtp();
+    const generatedOtp = generateOtp();
+    await Otp.create({
+      email: email,
+      otp: generatedOtp,
+    });
 
-    // OTP expiry (5 minutes)
-    const expiresAt = Date.now() + 5 * 60 * 1000;
-
-    otpStore.set(email, { otp, expiresAt });
     const info = await transporter.sendMail({
       from: '"Yachika@JMIETI"<kambojyartik@gmail.com>',
       to: email,
@@ -221,7 +236,7 @@ const sendOtpToMail = async (req, res) => {
       html: `
               <h3>Hi ${name} 👋</h3>
               <p>Use the following one-time password (OTP) for verification of your Yachika@JMIETI account.</p>
-              <h2 style="color:#1a4cff;">${otp}</h2>
+              <h2 style="color:#1a4cff;">${generatedOtp}</h2>
               <p>This OTP is valid for 5 minutes only.</p>
               <p>This mail is sent to: ${email}</p><br>
               <p>If you did not request this, please ignore this email.</p><br>
@@ -244,23 +259,15 @@ const sendOtpToMail = async (req, res) => {
 const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
-
-    const storedOtpData = otpStore.get(email);
+    const storedOtpData = await Otp.findOne({ email: email });
 
     if (!storedOtpData) {
       return res.status(400).json({ msg: "OTP not found or expired" });
     }
 
-    if (Date.now() > storedOtpData.expiresAt) {
-      otpStore.delete(email);
-      return res.status(400).json({ msg: "OTP expired" });
-    }
-
     if (storedOtpData.otp !== otp) {
-      return res.status(400).json({ msg: "Invalid OTP" });
+      return res.status(400).json({ msg: "Invalid OTP." });
     }
-
-    otpStore.delete(email);
 
     res.status(200).json({ msg: "OTP verified successfully" });
   } catch (error) {

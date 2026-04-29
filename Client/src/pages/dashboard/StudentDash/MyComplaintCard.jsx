@@ -44,10 +44,10 @@ const MyComplaintCard = ({ complaint }) => {
 
         <div className="stone-footer d-flex flex-sm-row flex-column">
           <div
-            className="text-muted border border-secondary border-opacity-25 bg-secondary bg-opacity-10 py-1 px-2 rounded-2"
+            className="text-muted border border-secondary border-opacity-10 bg-secondary bg-opacity-10 py-1 px-2 rounded-3"
             style={{ fontSize: "0.8rem", width: "fit-content" }}
           >
-            <strong>Category: </strong>
+            <strong className="me-1">Category: </strong>
             <span>
               {complaint.category} - {complaint.subCategory}
             </span>

@@ -175,13 +175,13 @@ const AllStudents = ({ role }) => {
       <span className="text-muted small text-nowrap d-none d-sm-block">
         Total: {filteredStudents.length}
       </span>
-      <div className="btn-group shadow-sm">
+      <div className="btn-group">
         <button className="btn btn-outline-secondary btn-sm" onClick={goToPrevPage} disabled={currentPage === 1}>
           &lt; Prev
         </button>
-        <button className="btn btn-light btn-sm disabled text-dark" style={{ minWidth: "100px" }}>
+        <p className="btn btn-light btn-sm disabled text-dark m-0" style={{ minWidth: "100px" }}>
           Page {currentPage} of {totalPages}
-        </button>
+        </p>
         <button className="btn btn-outline-secondary btn-sm" onClick={goToNextPage} disabled={currentPage === totalPages}>
           Next &gt;
         </button>
@@ -234,7 +234,7 @@ const AllStudents = ({ role }) => {
 
               return (
                 <div key={curStudent._id} className="col-lg-6 col-md-6 col-sm-12 p-3">
-                  <div className="card rounded-4 p-4 text-start h-100 shadow-sm position-relative" style={{ backgroundColor: "#e0e1dd42", border: "none" }}>
+                  <div className="card border border-secondary border-opacity-10 rounded-4 p-4 text-start h-100 shadow-sm position-relative" style={{ backgroundColor: "#e0e1dd42", border: "none" }}>
                     <div className="d-flex flex-column justify-content-center h-100 gap-2">
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
                         <span className="fw-bold me-2" style={{ color: "#065064" }}>Name:</span> {curStudent.name}
@@ -261,7 +261,7 @@ const AllStudents = ({ role }) => {
                             <span className="fw-bold me-2">Registered:</span> {formattedCreatedAt}
                           </p>
 
-                        {role === "Admin" && (
+                        {/* {role === "Admin" && (
                           <button
                             className="btn btn-outline-danger rounded-pill d-flex align-items-center"
                             onClick={() => deleteStudent(curStudent._id)}
@@ -272,7 +272,7 @@ const AllStudents = ({ role }) => {
                             </svg>
                             Delete
                           </button>
-                        )}
+                        )} */}
                         {role === "SuperAdmin" && !isCurrentlySuspended && (
                           <button
                             className="btn btn-outline-danger text-truncate rounded-4 text-center"

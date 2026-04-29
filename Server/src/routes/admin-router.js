@@ -3,6 +3,7 @@ import {
   getAllStudents,
   getAllComplaintsAdmins,
   getContactUsMessages,
+  deleteContactUsMessage,
   AdminSignup,
   adminLogin,
   getRecentComplaints,
@@ -23,6 +24,7 @@ import { adminMiddleware, verifyAdminToken } from "../middlewares/admin-middlewa
 router .route("/allStudents") .get(authMiddleware, adminMiddleware, getAllStudents);
 router.route("/allComplaintsAdmins").get(verifyAdminToken, getAllComplaintsAdmins);
 router .route("/allContactUsMessages") .get(authMiddleware, adminMiddleware, getContactUsMessages);
+router .route("/delete/SingleContactUsMessage/:id") .delete(authMiddleware, adminMiddleware, deleteContactUsMessage);
 router .route("/getRecentComplaints") .get(authMiddleware, adminMiddleware, getRecentComplaints);
 router.route("/signup").post(AdminSignup);
 router.route("/login").post(adminLogin);

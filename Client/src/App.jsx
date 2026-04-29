@@ -31,6 +31,7 @@ function App() {
     location.pathname === "/login" ||
     location.pathname === "/complaintSubmission" ||
     location.pathname.includes("/dashboard") ||
+    location.pathname.includes("/studentDashboard") ||
     location.pathname.includes("/suspended-account") ||
     location.pathname === "/forget-password" ||
     location.pathname === "/privacy-policy";

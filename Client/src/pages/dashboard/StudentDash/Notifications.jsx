@@ -303,12 +303,12 @@ const Notifications = () => {
                   </div>
 
                   {!currNotiIsAppeal && (
-                    <div className="notification-content m-0">
+                    <div className="notification-content">
                       <p className="notification-message text-start text-lg-center w-75 mx-auto">
                         {notification.message}
                       </p>
 
-                      <div className="row container bg-secondary ms-0 bg-opacity-10 p-1 rounded-3 w-100 mt-2 text-sm-start g-3">
+                      <div className="row container bg-secondary mx-4 mx-lg-5 w-100 bg-opacity-10 p-1 rounded-3 mt-2 text-sm-start g-3" style={{maxWidth:"90%"}}>
                         <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
                           <span className="fw-semibold">Title: </span>
                           {notification.complaintTitle}

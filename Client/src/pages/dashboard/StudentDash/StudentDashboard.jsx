@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef, useMemo } from "react";
 import male2img from "../../../assets/new male avatar.jpg";
 import femaleimg from "../../../assets/Girl_img_avatar.png";
 import othersimg from "../../../assets/others avatar.avif";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../store/auth";
 import HomeStudent from "./HomeStudent";
 import MyComplaints from "./MyComplaints";
@@ -77,9 +77,7 @@ function StudentDashboard() {
   }, []);
 
   if (!student) {
-    return (
-      <Error />
-    );
+    return <Error />;
   }
 
   let imgSrc;
@@ -108,31 +106,48 @@ function StudentDashboard() {
   return (
     <div className="my-5 studentDashboard mx-auto">
       <div
-        className="text-center head mb-4 px-4 d-flex justify-content-between align-items-center text-capitalize"
+        className="head container mb-4 p-0 d-flex justify-content-between align-items-center text-capitalize"
         style={{ width: "100%" }}
       >
         <h4
-          className="text-start mx-lg-4 mx-0 my-auto fw-light"
+          className="text-start my-auto fw-light"
           style={{ color: "#065064", width: "fit-content" }}
+        >
+          <img
+            src={imgSrc}
+            alt="Student Avatar"
+            className="ProfileimgStudent rounded-circle me-3"
+            style={{
+              width: "40px",
+              height: "40px",
+              border: "3px solid #065064",
+            }}
+          />
+          {student.name}'s Dashboard
+        </h4>
+        <Link
+          to="/logout"
+          className="py-1 btn d-flex align-items-center btn-outline-danger"
+          title="Log Out"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 640 640"
-            width={30}
-            height={30}
-            fill="#065064"
-            className="pb-1 me-1"
+            width="19"
+            height="19"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="me-1"
           >
-            <path d="M320 312C253.7 312 200 258.3 200 192C200 125.7 253.7 72 320 72C386.3 72 440 125.7 440 192C440 258.3 386.3 312 320 312zM289.5 368L350.5 368C360.2 368 368 375.8 368 385.5C368 389.7 366.5 393.7 363.8 396.9L336.4 428.9L367.4 544L368 544L402.6 405.5C404.8 396.8 413.7 391.5 422.1 394.7C484 418.3 528 478.3 528 548.5C528 563.6 515.7 575.9 500.6 575.9L139.4 576C124.3 576 112 563.7 112 548.6C112 478.4 156 418.4 217.9 394.8C226.3 391.6 235.2 396.9 237.4 405.6L272 544.1L272.6 544.1L303.6 429L276.2 397C273.5 393.8 272 389.8 272 385.6C272 375.9 279.8 368.1 289.5 368.1z" />
+            <path d="m16 17 5-5-5-5" />
+            <path d="M21 12H9" />
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
           </svg>
-          {student.name}'s Dashboard
-        </h4>
-        <img
-          src={imgSrc}
-          alt="Student Avatar"
-          className="ProfileimgStudent rounded-circle mx-lg-4 mx-0"
-          style={{ width: "40px", height: "40px", border: "3px solid #065064" }}
-        />
+          Log Out
+        </Link>
       </div>
 
       <div className="card shadow-lg rounded-4 container p-4 pb-3">

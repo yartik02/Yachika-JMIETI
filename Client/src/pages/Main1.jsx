@@ -40,7 +40,7 @@ function Main1() {
         <div className="row align-items-center mt-5 g-5 mb-5">
           <div className="col-lg-6 order-lg-1 order-1">
             <div className="d-flex flex-column mb-sm-5 mb-lg-0 h-100">
-              <span className="badge main1Badge bg-primary bg-opacity-10 fw-normal align-self-start mb-4 p-2 px-3 rounded-pill" style={{color:"#2648c2ff"}}>
+              <span className="badge main1Badge bg-primary bg-opacity-10 fw-normal d-flex align-items-center align-self-start mb-4 p-2 px-3 rounded-pill" style={{color:"#2648c2ff"}}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"

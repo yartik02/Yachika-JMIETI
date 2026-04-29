@@ -60,7 +60,7 @@ const adminLogin = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
   try {
-    const allStudents = await student.find({}, { password: 0 });
+    const allStudents = await student.find({}, { password: 0 }).sort({ createdAt: -1 });
     // console.log(allStudents);
     if (!allStudents || allStudents.length === 0) {
       return res.status(404).json({ msg: "No students found" });
@@ -141,7 +141,7 @@ const getRecentComplaints = async (req, res) => {
 
 const getContactUsMessages = async (req, res) => {
   try {
-    const allMessages = await contactMsg.find();
+    const allMessages = await contactMsg.find().sort({ createdAt: -1 });
     // console.log("all Messages: ",allMessages);
     if (!allMessages || allMessages.length === 0) {
       return res.status(404).json({ msg: "No messages found" });
@@ -165,6 +165,18 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const deleteContactUsMessage = async (req, res) => {
+  try {
+    const msgId = req.params.id;
+    const deletedMsg = await contactMsg.deleteOne({ _id: msgId });
+    if (deletedMsg.deletedCount === 0) {
+      return res.status(404).json({ msg: "Contact Message not found" });
+    }
+    return res.status(200).json({ msg: "Contact Message deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
 //get single student data
 
 const getComplaintById = async (req, res, next) => {
@@ -460,6 +472,7 @@ export {
   getAllStudents,
   getAllComplaintsAdmins,
   getContactUsMessages,
+  deleteContactUsMessage,
   AdminSignup,
   adminLogin,
   getRecentComplaints,

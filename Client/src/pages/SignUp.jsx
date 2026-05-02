@@ -6,7 +6,6 @@ import { useAuth } from "../store/auth.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import "../components/CompliantSorting.css";
 
-// --- Reusable SVG Icons ---
 const Icons = {
   Mail: (
     <svg
@@ -321,38 +320,37 @@ function Signup() {
       } else {
         const errorData = await response.json();
         console.log(errorData.error);
-        
-        if (errorData.error.includes("ROLL_NUMBER_EXISTS")) {
-        console.log(
-          "Student with this Roll number already exist either check your roll number or complain into the admin cell!",
-        );
 
-        toast.error(
-          <div className="d-flex flex-column">
-            <strong>SignUp failed</strong>
-            <p className="m-0" style={{ fontSize: "0.95rem" }}>
-              Student with this roll number already exist,
-            </p>
-            <p className="m-0" style={{ fontSize: "0.8rem" }}>
-              Check your Roll no or complain in admin cell!
-            </p>
-          </div>,
-          {
-            style: {
-              width: "fit-content",
+        if (errorData.error.includes("ROLL_NUMBER_EXISTS")) {
+          console.log(
+            "Student with this Roll number already exist either check your roll number or complain into the admin cell!",
+          );
+
+          toast.error(
+            <div className="d-flex flex-column">
+              <strong>SignUp failed</strong>
+              <p className="m-0" style={{ fontSize: "0.95rem" }}>
+                Student with this roll number already exist,
+              </p>
+              <p className="m-0" style={{ fontSize: "0.8rem" }}>
+                Check your Roll no or complain in admin cell!
+              </p>
+            </div>,
+            {
+              style: {
+                width: "fit-content",
+              },
             },
-          },
-        );
-        return;
-      }
+          );
+          return;
+        }
         toast.error(
           errorData.msg || "Sign up failed. Please check your details.",
         );
       }
     } catch (err) {
-      console.log("err here:",err);
-      
-      
+      console.log("err here:", err);
+
       console.error("Error during signup:", err);
       toast.error(err.message || "Sign up failed. A network error occurred.");
     } finally {

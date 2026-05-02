@@ -215,9 +215,9 @@ function Contact() {
 
             {/* --- Left Column (Sticky Form) --- */}
             <div className="col-lg-6">
-              <div className="sticky-form-wrapper bg-white">
-                <h3 className="fw-bold mb-2">Send us a Message</h3>
-                <p className="form-subtitle mb-4 text-muted fw-light mx-auto lh-0">
+              <div className="sticky-form-wrapper bg-white text-center">
+                <h3 className="fw-bold mb-2">Send us a <span className="text-gradient">Message</span></h3>
+                <p className="form-subtitle mb-4 text-muted fw-light mx-auto w-100" style={{maxWidth:"75%", fontSize:"0.95rem"}}>
                   Fill out the form below and we'll get back to you as soon as
                   possible.
                 </p>

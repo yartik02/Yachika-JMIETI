@@ -150,7 +150,7 @@ export default function Signin() {
       return (
         <div className="text-center loading my-5">
           <div className="spinner-border" role="status"></div>
-          <p className="">Loading the course details...</p>
+          <p className="">Loading details...</p>
         </div>
       );
     }

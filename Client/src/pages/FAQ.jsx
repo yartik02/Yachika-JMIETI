@@ -3,60 +3,63 @@ import "./FAQ.css";
 
 const faqData = [
   {
+    id: "faq1",
     question: "How do I submit a complaint?",
-    answer:
-      "Simply create an account, log in, and use our complaint submission form. You can choose to submit anonymously if needed.",
+    answer: "Simply create an account using your institutional email, verify it via the secure OTP process, log in, and use the submission form. You can categorize your issue for direct routing and choose to submit anonymously if needed."
   },
   {
+    id: "faq2",
     question: "How long does resolution take?",
-    answer:
-      "Most complaints are resolved within 2-5 working days or depending on complexity. You'll receive regular updates throughout the process.",
+    answer: "Resolution times depend on the specific category and its strict Service Level Agreement deadline. If the assigned administrator fails to resolve your issue within the mandated timeframe, the system automatically escalates your ticket to higher administration for immediate intervention."
   },
   {
+    id: "faq3",
     question: "Can I track my complaint status?",
-    answer:
-      "Yes! Your dashboard shows real-time status updates, and you'll receive notifications whenever there are changes in your notifications tab.",
+    answer: "Yes. Your dashboard provides a real time timeline and audit trail for every complaint except the anonymous ones. You will also receive asynchronous push notifications the exact moment an administrator updates the status of your ticket."
   },
   {
+    id: "faq4",
     question: "Is my information secure?",
-    answer:
-      "Absolutely. We use industry-standard security measures and offer anonymous submission options to protect your privacy.",
+    answer: "Absolutely. The platform utilizes enterprise grade cryptographic hashing to protect your credentials and strict role based access control to ensure only authorized staff can view your submissions."
   },
   {
-    question: "How does the 'anonymous' feature actually work?",
-    answer:
-      "When you submit a complaint anonymously, the system completely hides your personal details (name, roll no., email) from all admins and faculty. Your identity is encrypted and fully dissociated from the complaint itself, ensuring your privacy for sensitive issues.",
+    id: "faq5",
+    question: "How does the anonymous feature actually work?",
+    answer: "When you toggle the anonymous option, the backend explicitly strips your personal identifiers before routing the ticket to the administrator. Your identity is completely hidden to prevent academic retaliation. However, higher administration retains emergency override authority strictly for cases of severe platform abuse."
   },
   {
-    question: "What if my complaint is closed but the issue is not resolved?",
-    answer:
-      "Once an admin marks your complaint as 'Resolved,' you will be prompted to provide feedback on the outcome. This includes giving a rating (e.g., Satisfied or Unsatisfied) and adding comments. If you are not happy with the result and give a poor rating, the complaint will be automatically re-opened and sent for further review. This ensures your voice is heard and the issue is genuinely fixed to your satisfaction.",
+    id: "faq6",
+    question: "What happens after my complaint is marked as resolved?",
+    answer: "Once an administrator marks your complaint as resolved, the system triggers a mandatory feedback form. You will provide a rating and comments regarding the handling of your issue. This data is pushed directly to the SuperAdmin dashboard to track departmental efficiency and student satisfaction."
   },
   {
+    id: "faq7",
     question: "Who sees my complaint after I submit it?",
-    answer:
-      "It depends on the category. Hostel-related complaints are routed directly to the designated Warden. All other complaints (Infrastructure, Academics) are managed by the central Admin team, who then assign them to the relevant department for action.",
+    answer: "All submitted complaints are securely routed directly to the centralized Admin dashboard. The core institutional administrative team reviews every submission from this central queue and ensures your issue is processed and resolved efficiently."
   },
   {
-    question:
-      "What kind of details should I include to make my complaint effective?",
-    answer:
-      "Be as specific as possible. For infrastructure issues, include the exact location (e.g., 'Room 304, Hostel B, broken window latch'). For academic issues, mention the course/subject and describe the situation factually. Clear details help us resolve your issue much faster.",
+    id: "faq8",
+    question: "What kind of details should I include to make my complaint effective?",
+    answer: "Be as specific as possible utilizing text. Currently, the system does not support multimedia attachments like photos. Clearly state the exact location, the subject, and the factual details of the situation to help administrators resolve the issue efficiently."
   },
   {
-    question: "Can I submit a complaint on behalf of someone else?",
-    answer:
-      "We recommend that the person facing the issue submit the complaint themselves for clear communication and tracking. However, if you are reporting a general issue affecting a group (e.g., 'No water in C-Block'), you can state that in the description.",
+    id: "faq9",
+    question: "What happens if a complaint is ignored by the department?",
+    answer: "Our system features automated deadline enforcement. If a departmental administrator neglects a pending ticket, background scripts will automatically strip their access and escalate the issue directly to the SuperAdmin queue for a top down resolution."
   },
   {
-    question: "Is there a limit to how many complaints I can submit?",
-    answer:
-      "There is no limit on submitting genuine complaints. However, we encourage you to check if a similar issue has already been reported. Please use the platform responsibly, as spamming or submitting frivolous complaints may lead to account review.",
+    id: "faq10",
+    question: "What is the exact role of the SuperAdmin?",
+    answer: "The SuperAdmin represents senior institutional leadership. They monitor platform efficiency, review automatically escalated/reported tickets, manage administrative accounts, and hold the absolute authority to intervene in stalled departmental issues."
   },
+  {
+    id: "faq11",
+    question: "Is there a penalty for submitting false or spam complaints?",
+    answer: "Yes. Submitting abusive or spam complaints violates platform policies and the institutional code of conduct. The SuperAdmin holds overarching authority to issue temporary or permanent account suspensions. Furthermore, severe or malicious misuse of the system may be escalated to the disciplinary committee, resulting in formal institutional penalties. If suspended, you will lose primary access and must route an explanation through the secure Appeals Portal for review."  }
 ];
 
 function AuroraFaq() {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(null);
 
   return (
     <section className="aurora-faq-section" id="faqs">
@@ -68,9 +71,13 @@ function AuroraFaq() {
       </div>
 
       <div className="container position-relative" style={{ zIndex: 2 }}>
-        <div className="text-center mb-5">
-          <h3 className="faq-heading mb-3">Frequently Asked Questions</h3>
-          <p className="faq-subheading mb-5 mx-auto text-muted">
+        <div className="texts mx-auto">
+          <h6 className="display-6 heading fw-bold text-center">
+            Frequently Asked <span className="text-gradient">Questions</span>
+          </h6>
+          <p
+            className="fs-6 fw-light mb-5 text-center mx-auto text-muted"
+          >
             Quick answers to common questions
           </p>
         </div>
@@ -82,11 +89,11 @@ function AuroraFaq() {
                 className={`accordion-item rounded-4 ${
                   openIndex === index ? "active" : ""
                 }`}
-                key={index}
+                key={item.id}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
                 <div className={`accordion-header ${openIndex ===index ?" rounded-top-4":"rounded-4 "}`}>
-                  <span className="question-text text-start">{item.question}</span>
+                  <span className="question-text text-start">{index+1}. {item.question}</span>
                   <div className="accordion-icon">
                     <svg
                       width="14"

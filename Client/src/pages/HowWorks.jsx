@@ -30,17 +30,16 @@ const HowWorks = () => {
             How Yachika@JMIETI <span className="text-gradient">Works</span>
           </h6>
           <p
-            className="fs-6 fw-light mb-5 text-center mx-auto"
-            style={{ color: "#9CA3AF" }}
+            className="fs-6 fw-light mb-5 text-center mx-auto opacity-75"
           >
             Simple steps to make your voice heard
           </p>
         </div>
-        <div className="timeline-container">
+        <div className="timeline-container py-5">
           {stepsData.map((step, index) => (
             // Alternate 'left' and 'right' classes for the zig-zag layout
             <div
-              className={`timeline-item ${index % 2 === 0 ? "left" : "right"}`}
+              className={`timeline-item ${index % 2 === 0 ? "left" : "right"} my-5`}
               key={index}
             >
               <div className="timeline-dot"></div>

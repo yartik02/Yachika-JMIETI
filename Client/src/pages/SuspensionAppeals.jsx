@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../store/auth";
 import "./SuspendedAcc.css";
 import { toast } from "react-toastify";
+import {useTheme } from "../utils/useTheme.jsx"
 
 // --- Extracted Icons for cleaner JSX ---
 const HeaderIcon = () => (
@@ -44,8 +45,13 @@ const SuspensionAppeals = () => {
   const [appeals, setAppeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
+  const {theme}= useTheme();
 
-  const [modalConfig, setModalConfig] = useState({ isOpen: false, type: "", studentId: null });
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    type: "",
+    studentId: null,
+  });
   const [adminRemarks, setAdminRemarks] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -71,7 +77,14 @@ const SuspensionAppeals = () => {
           setAppeals([]);
         }
       } catch (error) {
-        toast.error("Unable to fetch the suspension appeals!");
+        toast.error("Unable to fetch the suspension appeals!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         console.error("Error fetching appeals:", error);
       } finally {
         setLoading(false);
@@ -92,9 +105,16 @@ const SuspensionAppeals = () => {
 
   const handleProcessAppeal = async (e) => {
     e.preventDefault();
-    
+
     if (!adminRemarks.trim()) {
-      toast.error("Please provide remarks for this decision.");
+      toast.error("Please provide remarks for this decision.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       return;
     }
 
@@ -103,49 +123,83 @@ const SuspensionAppeals = () => {
     try {
       // TODO: Uncomment and use actual API call
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/processAppeals`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          studentId: modalConfig.studentId,
-          action: modalConfig.type,
-          adminRemarks: adminRemarks
-        }),
-      });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/processAppeals`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              studentId: modalConfig.studentId,
+              action: modalConfig.type,
+              adminRemarks: adminRemarks,
+            }),
+          },
+        );
 
-      if (response.ok) {
-      setAppeals(prev => prev.filter(student => student._id !== modalConfig.studentId));
-      toast.success(`Appeal ${modalConfig.type === "Approve" ? "approved" : "rejected"} successfully.`);
-      closeActionModal();
-      }
-        
+        if (response.ok) {
+          setAppeals((prev) =>
+            prev.filter((student) => student._id !== modalConfig.studentId),
+          );
+          toast.success(
+            `Appeal ${modalConfig.type === "Approve" ? "approved" : "rejected"} successfully.`,
+            {
+              style: {
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                width: "fit-content",
+                maxWidth: "40vw",
+              },
+            },
+          );
+          closeActionModal();
+        }
       } catch (error) {
-        toast.error("Failed to process appeal!")
-      closeActionModal();
+        toast.error("Failed to process appeal!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
+        closeActionModal();
       }
     } catch (error) {
       console.error("Error processing appeal:", error);
-      toast.error("Server error while processing appeal.");
+      toast.error("Server error while processing appeal.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
     } finally {
       setIsProcessing(false);
     }
   };
 
   return (
-    <section className="d-flex flex-column justify-content-start align-items-center w-100 text-start">
+    <section
+      className="d-flex flex-column justify-content-start align-items-center w-100 text-start"
+      style={{ color: "var(--text-primary)" }}
+    >
       <div className="header w-100 mb-3">
         <p
           className="text-start fw-light mb-0 fs-3 d-flex align-items-center"
-          style={{ color: "#065064" }}
+          style={{ color: "var(--text-dashboard-name)" }}
         >
           <HeaderIcon />
           Suspension Appeals
         </p>
       </div>
-      <hr className="mx-auto mt-0 w-100" style={{ color: "#065064" }} />
+      <hr
+        className="mx-auto mt-0 w-100"
+        style={{ color: "var(--text-dashboard-name)" }}
+      />
 
       <div className="appealsContainer w-100">
         {appeals.length > 0 && (
@@ -158,10 +212,13 @@ const SuspensionAppeals = () => {
         )}
 
         {loading ? (
-          <p className="text-muted">Loading appeals...</p>
+          <p className="opacity-75">Loading appeals...</p>
         ) : appeals.length === 0 ? (
-          <div className="text-center py-5 bg-light rounded-4 border">
-            <p className="text-muted m-0">
+          <div
+            className="text-center py-5 rounded-4"
+            style={{ backgroundColor: "var(--bg-glass)" }}
+          >
+            <p className="opacity-75 m-0">
               No pending appeals to review at this time.
             </p>
           </div>
@@ -169,12 +226,38 @@ const SuspensionAppeals = () => {
           <div className="w-100">
             {appeals.map((student) => {
               const isOpen = expandedId === student._id;
+              const selectRandomColor = (seed) => {
+                const colors = [
+                  "#b82525", // Red
+                  "#2661c0", // Blue
+                  "#198662", // Green
+                  "#b17611", // Orange
+                  "#693cd3", // Purple
+                  "#c53a80", // Pink
+                  "#15a393", // Teal
+                  "#ac8100", // Yellow
+                ];
+                let hash = 0;
+                for (let i = 0; i < seed.length; i++) {
+                  hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                return colors[Math.abs(hash) % colors.length];
+              };
 
               return (
-                <div key={student._id} className="accordion-card">
+                <div
+                  key={student._id}
+                  className="accordion-card"
+                  style={{
+                    backgroundColor: "var(--bg-glass)",
+                    border: "1px solid var(--light-hover)",
+                    color: "var(--text-primary)",
+                  }}
+                >
                   {/* --- ACCORDION HEADER --- */}
                   <div
                     className="accordion-header d-flex justify-content-between align-items-center"
+                    style={{ backgroundColor: "transparent" }}
                     onClick={() => toggleAccordion(student._id)}
                   >
                     <div className="d-flex align-items-center">
@@ -183,7 +266,9 @@ const SuspensionAppeals = () => {
                         style={{
                           width: "45px",
                           height: "45px",
-                          backgroundColor: "#065064",
+                          backgroundColor: selectRandomColor(
+                            student.name || student.rollno,
+                          ),
                           fontSize: "1.1rem",
                         }}
                       >
@@ -194,22 +279,25 @@ const SuspensionAppeals = () => {
                       <div className="d-flex flex-column">
                         <p
                           className="fw-bold m-0"
-                          style={{ color: "#0f172a", fontSize: "1.05rem" }}
+                          style={{ fontSize: "1.05rem" }}
                         >
                           {student.name}
                         </p>
                         <span
-                          className="text-muted m-0"
+                          className="opacity-75 m-0"
                           style={{ fontSize: "0.85rem" }}
                         >
-                          {student.rollno} - {student.className} -{" "}
+                          {student.rollno} - {student.className} -
                           {student.branch}
                         </span>
                       </div>
                     </div>
 
                     <div className="d-flex align-items-center gap-3">
-                      <span className="badge bg-warning bg-opacity-25 text-dark fw-medium px-3 py-2 rounded-pill border border-warning border-opacity-50">
+                      <span
+                        className="badge bg-warning bg-opacity-25 fw-medium px-3 py-2 rounded-pill border border-warning border-opacity-50"
+                        style={{ color: "#ffaf03" }}
+                      >
                         Pending
                       </span>
                       <ChevronIcon isOpen={isOpen} />
@@ -221,14 +309,17 @@ const SuspensionAppeals = () => {
                     className={`custom-anim-wrapper ${isOpen ? "open" : ""}`}
                   >
                     <div className="custom-anim-inner">
-                      <div className="custom-anim-content">
+                      <div
+                        className="custom-anim-content"
+                        style={{ backgroundColor: "transparent" }}
+                      >
                         <div className="row">
                           <div className="col-12 mb-3">
                             <p
                               className="fw-bold mb-1"
                               style={{
                                 fontSize: "0.8rem",
-                                color: "#64748b",
+                                opacity: "0.85",
                                 textTransform: "uppercase",
                               }}
                             >
@@ -247,17 +338,16 @@ const SuspensionAppeals = () => {
                               className="fw-bold mb-1"
                               style={{
                                 fontSize: "0.8rem",
-                                color: "#64748b",
+                                opacity: "0.85",
                                 textTransform: "uppercase",
                               }}
                             >
                               Student's Appeal Statement
                             </p>
-                            <div className="p-3 bg-white border rounded-3 shadow-sm">
+                            <div className="p-3 rounded-3 shadow-sm" style={{ backgroundColor: "var(--light-hover)" }}>
                               <p
                                 className="m-0 fst-italic"
                                 style={{
-                                  color: "#334155",
                                   fontSize: "0.95rem",
                                 }}
                               >
@@ -270,7 +360,7 @@ const SuspensionAppeals = () => {
                         {/* Action Buttons */}
                         <div className="d-flex justify-content-between align-items-center gap-2 mt-2">
                           <span
-                            className="text-secondary fw-medium"
+                            className="fw-medium opacity-50"
                             style={{ fontSize: "0.9rem" }}
                           >
                             student email: {student.email}
@@ -278,14 +368,26 @@ const SuspensionAppeals = () => {
                           <div className="btns d-flex gap-2">
                             <button
                               className="btn btn-outline-danger px-4"
-                              onClick={() => setModalConfig({ isOpen: true, type: "Reject", studentId: student._id })}
+                              onClick={() =>
+                                setModalConfig({
+                                  isOpen: true,
+                                  type: "Reject",
+                                  studentId: student._id,
+                                })
+                              }
                               style={{ fontSize: "0.9rem", fontWeight: "500" }}
                             >
                               Reject
                             </button>
                             <button
                               className="btn px-4 btn-outline-success"
-                              onClick={() => setModalConfig({ isOpen: true, type: "Approve", studentId: student._id })}
+                              onClick={() =>
+                                setModalConfig({
+                                  isOpen: true,
+                                  type: "Approve",
+                                  studentId: student._id,
+                                })
+                              }
                               style={{
                                 fontSize: "0.9rem",
                                 fontWeight: "500",
@@ -307,36 +409,63 @@ const SuspensionAppeals = () => {
       {/* --- THE ACTION MODAL --- */}
       {modalConfig.isOpen && (
         <div className="modal-overlay" onClick={closeActionModal}>
-          <div 
+          <div
             className="modal-content-custom text-start" 
+            style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-primary)" }}
             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
           >
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h5 className="fw-bold m-0" style={{ color: modalConfig.type === "Approve" ? "#059669" : "#dc2626" }}>
-                {modalConfig.type === "Approve" ? "Approve Appeal" : "Reject Appeal"}
+            <div className="d-flex justify-content-between align-items-center mb-3"
+            data-bs-theme={theme}
+            >
+              <h5
+                className="fw-bold m-0"
+                style={{
+                  color: modalConfig.type === "Approve" ? "#059669" : "#d33232",
+                }}
+              >
+                {modalConfig.type === "Approve"
+                  ? "Approve Appeal"
+                  : "Reject Appeal"}
               </h5>
-              <button className="btn-close" onClick={closeActionModal} disabled={isProcessing}></button>
+              <button
+                className="btn-close"
+                onClick={closeActionModal}
+                disabled={isProcessing}
+              ></button>
             </div>
-            
-            <p style={{ color: "#475569", fontSize: "0.95rem", marginBottom: "1.5rem" }}>
-              {modalConfig.type === "Approve" 
+
+            <p
+              style={{
+                opacity: "0.85",
+                fontSize: "0.95rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              {modalConfig.type === "Approve"
                 ? "You are about to lift this student's suspension. Please provide a reason or note for the student."
                 : "You are about to permanently reject this appeal. The student will remain suspended until suspend expiry. Provide a reason below."}
             </p>
 
             <form onSubmit={handleProcessAppeal}>
               <div className="mb-4">
-                <label className="form-label fw-bold" style={{ color: "#334155", fontSize: "0.85rem" }}>
+                <label
+                  className="form-label fw-semibold"
+                  style={{ fontSize: "0.85rem" }}
+                >
                   Admin Remarks (Sent to Student)
                 </label>
                 <textarea
-                  className="form-control"
+                  className="form-control modalInput"
                   rows="4"
                   placeholder="e.g., Your appeal has been reviewed and accepted..."
                   value={adminRemarks}
                   onChange={(e) => setAdminRemarks(e.target.value)}
                   required
-                  style={{ resize: "none", border: "1px solid #cbd5e1", borderRadius: "8px" }}
+                  style={{
+                    resize: "none",
+                    border: "1px solid var(--light-hover)",
+                    borderRadius: "8px",
+                  }}
                   disabled={isProcessing}
                 ></textarea>
               </div>
@@ -355,14 +484,15 @@ const SuspensionAppeals = () => {
                   className={`btn px-4 text-white ${modalConfig.type === "Approve" ? "btn-success" : "btn-danger"}`}
                   disabled={isProcessing || !adminRemarks.trim()}
                 >
-                  {isProcessing ? "Processing..." : `Confirm ${modalConfig.type}`}
+                  {isProcessing
+                    ? "Processing..."
+                    : `Confirm ${modalConfig.type}`}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
-
     </section>
   );
 };

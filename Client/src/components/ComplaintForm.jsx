@@ -62,7 +62,7 @@ const priorityOptions = ["Low", "Medium", "High"];
 function ComplaintForm() {
   const { user, token, refetchComplaints } = useAuth();
   if (!user || !token) {
-    return <Error />
+    return <Error />;
   }
 
   const [formData, setFormData] = useState({
@@ -155,14 +155,28 @@ function ComplaintForm() {
       !formData.subCategory ||
       !formData.priority
     ) {
-      toast.error("Fill all the form fields!");
+      toast.error("Fill all the form fields!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       return;
     }
 
     try {
       const token = localStorage.getItem("authToken");
       if (!token) {
-        toast.error("You must be logged in to submit a complaint.");
+        toast.error("You must be logged in to submit a complaint.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         return;
       }
       const response = await fetch(
@@ -178,7 +192,14 @@ function ComplaintForm() {
       );
 
       if (response.ok) {
-        toast.success("Complaint submitted successfully!");
+        toast.success("Complaint submitted successfully!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         setFormData({
           complaintTitle: "",
           complaintBody: "",
@@ -198,12 +219,26 @@ function ComplaintForm() {
         }, 1000);
       } else {
         const errorData = await response.json();
-        toast.error(errorData.msg || "Failed to submit complaint.");
+        toast.error(errorData.msg || "Failed to submit complaint.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         console.error("Server responded with an error:", errorData);
       }
     } catch (error) {
       console.error("Error while submitting complaint: ", error);
-      toast.error("Can’t reach the server!");
+      toast.error("Can’t reach the server!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
     }
   };
 
@@ -220,18 +255,18 @@ function ComplaintForm() {
   }) => {
     const isOpen = openDropdown === name;
     const displayValue = value || (
-      <span className="text-muted">{placeholder}</span>
+      <span className="opacity-75">{placeholder}</span>
     );
 
     return (
       <div
-        className={`p-2 ps-3 selects border rounded-3 bg-white d-flex justify-content-between align-items-center position-relative ${disabled ? "disabled" : ""}`}
+        className={`p-2 ps-3 selects rounded-3 d-flex justify-content-between align-items-center position-relative ${disabled ? "disabled" : ""}`}
         role="button"
         onClick={disabled ? null : () => handleToggleDropdown(name)}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-disabled={disabled}
-        style={{ minHeight: "38px" }}
+        style={{ minHeight: "38px", cursor: disabled ? "not-allowed" : "pointer", color: "var(--text-primary)", border: "1px solid var(--light-hover)" }}
       >
         {displayValue}
         <svg
@@ -248,7 +283,7 @@ function ComplaintForm() {
           />
         </svg>
         {isOpen && (
-          <div className="border menus mt-1 p-2 rounded-3 bg-white position-absolute">
+          <div className="menus mt-1 p-2 rounded-3 position-absolute" style={{backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)"}}>
             {options.map((option) => (
               <p
                 key={option}
@@ -285,13 +320,11 @@ function ComplaintForm() {
       style={{ backgroundImage: `url(${backImage})`, backgroundSize: "cover" }}
     >
       <div className="px-5 position-relative">
-               {" "}
         <button
           onClick={() => navigate(-1)}
           className="rounded-5 position-absolute top-0 start-0 mx-5"
           style={{ backgroundColor: "transparent", border: "none" }}
         >
-                   {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
@@ -300,35 +333,23 @@ function ComplaintForm() {
             className="bi bi-arrow-left back"
             viewBox="0 0 16 16"
           >
-                       {" "}
             <path
               fillRule="evenodd"
               d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0.708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
             />
-                     {" "}
           </svg>
-                 {" "}
         </button>
-             {" "}
       </div>
-           {" "}
       <div className="card backImg shadow-lg mx-auto text-start my-5">
-               {" "}
         <div
           className="card-header p-3 rounded-3 text-white"
           style={{ backgroundColor: "#1a257d" }}
         >
-                   {" "}
-          <h2 className="mb-0 text-center header">Submit a New Complaint</h2>   
-             {" "}
+          <h2 className="mb-0 text-center header">Submit a New Complaint</h2>
         </div>
-               {" "}
-        <div className="card-body">
-                   {" "}
+        <div className="card-body" style={{ color: "var(--text-primary)" }}>
           <form onSubmit={handleSubmit} autoComplete="false">
-                       {" "}
             <div className="mb-3">
-                           {" "}
               <input
                 type="text"
                 className="form-control formText"
@@ -338,11 +359,8 @@ function ComplaintForm() {
                 value={formData.complaintTitle}
                 onChange={handleChange}
               />
-                         {" "}
             </div>
-                       {" "}
             <div className="mb-3">
-                           {" "}
               <textarea
                 className="form-control formText"
                 id="complaintBody"
@@ -352,13 +370,9 @@ function ComplaintForm() {
                 value={formData.complaintBody}
                 onChange={handleChange}
               ></textarea>
-                         {" "}
             </div>
-                       {" "}
             <div ref={dropdownContainerRef}>
-                           {" "}
               <div className="row formText">
-                               {" "}
                 <div className="col-md-6 mb-3">
                   {renderDropdown({
                     name: "category",
@@ -366,9 +380,7 @@ function ComplaintForm() {
                     value: formData.category,
                     placeholder: "Select a category...",
                   })}
-                                 {" "}
                 </div>
-                               {" "}
                 <div className="col-md-6 mb-3">
                   {renderDropdown({
                     name: "subCategory",
@@ -377,11 +389,9 @@ function ComplaintForm() {
                     placeholder: "Select a sub-category...",
                     disabled: !formData.category,
                   })}
-                                 {" "}
                 </div>
-                             {" "}
               </div>
-                           {" "}
+
               <div className="mb-3 formText">
                 {renderDropdown({
                   name: "priority",
@@ -389,13 +399,10 @@ function ComplaintForm() {
                   value: formData.priority,
                   placeholder: "Select a priority...",
                 })}
-                             {" "}
               </div>
-                         {" "}
             </div>
-                       {" "}
+
             <div className="form-check check mb-4 formText">
-                           {" "}
               <input
                 className="form-check-input mt-2"
                 type="checkbox"
@@ -404,19 +411,17 @@ function ComplaintForm() {
                 checked={formData.isAnonymous}
                 onChange={handleChange}
               />
-                           {" "}
+
               <label
                 className="form-check-label ms-2 mt-2"
                 htmlFor="isAnonymous"
                 title="For sensitive issues"
               >
-                                Submit Anonymously              {" "}
+                Submit Anonymously
               </label>
-                         {" "}
             </div>
-                       {" "}
-            <button type="submit" className="btn login_btn w-100 formText">
-                           {" "}
+
+            <button type="submit" className="py-2 rounded-3 login_btn w-100 formText btn-click-animation">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -425,19 +430,13 @@ function ComplaintForm() {
                 height="18"
                 className="bi bi-send me-2"
               >
-                               {" "}
                 <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"></path>
-                             {" "}
               </svg>
-                            Submit Complaint            {" "}
+              Submit Complaint
             </button>
-                     {" "}
           </form>
-                 {" "}
         </div>
-             {" "}
       </div>
-         {" "}
     </div>
   );
 }

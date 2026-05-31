@@ -13,7 +13,7 @@ const Icons = {
       height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#6c757d"
+      stroke="var(--text-primary)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -29,7 +29,7 @@ const Icons = {
       height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#6c757d"
+      stroke="var(--text-primary)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -73,7 +73,14 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      toast.error("Oops! Invalid credentials ");
+      toast.error("Oops! Invalid credentials", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
       return;
     }
 
@@ -100,7 +107,14 @@ export default function Signin() {
 
         if (res_data.role === "Admin") {
           return (
-            toast.success(`Welcome ${res_data.adminName}, Login successful!`),
+            toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
+              style: {
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                width: "fit-content",
+                maxWidth: "40vw",
+              },
+            }),
             setTimeout(() => {
               navigate(`/dashboard/admin`);
             }, 1000),
@@ -108,7 +122,14 @@ export default function Signin() {
           );
         } else if (res_data.role === "SuperAdmin") {
           return (
-            toast.success(`Welcome ${res_data.adminName}, Login successful!`),
+            toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
+              style: {
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                width: "fit-content",
+                maxWidth: "40vw",
+              },
+            }),
             setTimeout(() => {
               navigate(`/dashboard/superAdmin`);
             }, 1000),
@@ -117,6 +138,14 @@ export default function Signin() {
         } else {
           toast.success(
             `Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos!`,
+            {
+              style: {
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                width: "fit-content",
+                maxWidth: "40vw",
+              },
+            },
           );
           setTimeout(() => {
             navigate(`/studentDashboard/${res_data.rollno}`);
@@ -130,17 +159,38 @@ export default function Signin() {
           errorData.message &&
           errorData.message.toLowerCase().includes("suspended")
         ) {
-          toast.error("Your account is temporarily suspended.");
+          toast.error("Your account is temporarily suspended.", {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "100%",
+              maxWidth: "40vw",
+            }
+          });
           (storeTokenInLocalStorage(errorData.token),
             navigate("/suspended-account"));
-        } else toast.error(errorData.message || "Invalid Email or Password!");
+        } else toast.error(errorData.message || "Invalid Email or Password!", {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          }
+        });
         return;
       }
     } catch (err) {
       console.log(err);
 
       console.error("Error in form submission: ", err.message);
-      toast.error("Server not responding!");
+      toast.error("Server not responding!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
       return;
     } finally {
       setLoading(false);
@@ -155,7 +205,14 @@ export default function Signin() {
       );
     }
 
-    toast.error("Invalid Email or Password!");
+    toast.error("Invalid Email or Password!", {
+      style: {
+        backgroundColor: "var(--bg-surface)",
+        color: "var(--text-primary)",
+        width: "100%",
+        maxWidth: "40vw",
+      }
+    });
   };
 
   return (
@@ -205,11 +262,17 @@ export default function Signin() {
 
       {/* Right Section */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-5">
-        <div className="border rounded-4 p-4 shadow-lg w-100 bg-white" >
+        <div
+          className="rounded-4 p-4 shadow-lg w-100"
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            border: "1px solid var(--bg-surface)",
+          }}
+        >
           <form ref={formRef} onSubmit={handleSubmit} className="w-100">
             <div className="formHeader text-center">
               <p className="fs-4 fw-bold mb-1">Login</p>
-              <p className="text-muted mb-3">Login to your account</p>
+              <p className="opacity-75 mb-3">Login to your account</p>
             </div>
 
             {inputData.map((data, idx) => {
@@ -238,33 +301,36 @@ export default function Signin() {
                     )}
                   </label>
                   <div className="position-relative">
-                  <input
-                    id={data.name}
-                    type={currentType}
-                    placeholder={data.placeholder}
-                    name={data.name}
-                    value={formData[data.name]}
-                    onChange={handleChange}
-                    className="form-control p-3 pe-5"
-                  />
-                  {isPassword && (
-                    <span
-                      className="position-absolute top-50 translate-middle-y end-0 pe-3"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        if (isPassword) setShowPassword(!showPassword);
-                      }}
-                    >
-                      {isPassword && showPassword ? Icons.EyeOff : Icons.Eye}
-                    </span>
-                  )}
+                    <input
+                      id={data.name}
+                      type={currentType}
+                      placeholder={data.placeholder}
+                      name={data.name}
+                      value={formData[data.name]}
+                      onChange={handleChange}
+                      className="form-control p-3 pe-5"
+                    />
+                    {isPassword && (
+                      <span
+                        className="position-absolute top-50 translate-middle-y end-0 pe-3"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          if (isPassword) setShowPassword(!showPassword);
+                        }}
+                      >
+                        {isPassword && showPassword ? Icons.EyeOff : Icons.Eye}
+                      </span>
+                    )}
                   </div>
                 </div>
               );
             })}
 
             <div className="text-center">
-              <button type="submit" className="btn px-4 mt-3 login_btn w-100">
+              <button
+                type="submit"
+                className="btn px-4 mt-3 login_btn w-100 btn-click-animation"
+              >
                 Login
               </button>
             </div>

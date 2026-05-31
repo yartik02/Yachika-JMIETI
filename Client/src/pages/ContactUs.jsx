@@ -36,9 +36,9 @@ const contactInfo = [
     backcolor: "#ffedd4",
     title: "College Hours",
     details: [
-      "Monday - Friday: 9:50 AM - 5:00 PM",
-      "Working Saturday: 10:00 AM - 5:00 PM",
-      "Sunday: Closed",
+      `Mon - Fri: 9:50 AM - 5:00 PM`,
+      `Working Saturday: 10 AM - 5 PM`,
+      `Sunday: Closed`,
     ],
   },
 ];
@@ -49,7 +49,7 @@ const socialLinks = [
     label: "Facebook",
     claavalue: "bi bi-facebook",
     color: "#4f46e5",
-    url: "https://www.facebook.com/jmietiinstitute"
+    url: "https://www.facebook.com/jmietiinstitute",
   },
   {
     path: "M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z",
@@ -63,7 +63,7 @@ const socialLinks = [
     label: "Instagram",
     classValue: "bi bi-instagram",
     color: "#ff66a6ff",
-    url: "https://www.instagram.com/jmietiofficial/"
+    url: "https://www.instagram.com/jmietiofficial/",
   },
   {
     path: "M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z",
@@ -77,7 +77,7 @@ const socialLinks = [
     label: "YouTube",
     classValue: "bi bi-youtube",
     color: "#ff1111ff",
-    url: "https://www.youtube.com/@JmietiCollege"
+    url: "https://www.youtube.com/@JmietiCollege",
   },
 ];
 
@@ -85,13 +85,13 @@ const inputFields1 = [
   {
     id: "name",
     type: "text",
-    name:"name",
+    name: "name",
     placeholder: "Enter your name...",
   },
   {
     id: "email",
     type: "email",
-    name:"email",
+    name: "email",
     placeholder: "Enter your Email...",
   },
 ];
@@ -100,14 +100,14 @@ const messageFields = [
   {
     id: "subject",
     type: "text",
-    name:"subject",
+    name: "subject",
     placeholder: "Enter your title of inquiry...",
     divClass: "mb-3 text-start",
     element: "input",
   },
   {
     id: "message",
-    name:"message",
+    name: "message",
     placeholder: "Enter your message...",
     divClass: "mb-4 text-start",
     element: "textarea",
@@ -117,16 +117,16 @@ const messageFields = [
 
 function Contact() {
   const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-  const {user} = useAuth();
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const { user } = useAuth();
 
   const handleClick = (url) => {
     window.open(url, "_blank");
-  }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -134,67 +134,104 @@ function Contact() {
   };
 
   useEffect(() => {
-  if (user) {
-    setFormData((prev) => ({
-      ...prev,
-      name: user.name,
-      email: user.email,
-    }));
-  }
-}, [user]);
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
 
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      toast.error("Can’t submit empty fields, fill all!");
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
+      toast.error("Can’t submit empty fields, fill all!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
       return;
     }
 
-        try {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/api/auth/contactUs`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: formData.name,
-                email: formData.email,
-                subject: formData.subject,
-                message: formData.message,
-              }),
-            },
-          );
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/contactUs`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+          }),
+        },
+      );
 
-          if (response.ok) {
-            const res_Data = await response.json(); // Parse success data
-    
-            setFormData({ name: "", email: "", subject: "", message: "" });
-            toast.success("Message sent successfully!", { autoClose: 2000 });
-            // console.log(res_Data);
-          } else {
-            // If the response was not ok, parse the error message from the body.
-            const errorData = await response.json();
-            toast.error(errorData.msg || "Message not sent, please try again!");
-          }
-        } catch (err) {
-        console.error("Error during contactUs:", err);
-          toast.error("Message not sent, Network error occurred!");
+      if (response.ok) {
+        const res_Data = await response.json(); // Parse success data
+
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        toast.success("Message sent successfully!", { autoClose: 2000 }, {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          },
+        });
+        // console.log(res_Data);
+      } else {
+        // If the response was not ok, parse the error message from the body.
+        const errorData = await response.json();
+        toast.error(errorData.msg || "Message not sent, please try again!", {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          },
+        });
+      }
+    } catch (err) {
+      console.error("Error during contactUs:", err);
+      toast.error("Message not sent, Network error occurred!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
         }
-
+      });
+    }
   };
 
   return (
-    <section
-      className="ContactUs mt-5"
-    >
+    <section className="ContactUs mt-5">
       <div
         className="bg-primary bg-opacity-10 mx-auto fw-normal mb-5 p-2 px-3 rounded-pill fs-6"
-        style={{ color: "#2648c2ff", width:"fit-content" }}
+        style={{ color: "#2648c2ff", width: "fit-content" }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width={25} className="me-2" fill="currentColor">
-        <path d="M288 32L352 32C369.7 32 384 46.3 384 64L384 128L256 128L256 64C256 46.3 270.3 32 288 32zM96 96L208 96L208 128C208 154.5 229.5 176 256 176L384 176C410.5 176 432 154.5 432 128L432 96L544 96C579.3 96 608 124.7 608 160L608 480C608 515.3 579.3 544 544 544L96 544C60.7 544 32 515.3 32 480L32 160C32 124.7 60.7 96 96 96zM208 464C208 472.8 215.2 480 224 480L416 480C424.8 480 432 472.8 432 464C432 419.8 396.2 384 352 384L288 384C243.8 384 208 419.8 208 464zM320 344C350.9 344 376 318.9 376 288C376 257.1 350.9 232 320 232C289.1 232 264 257.1 264 288C264 318.9 289.1 344 320 344z"/></svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 640"
+          width={25}
+          className="me-2"
+          fill="currentColor"
+        >
+          <path d="M288 32L352 32C369.7 32 384 46.3 384 64L384 128L256 128L256 64C256 46.3 270.3 32 288 32zM96 96L208 96L208 128C208 154.5 229.5 176 256 176L384 176C410.5 176 432 154.5 432 128L432 96L544 96C579.3 96 608 124.7 608 160L608 480C608 515.3 579.3 544 544 544L96 544C60.7 544 32 515.3 32 480L32 160C32 124.7 60.7 96 96 96zM208 464C208 472.8 215.2 480 224 480L416 480C424.8 480 432 472.8 432 464C432 419.8 396.2 384 352 384L288 384C243.8 384 208 419.8 208 464zM320 344C350.9 344 376 318.9 376 288C376 257.1 350.9 232 320 232C289.1 232 264 257.1 264 288C264 318.9 289.1 344 320 344z" />
+        </svg>
         Contact Us
       </div>
 
@@ -202,7 +239,7 @@ function Contact() {
         <h6 className="display-6 heading fw-bold text-center">
           Let's get in <span className="text-gradient">Touch</span>
         </h6>
-        <p className="fs-6 fw-normal text-muted mb-4 text-center mx-auto">
+        <p className="fs-6 fw-normal opacity-75 mb-4 text-center mx-auto">
           Have questions about Yachika@JMIETI? Need assistance with your
           account? We're here to help! Reach out to us through any of the
           channels below.
@@ -212,12 +249,16 @@ function Contact() {
       <section className="contact-section mt-5 py-5" style={{ width: "100%" }}>
         <div className="container my-3 pb-5">
           <div className="row g-5 mx-auto" style={{ width: "100%" }}>
-
             {/* --- Left Column (Sticky Form) --- */}
             <div className="col-lg-6">
-              <div className="sticky-form-wrapper bg-white text-center">
-                <h3 className="fw-bold mb-2">Send us a <span className="text-gradient">Message</span></h3>
-                <p className="form-subtitle mb-4 text-muted fw-light mx-auto w-100" style={{maxWidth:"75%", fontSize:"0.95rem"}}>
+              <div className="sticky-form-wrapper text-center">
+                <h3 className="fw-bold mb-2">
+                  Send us a <span className="text-gradient">Message</span>
+                </h3>
+                <p
+                  className="form-subtitle mb-4 fw-light mx-auto "
+                  style={{ maxWidth: "75%", fontSize: "0.95rem" }}
+                >
                   Fill out the form below and we'll get back to you as soon as
                   possible.
                 </p>
@@ -229,12 +270,10 @@ function Contact() {
                           id={field.id}
                           type={field.type}
                           placeholder={field.placeholder}
-                          // required
                           name={field.name}
                           value={formData[field.name]}
                           onChange={handleChange}
                           className="form-control p-3"
-                          style={{backgroundColor:"#fafaff"}}
                         />
                       </div>
                     ))}
@@ -251,7 +290,6 @@ function Contact() {
                           value={formData[field.name]}
                           onChange={handleChange}
                           className="form-control p-3"
-                          style={{backgroundColor:"#fafaff"}}
                         />
                       ) : (
                         <textarea
@@ -262,19 +300,21 @@ function Contact() {
                           value={formData[field.name]}
                           onChange={handleChange}
                           className="form-control p-3"
-                          style={{backgroundColor:"#fafaff"}}
                         />
                       )}
                     </div>
                   ))}
-                  <button type="submit" className="btn login_btn py-2 w-100">
+                  <button
+                    type="submit"
+                    className="btn login_btn py-2 w-100 btn-click-animation"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 16 16"
                       fill="currentColor"
                       width="18"
                       height="18"
-                      className="bi bi-send me-2" 
+                      className="bi bi-send me-2"
                     >
                       <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"></path>
                     </svg>
@@ -287,9 +327,8 @@ function Contact() {
             {/* --- Right Column (Scrollable Info) --- */}
             <div className="col-lg-6">
               <div className="scrollable-info-wrapper ms-lg-5 ps-lg-5">
-
                 {/* Contact Info Section */}
-                <div className="info-section shadow-sm mb-5 text-start bg-white p-5 rounded-5">
+                <div className="info-section shadow-sm mb-5 text-start p-5 rounded-5">
                   <h4 className="text-start mb-4">Contact Information</h4>
                   {contactInfo.map((item, index) => (
                     <div className="contact-item mb-4" key={index}>
@@ -311,11 +350,38 @@ function Contact() {
                         <p className="mb-0" style={{ fontWeight: "600" }}>
                           {item.title}
                         </p>
-                        {item.details.map((line, i) => (
-                          <span className="text-muted fw-light" key={i}>
-                            {line}
-                          </span>
-                        ))}
+                        {item.details.map((line, i) => {
+                          // 1. Find the first colon to avoid breaking time formats (like 9:50 AM)
+                          const colonIndex = line.indexOf(":");
+
+                          // 2. If a colon exists, split the string into label and value
+                          if (colonIndex !== -1) {
+                            const label = line.substring(0, colonIndex + 1); // Includes the colon
+                            const value = line.substring(colonIndex + 1); // Everything after the colon
+
+                            return (
+                              <span
+                                className="fw-light"
+                                style={{ display: "block" }}
+                                key={i}
+                              >
+                                <span className="fw-medium">{label}</span>
+                                {value}
+                              </span>
+                            );
+                          }
+
+                          // 3. Fallback for strings without a colon (like your email address)
+                          return (
+                            <span
+                              className="fw-light"
+                              style={{ display: "block" }}
+                              key={i}
+                            >
+                              {line}
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
                   ))}
@@ -335,7 +401,7 @@ function Contact() {
                     </svg>
                     Need Immediate Help?
                   </h5>
-                  <p className="text-muted">
+                  <p className="">
                     For urgent issues or technical problems, you can:
                   </p>
                   <ul>
@@ -344,12 +410,11 @@ function Contact() {
                   </ul>
                 </div>
                 {/* Follow Us Section */}
-                <div className="info-section shadow-lg text-start p-5 bg-white rounded-5">
+                <div className="info-section shadow-lg text-start p-6 rounded-5">
                   <h5
-                    className="d-flex align-items-center fw-normal p-2 px-3 rounded-5 "
+                    className="d-flex followText align-items-center fw-normal p-2 px-3 rounded-5 "
                     style={{
                       width: "fit-content",
-                      backgroundColor: "#eef2ffcb",
                     }}
                   >
                     <svg
@@ -364,15 +429,15 @@ function Contact() {
                     </svg>
                     Follow Us
                   </h5>
-                  <p className="text-muted">
+                  <p className="opacity-75">
                     Stay updated with the latest news and announcements:
                   </p>
-                  <div className="social-links p-auto">
+                  <div className="social-links">
                     {socialLinks.map((link, index) => (
                       <p
                         aria-label={link.label}
                         title={link.label}
-                        className="social-icon"
+                        className="social-icon btn-click-animation m-0"
                         key={index}
                         onClick={() => handleClick(link.url)}
                       >
@@ -397,8 +462,6 @@ function Contact() {
       </section>
 
       <FaqSection />
-      {/* <section className="FAQ">
-      </section> */}
     </section>
   );
 }

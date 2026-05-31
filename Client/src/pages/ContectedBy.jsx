@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { trashIcon } from "../utils/Icons";
 
 const ContactedUsers = () => {
   const [allContacts, setAllContacts] = useState([]);
@@ -23,7 +24,15 @@ const ContactedUsers = () => {
       setAllContacts(data);
     } catch (error) {
       console.error("Fetch error:", error);
-      toast.error("Could not load messages.");
+      toast.error("Could not load messages.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      }
+      );
     }
   };
 
@@ -46,13 +55,34 @@ const ContactedUsers = () => {
       );
 
       if (response.ok) {
-        toast.success("Message deleted successfully!");
+        toast.success("Message deleted successfully!" , {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         setAllContacts((prev) => prev.filter((msg) => msg._id !== msgId));
       } else {
-        toast.error("Failed to delete message.");
+        toast.error("Failed to delete message.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (error) {
-      toast.error("An error occurred, try again later!");
+      toast.error("An error occurred, try again later!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       console.error("Delete error:", error);
     }
   };
@@ -62,17 +92,20 @@ const ContactedUsers = () => {
       <div className="w-100">
         <h3
           className="text-start fw-light ms-3 mb-0 d-flex align-items-center"
-          style={{ color: "#065064" }}
+          style={{ color: "var(--text-dashboard-name)" }}
         >
           <GridIcon />
           Contacted By
         </h3>
-        <hr className="mx-auto w-100" style={{ color: "#065064" }} />
+        <hr
+          className="mx-auto w-100"
+          style={{ color: "var(--text-dashboard-name)" }}
+        />
       </div>
 
-      <div className="row w-100 px-3">
+      <div className="row px-3">
         {allContacts.length === 0 ? (
-          <div className="text-muted mt-5 fs-5 d-flex flex-column justify-content-center align-items-center">
+          <div className="mt-5 fs-5 d-flex flex-column justify-content-center align-items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={70}
@@ -89,7 +122,7 @@ const ContactedUsers = () => {
               <path d="M7 15h6" />
               <path d="M7 7h8" />
             </svg>
-            <p className="text-center">No contact messages found.</p>
+            <p className="text-center opacity-75">No contact messages found.</p>
           </div>
         ) : (
           allContacts.map((curMsg) => {
@@ -108,38 +141,63 @@ const ContactedUsers = () => {
             return (
               <div key={curMsg._id} className="col-lg-6 col-md-6 col-sm-12 p-3">
                 <div
-                  className="card rounded-4 text-start border border-secondary border-opacity-10 p-4 d-flex flex-column justify-content-between shadow-sm"
+                  className="card rounded-4 text-start p-4 d-flex flex-column justify-content-between shadow-sm"
                   style={{
-                    backgroundColor: "#e0e1dd42",
+                    backgroundColor: "var(--bg-glass)",
                     minHeight: "30vh",
+                    color: "var(--text-primary)",
                   }}
                 >
                   <div className="d-flex flex-column gap-2 mb-4">
                     <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                      <span className="fw-bold me-2">Name:</span> {curMsg.name}
+                      <span
+                        className="fw-bold me-2"
+                        style={{ color: "var(--text-dashboard-name)" }}
+                      >
+                        Name:
+                      </span>{" "}
+                      {curMsg.name}
                     </p>
                     <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                      <span className="fw-bold me-2">Email:</span>{" "}
+                      <span
+                        className="fw-bold me-2"
+                        style={{ color: "var(--text-dashboard-name)" }}
+                      >
+                        Email:
+                      </span>
                       {curMsg.email}
                     </p>
                     <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                      <span className="fw-bold me-2">Subject:</span>{" "}
+                      <span
+                        className="fw-bold me-2"
+                        style={{ color: "var(--text-dashboard-name)" }}
+                      >
+                        Subject:
+                      </span>
                       {curMsg.subject}
                     </p>
                     <div
-                      className="m-0 mt-2 p-3 bg-white rounded-3 border border-secondary border-opacity-10"
-                      style={{ fontSize: "0.9rem" }}
+                      className="m-0 mt-2 p-3 rounded-3 border border-secondary border-opacity-10"
+                      style={{
+                        fontSize: "0.9rem",
+                        backgroundColor: "var(--light-hover)",
+                      }}
                     >
                       <span className="fst-italic">"{curMsg.message}"</span>
                     </div>
                   </div>
 
-                  <div className="d-flex justify-content-between align-items-center mt-auto border-top pt-3">
-                    <p
-                      className="m-0 text-muted"
-                      style={{ fontSize: "0.85rem" }}
-                    >
-                      <span className="fw-bold me-1">Received:</span>
+                  <div
+                    className="d-flex justify-content-between align-items-center mt-auto pt-3"
+                    style={{ borderTop: "1px solid var(--light-hover)" }}
+                  >
+                    <p className="m-0" style={{ fontSize: "0.85rem" }}>
+                      <span
+                        className="fw-bold me-1"
+                        style={{ color: "var(--text-dashboard-name)" }}
+                      >
+                        Received:
+                      </span>
                       {formattedDate} at {formattedTime}
                     </p>
                     <button
@@ -147,7 +205,20 @@ const ContactedUsers = () => {
                       onClick={() => deleteMsg(curMsg._id)}
                       style={{ fontSize: "0.85rem" }}
                     >
-                      <TrashIcon />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        // height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        className="me-1"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                      {trashIcon}
+                      </svg>
                       Delete
                     </button>
                   </div>
@@ -168,7 +239,7 @@ const GridIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     width="25"
     height="25"
-    fill="#065064"
+    fill="currentColor"
     className="me-2"
     viewBox="0 0 16 16"
   >
@@ -176,15 +247,15 @@ const GridIcon = () => (
   </svg>
 );
 
-const TrashIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    fill="currentColor"
-    className="me-2"
-    viewBox="0 0 16 16"
-  >
-    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-  </svg>
-);
+// const TrashIcon = () => (
+//   <svg
+//     xmlns="http://www.w3.org/2000/svg"
+//     width="16"
+//     height="16"
+//     fill="currentColor"
+//     className="me-2"
+//     viewBox="0 0 16 16"
+//   >
+//     <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+//   </svg>
+// );

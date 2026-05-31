@@ -20,3 +20,12 @@
 .star-off {
   color: #e0e0e0; /* A light gray */
 }
+
+.feedbackTextarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 1; /* Ensure placeholder is fully opaque */
+}
+
+.feedbackTextarea:focus, .feedbackTextarea:active{
+  color: var(--text-primary);
+}

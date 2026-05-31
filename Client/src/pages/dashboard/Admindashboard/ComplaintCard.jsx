@@ -5,12 +5,10 @@ const ComplaintCard = ({ complaint }) => {
   const priorityClass = `priority-${(complaint.priority || "").toLowerCase()}`;
 
   return (
-    <div className="stone-card border d-flex flex-lg-row flex-column justify-content-lg-between align-items-lg-center rounded-4 p-3 text-start bg-white">
-      <div className="d-flex flex-column align-items-start">
+    <div className="stone-card d-flex flex-lg-row flex-column justify-content-lg-between align-items-lg-center rounded-4 p-3 text-start" style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)" }}>
+      <div className="d-flex flex-column align-items-start" style={{maxWidth:"70%"}}>
         <h3 className="stone-title m-0">{complaint.complaintTitle}</h3>
-        <p className="m-0 text- text-muted">
-          {complaint.complaintBody}
-        </p>
+        <p className="m-0 opacity-75 text-truncate w-100">{complaint.complaintBody}</p>
       </div>
 
       <div className="stone-footer d-flex gap-3">

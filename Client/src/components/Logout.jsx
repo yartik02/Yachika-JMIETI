@@ -11,8 +11,15 @@ export default function Logout() {
   useEffect(() => {
     if (!hasLoggedOut.current) {
       LogoutUser();
-      toast.success("Logged out successfully!");
-      
+      toast.success("Logged out successfully!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
+
       navigate("/");
       hasLoggedOut.current = true;
     }

@@ -46,7 +46,7 @@ function SimpleAnalytics() {
         statistics.categories[complaint.category]++;
       }
       if (complaint.status && statistics.statuses.hasOwnProperty(complaint.status)) {
-        statistics.statuses[complaint.status]++; // <<< This will now count "Progress"
+        statistics.statuses[complaint.status]++; 
       }
     }
 
@@ -76,20 +76,20 @@ function SimpleAnalytics() {
 
   return (
     <section className="container-fluid simple-analytics-section p-0">
-      <h3 className="mb-4 fw-light text-start mx-3" style={{color:"#065064"}}>
+      <h3 className="mb-4 fw-light text-start mx-3" style={{color:"var(--text-dashboard-name)"}}>
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-bar-chart-line-fill me-2" viewBox="0 0 16 16">
           <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
         </svg>
         Complaints Analysis</h3>
       
       {stats.total === 0 ? (
-        <p className="text-muted">No complaints filed yet.</p>
+        <p className="opacity-75 text-center">No complaints filed yet.</p>
       ) : (
         <div className="row">
           {/* Column 1: Categories */}
           <div className="col-lg-6 col-md-12 mb-4">
-            <div className="stat-card p-4 rounded-4 bg-white">
-              <h5 className="stat-card-title mb-4 pb-2">By Category</h5>
+            <div className="stat-card p-4 rounded-4" style={{backgroundColor: "var(--bg-glass)"}}>
+              <h5 className="stat-card-title mb-4 pb-2 text-center">By Category</h5>
               {Object.entries(stats.categories).map(([name, count]) => {
                 const percentage = getPercentage(count, stats.total);
                 return (
@@ -107,8 +107,8 @@ function SimpleAnalytics() {
 
           {/* Column 2: Statuses */}
           <div className="col-lg-6 col-md-12 mb-4">
-            <div className="stat-card p-4 rounded-4 bg-white">
-              <h5 className="stat-card-title mb-4 pb-2">By Status</h5>
+            <div className="stat-card p-4 rounded-4" style={{backgroundColor: "var(--bg-glass)"}}>
+              <h5 className="stat-card-title mb-4 pb-2 text-center">By Status</h5>
               {Object.entries(stats.statuses).map(([name, count]) => {
                 const percentage = getPercentage(count, stats.total);
                 return (

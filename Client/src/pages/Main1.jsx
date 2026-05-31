@@ -66,7 +66,7 @@ function Main1() {
               </h1>
 
               {/* Description */}
-              <p className="fs-6 text-muted opacity-75 mb-4 text-lg-start text-sm-center">
+              <p className="fs-6 opacity-75 mb-4 text-lg-start text-sm-center">
                 Submit complaints, track progress, and help us create a better
                 campus experience for everyone. Your feedback drives positive
                 change and helps build a stronger academic community.
@@ -76,14 +76,14 @@ function Main1() {
               <div className="d-flex flex-wrap gap-4 mb-4 mb-lg-0 justify-content-around">
                 {statsData.map((item, index) => (
                   <div
-                    className="d-flex flex-column shadow justify-content-center align-items-center p-4 rounded-4 bg-light"
+                    className="d-flex flex-column shadow justify-content-center align-items-center p-4 rounded-4 smallStats"
                     key={index}
                     style={{ minWidth: "120px" }}
                   >
                     <span className={`display-6 fw-bold ${item.color}`}>
                       {item.title}
                     </span>
-                    <small className="text-muted">{item.desc}</small>
+                    <small className="opacity-75">{item.desc}</small>
                   </div>
                 ))}
               </div>
@@ -97,13 +97,13 @@ function Main1() {
               <img
                 src={image2}
                 alt="Students discussing campus issues"
-                className="img-fluid rounded-4 border shadow w-75"
+                className="img-fluid Main1Img rounded-4 shadow w-75"
               />
 
               {floatingInfo.map((item) => (
                 <div
                   key={item.id}
-                  className={`position-absolute bg-white rounded-3 px-3 d-flex align-items-center text-${item.color}`}
+                  className={`position-absolute smallStats rounded-3 px-3 d-flex align-items-center text-${item.color}`}
                   style={{
                     ...item.position,
                     boxShadow: "0 1px 10px rgba(0, 0, 0, 0.3)",
@@ -125,7 +125,7 @@ function Main1() {
                   </span>
                   <div className="d-flex flex-column my-1">
                     <p className="fw-bold mb-0">{item.title}</p>
-                    <small className="text-muted text-start">{item.desc}</small>
+                    <small className="text-start">{item.desc}</small>
                   </div>
                 </div>
               ))}

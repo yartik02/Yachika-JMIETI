@@ -31,7 +31,7 @@ const Icons = {
       height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#6c757d"
+      stroke="var(--text-primary)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -47,7 +47,7 @@ const Icons = {
       height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#6c757d"
+      stroke="var(--text-primary)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -212,19 +212,47 @@ function Signup() {
       !formData.password ||
       !formData.confirmPassword
     ) {
-      return toast.error("Oops! Something’s missing — please fill all fields");
+      return toast.error("Oops! Something’s missing — please fill all fields", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
     if (formData.password !== formData.confirmPassword) {
-      return toast.error("Passwords do not match!");
+      return toast.error("Passwords do not match!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
     if (formData.password.length < 8) {
-      return toast.error("Password must be at least 8 characters long!");
+      return toast.error("Password must be at least 8 characters long!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
     if (
       formData.branch === "Bachelor of Computer Applications" &&
       formData.className === "4th Year"
     ) {
-      return toast.error("BCA 4th Year is not a valid class!");
+      return toast.error("BCA 4th Year is not a valid class!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
 
     // 2. Send OTP
@@ -244,15 +272,50 @@ function Signup() {
 
       // if (!mailRes.ok) throw new Error("Failed to send email");
       if (mailRes.ok) {
-        toast.success("OTP sent to your email!");
+        toast.success(
+          <div
+            className="d-flex flex-column w-100"
+            style={{ minWidth: "70vw" }}
+          >
+            <strong>OTP Sent!</strong>
+            <p className="m-0" style={{ fontSize: "0.95rem" }}>
+              If an account with that email exists, an OTP has been sent.
+            </p>
+            <p className="m-0" style={{ fontSize: "0.8rem" }}>
+              Please check your email (and spam folder) for the OTP.
+            </p>
+          </div>,
+          {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "100%",
+              maxWidth: "40vw",
+            },
+          },
+        );
         setStep(2); // Move to OTP Verification Step
       } else {
         const errorData = await mailRes.json();
-        toast.error(<p className="m-0 ">{errorData.msg}</p>);
+        toast.error(<p className="m-0 ">{errorData.msg}</p>, {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          }
+        });
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to send OTP. Please try again.");
+      toast.error("Failed to send OTP. Please try again.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     } finally {
       setIsSendingOtp(false);
     }
@@ -264,7 +327,14 @@ function Signup() {
     const enteredOtp = otp.join("");
 
     if (enteredOtp.length !== 6) {
-      return toast.error("Please enter the complete 6-digit OTP.");
+      return toast.error("Please enter the complete 6-digit OTP.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
 
     try {
@@ -315,7 +385,14 @@ function Signup() {
         });
         setOtp(["", "", "", "", "", ""]);
 
-        toast.success("Sign up is complete, now sign in!", { autoClose: 2000 });
+        toast.success("Sign up is complete, now sign in!", { autoClose: 2000 }, {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            maxWidth: "40vw",
+          },
+        });
         navigate("/login");
       } else {
         const errorData = await response.json();
@@ -338,7 +415,10 @@ function Signup() {
             </div>,
             {
               style: {
-                width: "fit-content",
+                backgroundColor: "var(--bg-surface)",
+                color: "var(--text-primary)",
+                width: "100%",
+                maxWidth: "40vw",
               },
             },
           );
@@ -346,13 +426,28 @@ function Signup() {
         }
         toast.error(
           errorData.msg || "Sign up failed. Please check your details.",
+          {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "100%",
+              maxWidth: "40vw",
+            }
+          }
         );
       }
     } catch (err) {
       console.log("err here:", err);
 
       console.error("Error during signup:", err);
-      toast.error(err.message || "Sign up failed. A network error occurred.");
+      toast.error(err.message || "Sign up failed. A network error occurred.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     } finally {
       setIsVerifying(false);
     }
@@ -384,7 +479,7 @@ function Signup() {
             />
           </svg>
         </button>
-        <div className="d-flex align-items-center topxtra">
+        <div className="d-flex align-items-center ">
           <div className="text-white logo ms-3 p-4 rounded-3 fs-3 d-flex justify-content-center align-items-center">
             <p className="m-0">
               <img src={logo} alt="Yachika Logo" width={75} />
@@ -403,7 +498,13 @@ function Signup() {
 
       {/* --- Right Form Section --- */}
       <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-sm-5">
-        <div className="border rounded-4 p-4 bg-white shadow-lg w-100 ">
+        <div
+          className="rounded-4 p-4 shadow-lg w-100 "
+          style={{
+            backgroundColor: "var(--bg-surface)",
+            border: "1px solid var(--bg-surface)",
+          }}
+        >
           <form
             onSubmit={step === 1 ? handleSendOTP : handleFinalSubmit}
             method="POST"
@@ -415,7 +516,7 @@ function Signup() {
               <div className="fade-enter-active">
                 <div className="formHeader text-center">
                   <p className="fs-4 fw-bold mb-1">Sign-up</p>
-                  <p className="text-muted mb-3">
+                  <p className="mb-3 opacity-75">
                     Signup and become a member now!
                   </p>
                 </div>
@@ -503,8 +604,12 @@ function Signup() {
                     return (
                       <div className="text-start" key={dropdown.name}>
                         <div
-                          className="p-2 ps-3 selects border rounded-3 d-flex justify-content-between align-items-center position-relative mb-3"
+                          className="p-2 ps-3 selects rounded-3 d-flex justify-content-between align-items-center position-relative mb-3"
                           role="button"
+                          style={{
+                            border: "1px solid var(--hover-overlay)",
+                            backgroundColor: "transparent",
+                          }}
                           onClick={() => handleToggleDropdown(dropdown.name)}
                         >
                           {selectedValue}
@@ -523,8 +628,13 @@ function Signup() {
                           </svg>
                           {isOpen && (
                             <div
-                              className="border menus mt-1 p-2 rounded-3 bg-white position-absolute w-100"
-                              style={{ zIndex: 10 }}
+                              className="menus mt-1 p-2 rounded-3 position-absolute w-100"
+                              style={{
+                                zIndex: 10,
+                                backgroundColor: "var(--bg-surface)",
+                                border: "1px solid var(--hover-overlay)",
+                                color: "var(--text-primary)",
+                              }}
                             >
                               {dropdown.options.map((option) => (
                                 <p
@@ -548,7 +658,7 @@ function Signup() {
                 <div className="text-center">
                   <button
                     type="submit"
-                    className="login_btn p-2 rounded-2 w-100 px-4 mt-1"
+                    className="login_btn p-2 rounded-2 w-100 px-4 mt-1 btn-click-animation"
                     disabled={isSendingOtp}
                   >
                     {isSendingOtp ? "Sending OTP..." : "Continue"}
@@ -567,20 +677,26 @@ function Signup() {
             {step === 2 && (
               <div className="fade-enter-active text-center">
                 <p className="fs-4 fw-bold mb-1">Verify your identity</p>
-                <p className="text-muted mb-4">
+                <p className="opacity-75 mb-4">
                   Enter the code sent to your email
                 </p>
 
                 <div className="text-center mt-2">
                   <div
                     className="bg-primary bg-opacity-25 rounded-circle d-inline-flex align-items-center justify-content-center mb-4"
-                    style={{ width: "74px", height: "74px", color: "#1a267d" }}
+                    style={{
+                      width: "74px",
+                      height: "74px",
+                      color: "var(--accent-primary)",
+                    }}
                   >
                     {Icons.Mail}
                   </div>
-                  <p className="text-muted">
+                  <p className="opacity-75">
                     We've sent a 6-digit code to <br />
-                    <strong className="text-dark">{formData.email}</strong>
+                    <strong style={{ color: "var(--bg-primary)" }}>
+                      {formData.email}
+                    </strong>
                   </p>
                 </div>
 
@@ -590,11 +706,11 @@ function Signup() {
                       key={index}
                       type="text"
                       inputMode="numeric"
-                      className="form-control otpInputs rounded-4 text-center fw-bold fs-4 bg-light border border-primary-subtle"
+                      className="form-control otpInputs rounded-4 text-center fw-bold fs-4 border border-primary-subtle"
                       style={{
                         width: "50px",
                         height: "55px",
-                        borderColor: "#1a267d",
+                        borderColor: "var(--accent-primary)",
                       }}
                       maxLength="1"
                       value={digit}
@@ -608,7 +724,7 @@ function Signup() {
                 <button
                   type="button"
                   className="btn btn-link fw-bold text-decoration-none small mb-4"
-                  style={{ color: "#1a267d" }}
+                  style={{ color: "var(--accent-primary)" }}
                   onClick={handleSendOTP}
                   disabled={isSendingOtp}
                 >
@@ -618,7 +734,7 @@ function Signup() {
                 <div className="d-flex gap-3">
                   <button
                     type="button"
-                    className="btn btn-outline-secondary w-50"
+                    className="btn btn-outline-secondary w-50 btn-click-animation"
                     onClick={() => setStep(1)}
                     disabled={isVerifying}
                   >
@@ -626,7 +742,7 @@ function Signup() {
                   </button>
                   <button
                     type="submit"
-                    className="login_btn p-2 rounded-2 w-50"
+                    className="login_btn p-2 rounded-2 w-50 btn-click-animation"
                     disabled={isVerifying}
                   >
                     {isVerifying ? "Verifying..." : "Verify & Sign Up"}

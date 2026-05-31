@@ -63,7 +63,6 @@ function AuroraFaq() {
 
   return (
     <section className="aurora-faq-section" id="faqs">
-      {/* The new animated background elements */}
       <div className="aurora-bg">
         <div className="aurora-shape aurora-shape1"></div>
         <div className="aurora-shape aurora-shape2"></div>
@@ -76,7 +75,7 @@ function AuroraFaq() {
             Frequently Asked <span className="text-gradient">Questions</span>
           </h6>
           <p
-            className="fs-6 fw-light mb-5 text-center mx-auto text-muted"
+            className="fs-6 fw-light mb-5 text-center mx-auto opacity-75"
           >
             Quick answers to common questions
           </p>
@@ -92,7 +91,7 @@ function AuroraFaq() {
                 key={item.id}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
-                <div className={`accordion-header ${openIndex ===index ?" rounded-top-4":"rounded-4 "}`}>
+                <div className={`accordion-header ${openIndex ===index ?" rounded-top-4":"rounded-4 "}`} style={{ backgroundColor: "var(--accordian-bg)" }}>
                   <span className="question-text text-start">{index+1}. {item.question}</span>
                   <div className="accordion-icon">
                     <svg

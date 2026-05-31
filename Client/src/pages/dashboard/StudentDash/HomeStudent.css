@@ -11,7 +11,6 @@
   position: relative;
   overflow: hidden;
   background: var(--luminous-bg);
-  border: 1px solid rgba(136, 146, 176, 0.2);
 }
 
 /* --- The Preserved Spotlight Effect --- */
@@ -47,7 +46,6 @@
   z-index: 2;
 }
 .banner-title {
-  font-family: 'Poppins', sans-serif;
   font-size: 2.8rem;
   font-weight: 700;
   color: var(--luminous-text-primary);
@@ -124,20 +122,18 @@
 }
 
 .newComp{
-  background-color: #0a192f;
-  color: white;
-  border: 2px solid #0a192f;
+  background-color: var(--accent-primary);
+  color: var(--text-inverse);
+  border: 2px solid var(--accent-primary);
   transition: 0.3s ease;
   cursor: pointer;
 }
 
 .newComp:hover{
-  background-color: white;
-  color: #065064;
-  border: 2px solid #065064;
+  background-color: transparent;
+  color: var(--accent-primary);
   transition: 0.3s ease;
   transform: scale(1.02);
-  box-shadow: 0 0px 20px #06506466;
   cursor: pointer;
 }
 
@@ -153,4 +149,61 @@
   background-color: transparent;
   color: #0a192f;
   transform: translateY(-3px) scale(1.01);
+}
+
+/* student stat cards css */
+/* --- LIGHT THEME (Your Originals) --- */
+:root {
+  /* Total (Blue) */
+  --stat-total-bg: #3b83f611;
+  --stat-total-glow: #0e469fff;
+  --stat-total-icon: #0062ffff;
+
+  /* Pending (Amber) */
+  --stat-pending-bg: #f59f0b17;
+  --stat-pending-glow: #ba5a00ff;
+  --stat-pending-icon: #ff7b00ff;
+
+  /* Resolved (Emerald) */
+  --stat-resolved-bg: #10b9811e;
+  --stat-resolved-glow: #0a5d36ff;
+  --stat-resolved-icon: #0f9166ff;
+
+  /* Rated (Violet) */
+  --stat-rated-bg: #8a5cf61d;
+  --stat-rated-glow: #430986ff;
+  --stat-rated-icon: #8e2eceff;
+
+  /* high priority */
+  --stat-high-priority-bg: #ff000010;
+  --stat-high-priority-glow: #890000ff;
+  --stat-high-priority-icon: #b60000ff;
+}
+
+/* --- DARK THEME (Contrast Improved) --- */
+[data-theme="dark"] {
+  /* Total (Blue) - Higher opacity bg, luminous glows */
+  --stat-total-bg: #3b83f625; 
+  --stat-total-glow: #60a5faff;
+  --stat-total-icon: #3b82f6ff;
+
+  /* Pending (Amber) */
+  --stat-pending-bg: #f59f0b25;
+  --stat-pending-glow: #fbbf24ff;
+  --stat-pending-icon: #f59e0bff;
+
+  /* Resolved (Emerald) */
+  --stat-resolved-bg: #10b98125;
+  --stat-resolved-glow: #34d399ff;
+  --stat-resolved-icon: #10b981ff;
+
+  /* Rated (Violet) */
+  --stat-rated-bg: #8a5cf625;
+  --stat-rated-glow: #a78bffff;
+  --stat-rated-icon: #8b5cf6ff;
+
+  /* high priority */
+  --stat-high-priority-bg: #ff000020;
+  --stat-high-priority-glow: #ff0000ff;
+  --stat-high-priority-icon: #ff0000ff;
 }

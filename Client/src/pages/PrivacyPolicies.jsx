@@ -376,13 +376,13 @@ function PrivacyPolicy() {
                       Request deletion of your account.
                     </InfoListItem>
                     <InfoListItem>
-                      File complaints anonymously{" "}
+                      File complaints anonymously  
                       <span className="nextLineText">
                         (where applicable).
-                      </span>{" "}
+                      </span>  
                     </InfoListItem>
                     <InfoListItem>
-                      Withdraw consent for data usage{" "}
+                      Withdraw consent for data usage  
                       <span className="nextLineText">
                         (subject to institutional policies).
                       </span>
@@ -394,7 +394,7 @@ function PrivacyPolicy() {
                 <PolicySection id="section-7" title="6. Cookies and Analytics">
                   <p className="text-body-secondary">
                     Yachika@JMIETI may use minimal cookies for maintaining login
-                    sessions and improving functionality.{" "}
+                    sessions and improving functionality.  
                     <strong>
                       We do not use tracking or advertising cookies.
                     </strong>

@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 
-
 // let tokenExist =null, isLoggedIn;
 const Home = () => {
   const { user } = useAuth();
@@ -16,20 +15,39 @@ const Home = () => {
   const tokenExist = localStorage.getItem("authToken");
   const isLoggedIn = !!tokenExist;
 
-
   const handleClick = () => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       navigate("/complaintSubmission");
-    }
-    else{
-      toast.info("Please login to submit a complaint.", { autoClose: 2000 });
+    } else {
+      toast.info(
+        "Please login to submit a complaint.",
+        { autoClose: 2000,
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          },
+        },
+      );
       setTimeout(() => {
-      toast.warning("Redirecting to login page...", { autoClose: 2000 });}, 1500);
+        toast.warning(
+          "Redirecting to login page...",
+          { autoClose: 2000,
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "100%",
+              maxWidth: "40vw",
+            },
+          },
+        );
+      }, 1500);
       setTimeout(() => {
-          navigate("/login");
-        }, 4400);
+        navigate("/login");
+      }, 4400);
     }
-  }
+  };
 
   return (
     <section className="home container-fluid p-0 w-100">
@@ -43,7 +61,10 @@ const Home = () => {
             className="w-100"
           />
         </picture>
-        <button className="btn1 mb-4 rounded-pill fw-light" onClick={handleClick}>
+        <button
+          className="btn1 mb-4 rounded-pill fw-light"
+          onClick={handleClick}
+        >
           SUBMIT A COMPLAINT
         </button>
       </div>

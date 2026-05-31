@@ -1,6 +1,6 @@
 .suspension-bg {
-  background-color: #f8fafc;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-color: var(--bg-main);
+  background-image: radial-gradient(var(--hover-overlay) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .expiry-box {
-  background-color: #f8fafc;
+  background-color: #e4e4e4;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 1rem 1.5rem;
@@ -54,7 +54,7 @@
 
 .btn-outline-custom {
   background-color: transparent;
-  color: #475569;
+  color: var(--text-primary);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -124,25 +124,19 @@
 
 /* suspension appeals.jsx  */
 .accordion-card {
-  border: 1px solid #e2e8f0;
   border-radius: 12px;
-  background: #ffffff;
+  /* background: #ffffff; */
   transition: all 0.2s ease;
   overflow: hidden;
   margin-bottom: 1rem;
 }
 .accordion-card:hover {
-  border-color: #cbd5e1;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 .accordion-header {
   cursor: pointer;
   padding: 1.25rem 1.5rem;
-  background: #ffffff;
   transition: background 0.2s ease;
-}
-.accordion-header:hover {
-  background: #f8fafc;
 }
 .chevron-icon {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -165,8 +159,7 @@
   min-height: 0; /* Crucial for grid animation */
 }
 .custom-anim-content {
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--light-hover);
   padding: 1.5rem;
   opacity: 0;
   transform: translateY(-10px);
@@ -219,4 +212,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.modalInput::placeholder, .modalInput:focus, .modalInput:active {
+  color: var(--text-primary);
+  opacity: 0.9;
 }

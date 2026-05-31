@@ -5,11 +5,8 @@
  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 .search-input {
- background-color: #f8f9fa;
- border: 1px solid #e9ecef;
  padding: 0.5rem 1rem 0.5rem 2.5rem; 
  border-radius: 8px;
- width: 100%;
 }
 
 .search-input:focus {
@@ -25,8 +22,12 @@
  position: absolute;
  left: 1.5rem;
  top: 50%;
+ z-index: 1;
  transform: translateY(-50%);
- color: #6c757d;
+}
+.search-input::placeholder, .search-input:focus, .search-input:active {
+ color: var(--text-primary);
+ opacity: 0.9
 }
 /* Add these styles to your existing CSS file */
 
@@ -46,14 +47,14 @@
 }
 
 .dropdown-option:hover {
- background-color: #f0f0f0;
+ background-color: var(--light-hover);
 }
 
 /* Style for the selected option */
-.dropdown-option.selected-option {
- background-color: #e9e9e9ab; /* Light gray background for selected item */
- font-weight: 500; /* Make text a bit bolder */
- color: #343a40; /* Slightly darker text color */
+.selected-option {
+ background-color: var(--light-hover); /* Light gray background for selected item */
+ font-weight: 600; /* Make text a bit bolder */
+ color: var(--text-primary); /* Slightly darker text color */
 }
 
 /* Ensure the .menus div is positioned correctly */
@@ -64,15 +65,15 @@
  z-index: 1000;
 }
 .export-btn {
- background-color: #6266691a;
- border: 2px solid #6266691a;
+ background-color: var(--bg-surface);
+ border: 2px solid var(--light-hover);
+ color: var(--text-primary);
  font-weight: 400;
  transition: all 0.2s ease;
 }
 .export-btn:hover {
- background-color: #ffffff;
- border: 2px solid #626669a4;
- color: #5d5d5d;
+ background-color: var(--light-hover);
+ border: 2px solid var(--light-hover);
  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
  transform: translateY(-3px);
 }
@@ -148,6 +149,16 @@
  font-size: 1.8rem;
 }
 
+.complaintForm input::placeholder, .complaintForm textarea::placeholder {
+  color: var(--text-primary);
+}
+
+.complaintForm input:focus,
+.complaintForm input:active,
+.complaintForm textarea:focus,
+.complaintForm textarea:active {
+  color: var(--text-inverse);
+}
 
 @media (max-width:770px) {
  .para{

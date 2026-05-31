@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { toast } from "react-toastify";
+import "../pages/dashboard/Admindashboard/SimpleAnalytics.css";
 
 // Helper function moved OUTSIDE the component
 const formatDateTime = (isoString) => {
@@ -81,20 +82,48 @@ const AllStudents = ({ role }) => {
       );
 
       if (response.ok) {
-        toast.success("Student deleted successfully!");
+        toast.success("Student deleted successfully!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         setAllStudents((prev) => prev.filter((student) => student._id !== studentId));
       } else {
-        toast.error("Failed to delete student.");
+        toast.error("Failed to delete student.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (error) {
-      toast.error("An error occurred, try again later!");
+      toast.error("An error occurred, try again later!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       console.error("Delete error:", error);
     }
   };
 
   const suspendStudent = async (studentId) => {
     if (!suspendReason.trim()) {
-      toast.error("Suspension reason is required.");
+      toast.error("Suspension reason is required.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       return;
     }
 
@@ -117,7 +146,14 @@ const AllStudents = ({ role }) => {
       );
 
       if (response.ok) {
-        toast.success(`Student suspended ${suspendDuration === "permanent" ? "permanently" : "successfully"}!`);
+        toast.success(`Student suspended ${suspendDuration === "permanent" ? "permanently" : "successfully"}!`, {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         setAllStudents((prevStudents) =>
           prevStudents.map((student) =>
             student._id === studentId
@@ -135,10 +171,25 @@ const AllStudents = ({ role }) => {
         setSuspendDuration("7");
         setCurStudentId(null);
       } else {
-        toast.error("Failed to suspend student.");
+        toast.error("Failed to suspend student.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (error) {
-      toast.error("An error occurred, try again later!");
+      toast.error("An error occurred, try again later!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+          
+        },
+      });
       console.error("Suspend error:", error);
     }
   };
@@ -172,14 +223,14 @@ const AllStudents = ({ role }) => {
 
   const paginationJSX = (
     <div className="d-flex align-items-center justify-content-center gap-3 mt-3 mb-2">
-      <span className="text-muted small text-nowrap d-none d-sm-block">
+      <span className="small text-nowrap d-none d-sm-block opacity-75">
         Total: {filteredStudents.length}
       </span>
       <div className="btn-group">
         <button className="btn btn-outline-secondary btn-sm" onClick={goToPrevPage} disabled={currentPage === 1}>
           &lt; Prev
         </button>
-        <p className="btn btn-light btn-sm disabled text-dark m-0" style={{ minWidth: "100px" }}>
+        <p className="btn btn-sm disabled border-0 m-0" style={{ minWidth: "100px", backgroundColor: "var(--light-hover)" }}>
           Page {currentPage} of {totalPages}
         </p>
         <button className="btn btn-outline-secondary btn-sm" onClick={goToNextPage} disabled={currentPage === totalPages}>
@@ -190,25 +241,26 @@ const AllStudents = ({ role }) => {
   );
 
   return (
-    <section className="d-flex flex-column justify-content-center align-items-center allStudents" style={{ width: "100%" }}>
+    <section className="d-flex flex-column justify-content-center align-items-center allStudents">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center w-100 px-sm-5 px-lg-0 mt-sm-4 gap-3">
-        <p className="text-start fw-light mb-0 fs-3 d-flex align-items-center text-nowrap" style={{ color: "#065064" }}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#065064" className="bi bi-ui-checks-grid me-2 mb-1" viewBox="0 0 16 16">
+        <p className="text-start fw-light mb-0 fs-3 d-flex align-items-center text-nowrap" style={{ color: "var(--text-dashboard-name)" }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="var(--text-dashboard-name)" className="me-2 mb-1" viewBox="0 0 16 16">
             <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
           </svg>
           All Students
         </p>
 
         {/* SEARCH BAR */}
-        <div className="border rounded-3 bg-light bg-opacity d-flex align-items-center mx-auto" style={{ maxWidth: "400px", width: "100%" }}>
-          <div className="input-group-text border-0 bg-transparent text-muted ps-3 p-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="">
+        <div className="rounded-3 bg-opacity d-flex align-items-center mx-auto" style={{ maxWidth: "400px", width: "100%", backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)" }}>
+          <div className="input-group-text border-0 bg-transparent ps-3 p-0" style={{ color: "var(--text-primary)" }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
             </svg>
           </div>
           <input
             type="text"
-            className="form-control form-control-sm bg-transparent border-0 shadow-none"
+            className="form-control form-control-sm bg-transparent border-0 shadow-none searchInput"
+            // style={{color:"var(--text-primary)"}}
             placeholder="Search by name, class, or branch..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -216,7 +268,7 @@ const AllStudents = ({ role }) => {
         </div>
       </div>
 
-      <hr className="mx-auto w-100" style={{ color: "#065064" }} />
+      <hr className="mx-auto w-100" style={{ color: "var(--text-dashboard-name)" }} />
 
       {isLoading ? (
         <p className="mt-5 fs-5 text-muted">Loading students...</p>
@@ -234,45 +286,33 @@ const AllStudents = ({ role }) => {
 
               return (
                 <div key={curStudent._id} className="col-lg-6 col-md-6 col-sm-12 p-3">
-                  <div className="card border border-secondary border-opacity-10 rounded-4 p-4 text-start h-100 shadow-sm position-relative" style={{ backgroundColor: "#e0e1dd42", border: "none" }}>
-                    <div className="d-flex flex-column justify-content-center h-100 gap-2">
+                  <div className="card rounded-4 p-4 text-start h-100 shadow-sm position-relative" style={{ backgroundColor: "var(--bg-glass)" }}>
+                    <div className="d-flex flex-column justify-content-center h-100 gap-2" style={{ color: "var(--text-primary)" }}>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Name:</span> {curStudent.name}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Name:</span> {curStudent.name}
                       </p>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Email:</span> {curStudent.email}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Email:</span> {curStudent.email}
                       </p>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Roll No:</span> {curStudent.rollno}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Roll No:</span> {curStudent.rollno}
                       </p>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Class:</span> {curStudent.className}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Class:</span> {curStudent.className}
                       </p>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Branch:</span> {curStudent.branch}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Branch:</span> {curStudent.branch}
                       </p>
                       <p className="m-0" style={{ fontSize: "0.95rem" }}>
-                        <span className="fw-bold me-2" style={{ color: "#065064" }}>Gender:</span> {curStudent.gender}
+                        <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Gender:</span> {curStudent.gender}
                       </p>
                       <hr className="my-2 opacity-25" />
 
                       <div className="bottom d-flex align-items-center justify-content-between">
-                          <p className="m-0 text-muted text-truncate " style={{ fontSize: "0.85rem" }}>
-                            <span className="fw-bold me-2">Registered:</span> {formattedCreatedAt}
+                          <p className="m-0 text-truncate" style={{ fontSize: "0.85rem" }}>
+                            <span className="fw-bold me-2" style={{color:"var(--text-dashboard-name)"}}>Registered:</span> {formattedCreatedAt}
                           </p>
-
-                        {/* {role === "Admin" && (
-                          <button
-                            className="btn btn-outline-danger rounded-pill d-flex align-items-center"
-                            onClick={() => deleteStudent(curStudent._id)}
-                            style={{ fontSize: "0.85rem" }}
-                          >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash3-fill me-2" viewBox="0 0 16 16">
-                              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                            </svg>
-                            Delete
-                          </button>
-                        )} */}
+                          
                         {role === "SuperAdmin" && !isCurrentlySuspended && (
                           <button
                             className="btn btn-outline-danger text-truncate rounded-4 text-center"
@@ -316,25 +356,29 @@ const AllStudents = ({ role }) => {
           <div className="modal-backdrop fade show" style={{ zIndex: 1040 }}></div>
           <div className="modal fade show d-block" style={{ zIndex: 1050 }} tabIndex="-1">
             <div className="modal-dialog modal-dialog-centered modal-mg text-center">
-              <div className="modal-content border-0 shadow-lg rounded-4">
+              <div className="modal-content border-0 shadow-lg rounded-4" style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-primary)" }}>
                 <div className="modal-body p-4">
-                  <h6 className="fw-bold mb-3 text-dark">Confirm Suspension</h6>
-                  <p className="text-muted small mb-3">Provide a reason and select the duration.</p>
+                  <h6 className="fw-bold mb-2">Confirm Suspension</h6>
+                  <p className="small mb-3 opacity-75">Provide a reason and select the duration.</p>
 
                   <div className="text-start">
-                    <label className="fw-bold small text-muted">Reason</label>
+                    <label htmlFor="sReason" className="fw-semibold small opacity-75">Reason</label>
                     <input
                       type="text"
-                      className="shadow-none mb-3 mt-1 border rounded-3 form-control form-control-sm"
+                      id="sReason"
+                      className="shadow-none mb-3 mt-1 rounded-3 form-control form-control-sm"
                       placeholder="e.g., Violation of guidelines..."
+                      style={{ backgroundColor: "var(--bg-glass)", border: "1px solid var(--light-hover)", color: "var(--text-primary)" }}
                       value={suspendReason}
                       onChange={(e) => setSuspendReason(e.target.value)}
                       autoFocus
                     />
 
-                    <label className="fw-bold small text-muted">Duration</label>
+                    <label htmlFor="sDuration" className="fw-semibold small opacity-75">Duration</label>
                     <select
-                      className="shadow-none mt-1 border rounded-3 form-select form-select-sm"
+                      className="shadow-none mt-1 rounded-3 form-select form-select-sm py-2"
+                      style={{ backgroundColor: "var(--bg-glass)", border: "1px solid var(--light-hover)", color: "var(--text-primary)" }}
+                      id="sDuration"
                       value={suspendDuration}
                       onChange={(e) => setSuspendDuration(e.target.value)}
                     >

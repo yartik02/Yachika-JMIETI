@@ -3,7 +3,7 @@ import React, { memo } from 'react';
 const ComplaintItem = memo(({ complaint, onClick, isActive }) => {
     const statusClass = `status-${(complaint.status || "").toLowerCase()}`;
     const priorityClass = `priority-${(complaint.priority || "").toLowerCase()}`;
-    const activeClass = isActive ? 'active-complaint' : '';
+    const activeClass = isActive ? 'active-complaint bg-secondary bg-opacity-10' : '';
 
     const handleClick = () => {
         onClick(complaint);
@@ -13,14 +13,14 @@ const ComplaintItem = memo(({ complaint, onClick, isActive }) => {
         <div
             className={`complaint p-lg-3 p-2 rounded-4 text-start mb-2 ${activeClass}`}
             onClick={handleClick} 
-            style={{ cursor: "pointer", backgroundColor: "#f2f5fe89" }}
+            style={{ cursor: "pointer", backgroundColor: "var(--bg-surface)", border: isActive ? '2px solid var(--accent-primary)' : '2px solid var(--light-hover)', transition: 'border 0.1s ease' }}
         >
             <p className="d-flex m-0 justify-content-between">
-                <span className="value">{complaint.complaintTitle}</span>
-                <span className="my-auto bg-primary bg-opacity-10 fw-light rounded-3 para catagory p-1 px-2 text-dark">{complaint.category}</span>
+                <span className="value text-truncate" style={{}}>{complaint.complaintTitle}</span>
+                <span className="my-auto bg-primary bg-opacity-10 fw-light rounded-3 para catagory p-1 px-2">{complaint.category}</span>
             </p>
             <div
-                className="d-flex text-muted para"
+                className="d-flex opacity-75 para"
                 style={{ fontSize: "0.8rem", width: "fit-content" }}
             >
                 <p className="m-0 text-truncate" style={{ maxWidth: "290px" }}>

@@ -1,11 +1,26 @@
 :root {
-  --immersive-bg: #F9FAFB;
+  --immersive-bg: #f9fafb;
   --immersive-text-primary: #111827;
-  --immersive-text-secondary: #6B7280;
-  --immersive-accent: #4F46E5;
+  --immersive-text-secondary: #6b7280;
+  --immersive-accent: #4f46e5;
   --immersive-shadow: 0px 10px 40px -10px rgba(200, 210, 230, 0.8);
+  --accordian-bg: rgba(255, 255, 255, 0.8);
 
   /* New Aurora Colors */
+  --aurora-color-1: #a855f7; /* Purple */
+  --aurora-color-2: #1e35e8; /* Blue */
+  --aurora-color-3: #ec4899; /* Pink */
+}
+
+[data-theme="dark"] {
+  --immersive-bg: #1f2937;
+  --immersive-text-primary: #f9fafb;
+  --immersive-text-secondary: #d1d5db;
+  --immersive-accent: #4f46e5;
+  --immersive-shadow: 0px 10px 40px -10px rgba(165, 165, 165, 0.192);
+  --accordian-bg: var(--bg-surface);
+
+  /* Aurora Colors for Dark Mode */
   --aurora-color-1: #a855f7; /* Purple */
   --aurora-color-2: #1e35e8; /* Blue */
   --aurora-color-3: #ec4899; /* Pink */
@@ -15,8 +30,8 @@
   background-color: var(--immersive-bg);
   padding: 120px 0;
   position: relative;
-  overflow: hidden; 
-  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
 }
 
 .aurora-bg {
@@ -61,48 +76,53 @@
 }
 
 @keyframes move-aurora {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(100px, 50px) scale(1.1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(100px, 50px) scale(1.1);
+  }
 }
 
-.faq-subheading { 
+.faq-subheading {
   font-size: 1.09rem;
-  max-width: 600px; 
+  max-width: 600px;
 }
 
-.accordion-header { 
-    padding: 25px 30px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    font-size: 1.2rem; 
-    font-weight: 600; 
-    color: var(--immersive-text-primary); 
+.accordion-header {
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--immersive-text-primary);
 }
 
-.accordion-icon { 
-    flex-shrink: 0; 
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+.accordion-icon {
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.accordion-item.active .accordion-icon { 
-    transform: rotate(180deg); 
+.accordion-item.active .accordion-icon {
+  transform: rotate(180deg);
 }
-.accordion-collapse { 
-    max-height: 0; overflow: hidden; 
-    transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+.accordion-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
-.accordion-body { 
-    padding: 0 30px 25px 30px; 
-    color: var(--immersive-text-secondary); 
-    line-height: 1.7; 
+.accordion-body {
+  padding: 0 30px 25px 30px;
+  color: var(--immersive-text-secondary);
+  line-height: 1.7;
 }
 
 .accordion-group {
-  position: relative; 
+  position: relative;
 }
 
 .accordion-item {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--accordian-bg);
   backdrop-filter: blur(5px);
   margin-bottom: 20px;
   cursor: pointer;
@@ -113,51 +133,50 @@
   border-color: var(--immersive-accent);
   box-shadow: var(--immersive-shadow);
   transform: scale(1.03);
-  position: relative; 
+  position: relative;
   z-index: 2;
 }
 
 @media (max-width: 767px) {
-  .accordion-header { 
-    padding: 20px 25px; 
-    font-size: 0.9rem; 
+  .accordion-header {
+    padding: 20px 25px;
+    font-size: 0.9rem;
   }
-  .accordion-body { 
-    padding: 0 25px 20px 25px; 
+  .accordion-body {
+    padding: 0 25px 20px 25px;
     font-size: 0.8rem;
   }
 }
 
-
 /* errror page css */
 
-@media (max-width:700px) {
-  
-  .errorTXT{
+@media (max-width: 700px) {
+  .errorTXT {
     font-size: 4rem;
   }
-  .errorTAG{
-    font-size: calc(1rem + .3vw);
+  .errorTAG {
+    font-size: calc(1rem + 0.3vw);
   }
-  .errorPARA{
-    font-size: calc(0.6rem + .3vw);
+  .errorPARA {
+    font-size: calc(0.6rem + 0.3vw);
   }
-  .buttons .btn{
-    font-size: calc(0.6rem + .3vw);font-weight:normal;
+  .buttons .btn {
+    font-size: calc(0.6rem + 0.3vw);
+    font-weight: normal;
   }
 }
-@media (min-width:700px) {
-  
-  .errorTXT{
+@media (min-width: 700px) {
+  .errorTXT {
     font-size: 10rem;
   }
-  .errorTAG{
-    font-size: calc(1.2rem + .3vw);
+  .errorTAG {
+    font-size: calc(1.2rem + 0.3vw);
   }
-  .errorPARA{
-    font-size: calc(0.8rem + .3vw);
+  .errorPARA {
+    font-size: calc(0.8rem + 0.3vw);
   }
-  .buttons .btn{
-    font-size: calc(0.7rem + .3vw);font-weight:normal;
+  .buttons .btn {
+    font-size: calc(0.7rem + 0.3vw);
+    font-weight: normal;
   }
 }

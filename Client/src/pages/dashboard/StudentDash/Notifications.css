@@ -10,17 +10,6 @@
   overflow: hidden; /* Important for the border-radius on list items */
 }
 
-.notifications-header {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #edf2f7;
-}
-
-.notifications-header h5 {
-  font-weight: 600;
-  color: #1a202c; /* Darker text */
-}
-
 .notification-count-badge {
   display: inline-block;
   padding: 0.25em 0.6em;
@@ -42,7 +31,7 @@
 .notification-item {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #edf2f7;
+  border-bottom: 1px solid var(--light-hover);
   transition: background-color 0.2s ease;
   position: relative;
 }
@@ -55,8 +44,8 @@
   background-color: #2e96ff18;
 }
 
-.notification-item.unread {
-  background-color: #eff6ff; 
+.notification-item .unread {
+  background-color: #7db5ff3a; 
 }
 
 .notification-icon-wrapper {
@@ -83,20 +72,17 @@
 .notification-message {
   font-size: 1rem;
   font-weight: 600;
-  color: #2d3748;
   margin: 0 0 4px 0;
   line-height: 1.4;
 }
 
 .notification-context {
   font-size: 0.9rem;
-  color: #4a5568;
   margin: 0;
 }
 
 .notification-time {
   font-size: 0.8rem;
-  color: #718096; 
   position: absolute;
   right: 1rem;
   top: 1rem;
@@ -106,26 +92,13 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  background-color: #2c77ef;
+  background-color: var(--accent-primary);
   font-size: 0.6rem;
   color: white;
   flex-shrink: 0;
   box-shadow: 0 0 12px rgba(27, 108, 238, 0.51);
 }
 
-.no-notifications-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 2rem;
-  color: #a0aec0; /* Lighter text for placeholder */
-}
-
-.no-notifications-card p {
-  font-size: 1rem;
-  color: #718096;
-}
 
 .row .notText {
   border-right: 1px solid black;
@@ -148,7 +121,7 @@
 }
 .notification-context {
   font-size: 0.6rem;
-  color: #4a5568;
+  /* color: #4a5568; */
   /* flex-wrap: wrap; */
   margin: 0;
 }
@@ -190,5 +163,5 @@
 /* Ensure dots change color on hover */
 .notification-menu-container .btn:hover {
   color: #1a257d;
-  background-color: #f8f9fa;
+  background-color: var(--light-hover);
 }

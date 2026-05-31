@@ -55,8 +55,8 @@ const ComplaintSection = () => {
 
   return (
     <section
-      className="complaintView mx-auto bg-white rounded-4 p-lg-4 p-2"
-      style={{ width: "100%" }}
+      className="complaintView mx-auto rounded-4 py-3 p-2 w-100"
+      style={{ backgroundColor: "var(--bg-main)" }}
     >
 
     <div className="sortingSection p-lg-3 p-0">
@@ -84,7 +84,7 @@ const ComplaintSection = () => {
                                 >
                                     &lt; <span className='pageBtn'>Prev</span>
                                 </button>
-                                <span className="mx-2 text-muted" style={{fontSize: '0.9rem'}}>
+                                <span className="mx-2 opacity-75" style={{fontSize: '0.9rem'}}>
                                     Page {currentPage} of {totalPages}
                                 </span>
                                 <button 
@@ -109,7 +109,7 @@ const ComplaintSection = () => {
                             />
                         ))
                     ) : (
-                        <p className="text-muted p-3">No complaints match the current filters or search term.</p>
+                        <p className="opacity-75 text-center p-3">No complaints match the current filters or search term.</p>
                     )}
                 </div>
 

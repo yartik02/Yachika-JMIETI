@@ -3,6 +3,7 @@ import logo from "../assets/YachikaLogo.png";
 import Menu from "./Menu";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
+import { useTheme } from "../utils/useTheme.jsx";
 import.meta.env.VITE_ADMIN_MAIL;
 import.meta.env.VITE_SUPER_ADMIN_MAIL;
 
@@ -12,8 +13,30 @@ const navData = [
   { name: "Contact Us", path: "/contactUs" },
 ];
 
+const navIcons = {
+  light: (
+    <>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2" />
+      <path d="M12 20v2" />
+      <path d="m4.93 4.93 1.41 1.41" />
+      <path d="m17.66 17.66 1.41 1.41" />
+      <path d="M2 12h2" />
+      <path d="M20 12h2" />
+      <path d="m6.34 17.66-1.41 1.41" />
+      <path d="m19.07 4.93-1.41 1.41" />
+    </>
+  ),
+  dark: (
+    <>
+      <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+    </>
+  ),
+};
+
 function Navbar() {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   // This is the ONLY state you need for tracking active links.
   const location = useLocation();
@@ -49,7 +72,6 @@ function Navbar() {
           <p
             className="logo ps-0 my-auto m-0 p-0 fs-3"
             style={{
-              color: "#065064",
               fontWeight: "600",
               height: "fit-content",
             }}
@@ -98,7 +120,11 @@ function Navbar() {
         {/* Conditional Auth Button (Login/Logout) */}
         <li className="my-auto">
           {isLoggedIn && !isSuspended ? (
-            <Link to="/logout" className="py-1 btn d-flex align-items-center btn-outline-danger ms-2" title="Log Out">
+            <Link
+              to="/logout"
+              className="py-1 btn d-flex align-items-center btn-outline-danger ms-2"
+              title="Log Out"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="19"
@@ -121,14 +147,14 @@ function Navbar() {
             <>
               <Link
                 to="/signup"
-                className="py-1 px-2 mx-2 rounded login_btn"
+                className="py-1 px-2 mx-2 rounded login_btn btn-click-animation"
                 style={{ textDecoration: "none" }}
               >
                 Sign Up
               </Link>
               <Link
                 to="/login"
-                className="py-1 px-2 ms-2 rounded login_btn"
+                className="py-1 px-2 ms-2 rounded login_btn btn-click-animation"
                 style={{ textDecoration: "none" }}
               >
                 Log In
@@ -137,17 +163,42 @@ function Navbar() {
           )}
         </li>
 
+        {/* Theme Toggle Button */}
+        <li className="ms-2 btn-click-animation my-auto">
+          <p
+            className="d-flex align-items-center m-0 p-0 p-2 rounded-circle theme-toggle-btn"
+            role="button"
+            onClick={toggleTheme}
+            style={{ cursor: "pointer", height: "fit-content" }}
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {theme === "light" ? navIcons.dark : navIcons.light}
+            </svg>
+          </p>
+        </li>
+
         {/* Menu Icon for Off-canvas */}
         <span className="pe-2 fs-5 my-auto menu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="35"
             height="35"
-            fill="black"
+            fill="currentColor"
             role="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasWithBothOptions"
-            className="bi bi-list"
+            className="ms-2"
             viewBox="0 0 16 16"
           >
             <path
@@ -155,7 +206,7 @@ function Navbar() {
               d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
             />
           </svg>
-          <Menu navData={navData} />
+          <Menu navData={navData} navIcons={navIcons} />
         </span>
       </ul>
     </nav>

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./SuspendedAcc.css";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
+import { useTheme } from "../utils/useTheme.jsx";
+import { light, dark } from "../utils/Icons.jsx";
 
 // Helper function to format date specifically to Indian Standard Time (IST)
 const formatExpiryDate = (isoString) => {
@@ -32,18 +34,19 @@ const formatExpiryDate = (isoString) => {
 const SuspendedPage = () => {
   const { user, token } = useAuth();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [appealText, setAppealText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Track local appeal state so UI updates immediately without refreshing  
+  // Track local appeal state so UI updates immediately without refreshing
   const [hasAppealedLocal, setHasAppealedLocal] = useState(
-    user?.suspensionDetails?.appeal?.hasAppealed || false
+    user?.suspensionDetails?.appeal?.hasAppealed || false,
   );
-  
+
   const [localAppealStatus, setLocalAppealStatus] = useState(
-    user?.suspensionDetails?.appeal?.status || "None"
+    user?.suspensionDetails?.appeal?.status || "None",
   );
 
   useEffect(() => {
@@ -54,8 +57,11 @@ const SuspendedPage = () => {
   }, [user]);
 
   // Fallback values
-  const backendMessage = "Your account access has been restricted by the administration. Remember you can only appeal once.";
-  const suspensionReason = user?.suspensionDetails?.reason || "Violation of platform guidelines or pending administrative review.";
+  const backendMessage =
+    "Your account access has been restricted by the administration. Remember you can only appeal once.";
+  const suspensionReason =
+    user?.suspensionDetails?.reason ||
+    "Violation of platform guidelines or pending administrative review.";
   const expiryDate = user?.suspensionDetails?.expiresAt;
   const adminRemarks = user?.suspensionDetails?.appeal?.adminRemarks;
 
@@ -63,7 +69,14 @@ const SuspendedPage = () => {
     e.preventDefault();
 
     if (!appealText.trim()) {
-      toast.error("Please provide an explanation for your appeal.");
+      toast.error("Please provide an explanation for your appeal.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        },
+      });
       return;
     }
 
@@ -83,31 +96,88 @@ const SuspendedPage = () => {
       );
 
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (response.ok) {
         toast.success(
           "Appeal submitted successfully. Please wait for admin review.",
+          {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "fit-content",
+              maxWidth: "40vw",
+            },
+          },
         );
         setHasAppealedLocal(true);
         setLocalAppealStatus("Pending"); // Update UI to "Pending"
         setIsModalOpen(false); // Close modal
       } else {
-        toast.error(data.message || "Failed to submit appeal.");
+        toast.error(data.message || "Failed to submit appeal.", {
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "100%",
+            maxWidth: "40vw",
+          },
+        });
       }
     } catch (error) {
       console.error("Appeal error:", error);
-      toast.error("Server error. Please try again later.");
+      toast.error("Server error. Please try again later.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
-    
+
   return (
     <>
-      <div className="suspension-bg min-vh-100 d-flex justify-content-center align-items-center px-3 py-4">
+      <div className="suspension-bg min-vh-100 d-flex justify-content-center align-items-center px-3 py-4 position-relative">
+        {/* Theme Toggle Button */}
+        <div className="my-auto p-3 position-absolute top-0 end-0">
+          <div
+            className="p-1 rounded-circle"
+            style={{
+              backgroundColor: "var(--bg-surface)",
+            }}
+          >
+            <p
+              className="d-flex align-items-center m-0 p-0 p-2 rounded-circle btn-click-animation theme-toggle-btn"
+              role="button"
+              onClick={toggleTheme}
+              style={{ cursor: "pointer", height: "fit-content" }}
+              title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {theme === "light" ? dark : light}
+              </svg>
+            </p>
+          </div>
+        </div>
         <div
-          className="shadow-lg bg-white w-100 d-flex rounded-4 overflow-hidden horizontal-premium-card"
-          style={{ maxWidth: "970px", width: "auto" }}
+          className="shadow-lg w-100 d-flex rounded-4 overflow-hidden horizontal-premium-card"
+          style={{
+            maxWidth: "970px",
+            width: "auto",
+            backgroundColor: "var(--bg-surface)",
+          }}
         >
           {/* --- LEFT PANE --- */}
           <div className="card-left-pane text-white d-flex flex-column align-items-center justify-content-center text-center">
@@ -137,12 +207,10 @@ const SuspendedPage = () => {
 
           {/* --- RIGHT PANE --- */}
           <div className="card-right-pane text-start p-5 d-flex flex-column justify-content-center">
-            <h4 className="fw-bold mb-2" style={{ color: "#0f172a" }}>
-              Suspension Notice
-            </h4>
+            <h4 className="fw-bold mb-2">Suspension Notice</h4>
             <p
               className="mb-4"
-              style={{ color: "#475569", fontSize: "1rem", lineHeight: "1.6" }}
+              style={{ opacity: 0.85, fontSize: "1rem", lineHeight: "1.6" }}
             >
               {backendMessage}
             </p>
@@ -215,39 +283,78 @@ const SuspendedPage = () => {
             </div>
 
             {/* --- APPEAL STATUS BOX --- */}
-            {(localAppealStatus !== "None" || hasAppealedLocal)  && (
-              <div className={`mb-4 ${localAppealStatus === "Pending" ? "status-box-pending" : "status-box-rejected"}`}>
+            {(localAppealStatus !== "None" || hasAppealedLocal) && (
+              <div
+                className={`mb-4 ${localAppealStatus === "Pending" ? "status-box-pending" : "status-box-rejected"}`}
+              >
                 <div className="d-flex align-items-center mb-1">
                   {localAppealStatus === "Pending" ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#d97706" className="me-2" viewBox="0 0 16 16">
-                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0zM8 4a.5.5 0 0 0-.5.5v3.793L5.354 10.146a.5.5 0 1 0 .708.708l2.5-2.5a.5.5 0 0 0 .146-.354V4.5A.5.5 0 0 0 8 4z"/>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#d97706"
+                      className="me-2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0zM8 4a.5.5 0 0 0-.5.5v3.793L5.354 10.146a.5.5 0 1 0 .708.708l2.5-2.5a.5.5 0 0 0 .146-.354V4.5A.5.5 0 0 0 8 4z" />
                     </svg>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#dc2626" className="me-2" viewBox="0 0 16 16">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#dc2626"
+                      className="me-2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                     </svg>
                   )}
-                  <span className="fw-bold" style={{ color: localAppealStatus === "Pending" ? "#b45309" : "#991b1b", fontSize: "0.85rem", textTransform: "uppercase" }}>
+                  <span
+                    className="fw-bold"
+                    style={{
+                      color:
+                        localAppealStatus === "Pending" ? "#b45309" : "#991b1b",
+                      fontSize: "0.85rem",
+                      textTransform: "uppercase",
+                    }}
+                  >
                     Appeal Status: {localAppealStatus}
                   </span>
                 </div>
-                
+
                 {localAppealStatus === "Pending" && (
-                  <p className="m-0" style={{ color: "#92400e", fontSize: "0.9rem" }}>
-                    Your appeal has been received and is currently under review by the administration.
+                  <p
+                    className="m-0"
+                    style={{ color: "#92400e", fontSize: "0.9rem" }}
+                  >
+                    Your appeal has been received and is currently under review
+                    by the administration.
                   </p>
                 )}
-                
+
                 {localAppealStatus === "Rejected" && (
                   <>
-                    <p className="mb-2" style={{ color: "#7f1d1d", fontSize: "0.9rem" }}>
-                      Your appeal was reviewed and denied. The suspension will remain in place.
+                    <p
+                      className="mb-2"
+                      style={{ color: "#7f1d1d", fontSize: "0.9rem" }}
+                    >
+                      Your appeal was reviewed and denied. The suspension will
+                      remain in place.
                     </p>
                     {adminRemarks && (
                       <div className="p-2 rounded bg-light bg-opacity-50 border border-danger border-opacity-50">
-                        <span className="fw-bold d-block" style={{ fontSize: "0.8rem", color: "#991b1b" }}>Admin Note:</span>
-                        <span style={{ fontSize: "0.85rem", color: "#7f1d1d" }}>{adminRemarks}</span>
+                        <span
+                          className="fw-bold d-block"
+                          style={{ fontSize: "0.8rem", color: "#991b1b" }}
+                        >
+                          Admin Note:
+                        </span>
+                        <span style={{ fontSize: "0.85rem", color: "#7f1d1d" }}>
+                          {adminRemarks}
+                        </span>
                       </div>
                     )}
                   </>
@@ -266,7 +373,7 @@ const SuspendedPage = () => {
               </button>
 
               <button
-                onClick={()=>{
+                onClick={() => {
                   navigate("/logout");
                 }}
                 className="btn-outline-custom text-center fw-medium"
@@ -281,15 +388,17 @@ const SuspendedPage = () => {
         {isModalOpen && (
           <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
             <div
-              className="modal-content-custom text-start bg-white rounded-4"
+              className="modal-content-custom text-start rounded-4"
+              style={{ backgroundColor: "var(--bg-surface)" }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="fw-bold m-0" style={{ color: "#0f172a" }}>
-                  Submit Appeal
-                </h4>
+              <div
+                className="d-flex justify-content-between align-items-center mb-3"
+                data-bs-theme={theme}
+              >
+                <h4 className="fw-bold m-0">Submit Appeal</h4>
                 <button
-                  className="btn-close"
+                  className="btn-close btn-click-animation"
                   onClick={() => setIsModalOpen(false)}
                   disabled={isSubmitting}
                 ></button>
@@ -297,7 +406,7 @@ const SuspendedPage = () => {
 
               <p
                 style={{
-                  color: "#475569",
+                  opacity: 0.85,
                   fontSize: "0.9rem",
                   marginBottom: "1.5rem",
                 }}
@@ -309,13 +418,13 @@ const SuspendedPage = () => {
               <form onSubmit={handleSubmitAppeal}>
                 <div className="mb-4">
                   <label
-                    className="form-label fw-bold"
-                    style={{ color: "#334155", fontSize: "0.85rem" }}
+                    className="form-label fw-semibold"
+                    style={{ fontSize: "0.85rem" }}
                   >
                     Your Explanation
                   </label>
                   <textarea
-                    className="form-control"
+                    className="form-control modalInput"
                     rows="5"
                     placeholder="I am writing to appeal my suspension because..."
                     value={appealText}
@@ -323,7 +432,7 @@ const SuspendedPage = () => {
                     required
                     style={{
                       resize: "none",
-                      border: "1px solid #cbd5e1",
+                      border: "1px solid var(--light-hover)",
                       borderRadius: "8px",
                     }}
                     disabled={isSubmitting}
@@ -333,7 +442,7 @@ const SuspendedPage = () => {
                 <div className="d-flex justify-content-end gap-2">
                   <button
                     type="button"
-                    className="btn-outline-custom border-0 bg-light"
+                    className="btn-outline-custom border-0 bg-light text-dark btn-click-animation"
                     onClick={() => setIsModalOpen(false)}
                     disabled={isSubmitting}
                   >
@@ -341,7 +450,7 @@ const SuspendedPage = () => {
                   </button>
                   <button
                     type="submit"
-                    className="btn-primary-custom"
+                    className="btn-primary-custom btn-click-animation"
                     disabled={isSubmitting || !appealText.trim()}
                   >
                     {isSubmitting ? "Submitting..." : "Send Appeal"}

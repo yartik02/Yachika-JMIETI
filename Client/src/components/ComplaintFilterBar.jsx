@@ -93,13 +93,14 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
   return (
     <div className="row g-2 align-items-center" ref={dropdownContainerRef}>
       {/* Search Input */}
-      <div className="search-input-wrapper col-lg-4 col-md-12 m-0 border-0">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search search-icon ms-lg-1 ms-md-1" viewBox="0 0 16 16">
+      <div className="search-input-wrapper col-lg-4 col-md-12 m-0 border-0" style={{ color: "var(--text-primary)" }}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="var(--text-primary)" className="search-icon ms-lg-1 ms-md-1" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg>
         <input
           type="text"
-          className="search-input ps-md-5"
+          className="search-input ps-md-5 w-100"
+          style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)", color: "var(--text-primary)" }}
           placeholder="Search complaints..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -113,9 +114,10 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
         return (
           <div className="col-md-6 col-lg-2 m-0" key={dropdown.name}>
             <div
-              className="p-2 ps-3 selects border rounded-3 d-flex justify-content-between align-items-center position-relative"
+              className="p-2 ps-3 selects rounded-3 d-flex justify-content-between align-items-center position-relative"
               role="button"
               onClick={() => handleToggleDropdown(dropdown.name)}
+              style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)" }}
               aria-expanded={isOpen}
               aria-haspopup="listbox"
             >
@@ -124,7 +126,7 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
                 <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
               </svg>
               {isOpen && (
-                <div className="border menus mt-1 p-2 rounded-3 bg-white position-absolute" style={{ zIndex: 100 }}>
+                <div className="menus mt-1 p-2 rounded-3 position-absolute" style={{ zIndex: 100, backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)", width: "100%" }}>
                   {dropdown.options.map((option) => (
                     <p
                       key={option}

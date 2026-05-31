@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); 
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -85,13 +85,13 @@ function App() {
             <Route path="/forget-password" element={<ForgotPassword />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/suspended-account" element={<SuspendedAccount />} />
-            
+
             <Route path="/dashboard/admin" element={<AdminDashboard />}>
               <Route path="allStudents" element={<AllStudents />} />
               <Route path="contactedUsers" element={<ContectedUsers />} />
             </Route>
             <Route path="/dashboard/superAdmin" element={<SuperAdminDash />} />
-            
+
             <Route path="*" element={<Error />} />
           </Routes>
           <ScrollToTopButton />

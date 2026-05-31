@@ -68,7 +68,14 @@ const CoreValues = () => {
 
   const handleClick = () => {
     if (url == "/login") {
-      toast.info("Please Login to start !");
+      toast.info("Please Login to start!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "100%",
+          maxWidth: "40vw",
+        }
+      });
     }
   };
 
@@ -78,7 +85,7 @@ const CoreValues = () => {
         <h6 className="display-6 heading fw-bold mt-3 mb-1 text-center">
           Our Core <span className="text-gradient">Values</span>
         </h6>
-        <p className="fs-6 fw-light text-muted mb-5 text-center mx-auto">
+        <p className="fs-6 fw-light mb-5 text-center mx-auto opacity-75">
           The principles that guide everything we do
         </p>
       </div>
@@ -86,7 +93,7 @@ const CoreValues = () => {
       <div className="row w-75 mx-auto mb-5 pb-5 g-4">
         {coreData.map((item, idx) => (
           <div className="col-12 col-md-6 col-lg-4" key={idx}>
-            <div className="bg-white xtra d-flex flex-column align-items-center text-center p-4 rounded-4">
+            <div className="xtra d-flex flex-column align-items-center text-center p-4 rounded-4">
               <span
                 className="p-3 rounded-4 d-inline-block"
                 style={{ backgroundColor: item.background }}
@@ -116,15 +123,15 @@ const CoreValues = () => {
 
       <HowWorks />
 
-      <section className="cta-section py-5 bg-white">
+      <section className="cta-section py-5 ">
         <div className="container my-5">
           <div className="cta-card rounded-5 text-center p-5">
             <div className="texts mx-auto mb-4 p-0">
               <h6 className="display-6 fw-bold mt-4 text-center w-100" style={{maxWidth:"1000px"}}>
-                Ready to Make Your Voice{" "}
+                Ready to Make Your Voice  
                 <span className="text-gradient">Heard?</span>
               </h6>
-              <p className="fs-6 fw-normal text-muted text-center mx-auto w-100" style={{maxWidth:"660px"}}>
+              <p className="fs-6 fw-normal text-center mx-auto w-100" style={{maxWidth:"660px"}}>
                 Join our community of students who are already using Yachika@JMIETI to improve their campus experience.
               </p>
             </div>

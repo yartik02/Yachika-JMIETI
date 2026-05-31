@@ -6,8 +6,16 @@
   --cta-button-hover-shadow: 0 5px 30px 5px rgba(0, 0, 0, 0.263);
 }
 
+[data-theme="dark"] {
+  --cta-bg: linear-gradient(105deg, #bcc8ec75 0%, #edf2ffe3 100%);
+}
+
 .xtra{
   transition: all 0.3s ease;
+}
+
+.cta-section {
+  background: var(--bg-glass);
 }
 
 .cta-card {

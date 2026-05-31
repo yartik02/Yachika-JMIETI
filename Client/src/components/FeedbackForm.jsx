@@ -36,15 +36,36 @@ const FeedbackForm = ({ complaintId }) => {
             );
 
             if (response.ok) {
-                toast.success("Thank you for your feedback!");
+                toast.success("Thank you for your feedback!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
                 refetchComplaints();
             } else {
-                toast.error("Couldn't submit feedback. Please try again.");
+                toast.error("Couldn't submit feedback. Please try again.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
             }
         
         } catch (error) {
             console.error("Feedback submission error:", error);
-            toast.error("Couldn't connect to the server.");
+            toast.error("Couldn't connect to the server.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         } finally {
             setIsSubmitting(false);
         }
@@ -95,7 +116,7 @@ const FeedbackForm = ({ complaintId }) => {
             <div className="mb-3">
                 <label htmlFor={`feedback-${complaintId}`} className="form-label fw-semibold">Share your experience:</label>
                 <textarea
-                    className="form-control"
+                    className="form-control feedbackTextarea"
                     id={`feedback-${complaintId}`}
                     rows="3"
                     value={feedback}

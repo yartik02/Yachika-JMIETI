@@ -38,16 +38,13 @@
 }
 
 .stone-card {
-    background-color: var(--stone-bg);
     animation: popIn 0.5s ease-out forwards;
     transition: transform 0.3s ease;
 }
 
 .stone-card:hover{
     transform: scale(1.05);
-    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.393);
-    /* background-color: #090f3d; */
-    transition: transform 0.3s ease, box-shadow 0.1s ease;
+    transition: transform 0.3s ease;
 }
 
 .stone-icon{
@@ -157,9 +154,9 @@
     cursor: pointer;
 }
 
-.dropdown-option:hover {
+/* .dropdown-option:hover {
     background-color: #f0f0f0;
-}
+} */
 
 .menus {
     top: 100%;
@@ -173,6 +170,5 @@
 }
 
 .complaint.active-complaint {
-  border: 2px solid #0c3f8b;
   transition: all 0.1s ease;
 }

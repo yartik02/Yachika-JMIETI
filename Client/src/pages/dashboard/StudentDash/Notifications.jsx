@@ -175,10 +175,24 @@ const Notifications = () => {
       );
       if (res.ok) {
         setAllNotifications([]);
-        toast.success("Notifications cleared successfully!");
+        toast.success("Notifications cleared successfully!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (err) {
-      toast.error("Failed to clear notifications!");
+      toast.error("Failed to clear notifications!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
     } finally {
       setIsClearing(false);
     }
@@ -196,9 +210,9 @@ const Notifications = () => {
   };
 
   return (
-    <section className="notifications-page rounded-4 p-4">
-      <div className="notifications-card bg-white shadow-sm">
-        <header className="notifications-header p-4 d-flex justify-content-between align-items-center position-relative">
+    <section className="notifications-page shadow-sm rounded-4 p-0" style={{backgroundColor:"var(--bg-main)", color:"var(--text-primary)"}}>
+      {/* <div className="notifications-card"> */}
+        <header className="p-4 d-flex justify-content-between align-items-center position-relative" style={{borderBottom:"1px solid var(--light-hover)"}}>
           <div className="d-flex align-items-center">
             <h5 className="m-0 me-2">Notifications</h5>
             <span className="notification-count-badge">
@@ -210,7 +224,7 @@ const Notifications = () => {
             <div className="notification-menu-container" ref={menuRef}>
               {/* Three Vertical Dots Icon Button */}
               <button
-                className="btn p-1 border-0 shadow-none"
+                className="btn p-1 border-0 shadow-none btn-click-animation"
                 onClick={() => setShowMenu(!showMenu)}
                 aria-label="Notification Options"
               >
@@ -218,7 +232,7 @@ const Notifications = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   width="22"
                   height="22"
-                  fill="currentColor"
+                  fill="var(--text-primary)"
                   className="bi bi-three-dots-vertical"
                   viewBox="0 0 16 16"
                 >
@@ -229,8 +243,8 @@ const Notifications = () => {
               {/* Dropdown Menu */}
               {showMenu && (
                 <div
-                  className="position-absolute end-0 mt-2 shadow-sm rounded-3 bg-white border border-light py-2"
-                  style={{ zIndex: 1000, width: "150px", top: "80%" }}
+                  className="position-absolute end-0 mt-2 shadow-sm rounded-3 py-2"
+                  style={{ zIndex: 1000, width: "150px", top: "80%", backgroundColor:"var(--bg-surface)", border:"1px solid var(--light-hover)" }}
                 >
                   <button
                     className="dropdown-item text-danger d-flex align-items-center px-3 py-2 w-100 text-start"
@@ -294,7 +308,7 @@ const Notifications = () => {
                     </div>
                   )}
 
-                  <span className="notification-time my-auto">
+                  <span className="notification-time my-auto opacity-75">
                     {formatTimeAgo(notification.createdAt)}
                   </span>
 
@@ -308,20 +322,20 @@ const Notifications = () => {
                         {notification.message}
                       </p>
 
-                      <div className="row container bg-secondary mx-4 mx-lg-5 w-100 bg-opacity-10 p-1 rounded-3 mt-2 text-sm-start g-3" style={{maxWidth:"90%"}}>
-                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                      <div className="row container mx-4 mx-lg-5 w-100 p-1 rounded-3 mt-2 text-sm-start g-3" style={{maxWidth:"90%", backgroundColor:"var(--light-hover)"}}>
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto opacity-75">
                           <span className="fw-semibold">Title: </span>
                           {notification.complaintTitle}
                         </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto opacity-75">
                           <span className="fw-semibold">Category: </span>
                           {notification.complaintCategory}
                         </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto text-muted">
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notText border-dark notification-context my-auto opacity-75">
                           <span className="fw-semibold">Priority: </span>
                           {notification.complaintPriority}
                         </div>
-                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notification-context my-auto text-muted">
+                        <div className="col-lg-3 col-md-6 col-sm-12 text-start notification-context my-auto opacity-75">
                           <span className="fw-semibold">Submitted: </span>
                           {new Date(
                             notification.complaintCreatedAt,
@@ -336,7 +350,7 @@ const Notifications = () => {
                       {isResolved &&
                         matchedComplaint &&
                         matchedComplaint.feedback === " " && (
-                          <div className="container bg-white shadow-lg p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start">
+                          <div className="container shadow-lg p-3 rounded-3 mt-4 mx-auto w-75 text-sm-start" style={{backgroundColor:"var(--bg-surface)"}}>
                             <p className="fw-light">
                               Your complaint has been resolved. Please share
                               feedback.
@@ -369,20 +383,20 @@ const Notifications = () => {
                               className="m-0 text-start"
                               style={{ fontSize: "0.9rem" }}
                             >
-                              {" "}
+                                
                               <span className="fw-semibold">
                                 Your Feedback:
-                              </span>{" "}
+                              </span>  
                               {matchedComplaint.feedback}
                             </p>
                             <p
                               className="m-0 text-start"
                               style={{ fontSize: "0.9rem" }}
                             >
-                              {" "}
+                                
                               <span className="fw-semibold">
                                 Your rating:
-                              </span>{" "}
+                              </span>  
                               {matchedComplaint.rating}
                             </p>
                           </div>
@@ -395,9 +409,9 @@ const Notifications = () => {
                       <p className="notification-message text-start text-lg-center w-75 mx-auto">
                         {notification.title}!
                       </p>
-                      <div className="my-auto text-muted notification-message bg-success bg-opacity-10 py-1 px-2 px-lg-4 py-lg-2 rounded" style={{minWidth:"50%", maxWidth:"75%"}} >
+                      <div className="my-auto opacity-75 fw-light notification-message bg-success bg-opacity-10 py-1 px-2 px-lg-4 py-lg-2 rounded" style={{minWidth:"50%", maxWidth:"75%"}} >
                         <span className="fw-semibold me-2 text-success">
-                          Admin Remarks:{" "}
+                          Admin Remarks:  
                         </span>
                         {notification.message}
                       </div>
@@ -408,13 +422,13 @@ const Notifications = () => {
             })
           ) : (
             <div className="no-notifications-card p-5 text-center">
-              <p className="text-muted mt-3 mb-0">
+              <p className="opacity-75 mt-3 mb-0">
                 You don't have new notifications.
               </p>
             </div>
           )}
         </div>
-      </div>
+      {/* </div> */}
     </section>
   );
 };

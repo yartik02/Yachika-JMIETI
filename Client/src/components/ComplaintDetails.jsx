@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./CompliantSorting.css";
 import { toast } from "react-toastify";
 import { useAuth } from "../../src/store/auth";
+import { useTheme } from "../utils/useTheme.jsx";
 
 function ComplaintDetails({ complaint, role }) {
   const { token, refetchComplaintsAdmin, user } = useAuth();
+  const { theme } = useTheme();
 
   const [localStatus, setLocalStatus] = useState("");
   const [localIsReported, setLocalIsReported] = useState(false);
@@ -21,13 +23,13 @@ function ComplaintDetails({ complaint, role }) {
 
   if (!complaint) {
     return (
-      <p className="p-5 d-flex text-muted clickedComp rounded-4 flex-column align-items-center justify-content-center">
+      <p className="p-5 d-flex opacity-75 clickedComp rounded-4 flex-column align-items-center justify-content-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="45"
           height="45"
-          fill="gray"
-          className="bi bi-chat-left-text mb-2"
+          fill="currentColor"
+          className="mb-2"
           viewBox="0 0 16 16"
         >
           <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
@@ -73,9 +75,30 @@ function ComplaintDetails({ complaint, role }) {
 
   const updateStatus = async (newStatus, additionalData = {}) => {
     if (isSubmitting) return;
-    if (localStatus === "Resolved") return toast.error("Already resolved!");
-    if (localStatus === "Rejected") return toast.error("Already rejected!");
-    if (localStatus === newStatus) return toast.error(`Already in ${newStatus}!`);
+    if (localStatus === "Resolved") return toast.error("Already resolved!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
+    if (localStatus === "Rejected") return toast.error("Already rejected!", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
+    if (localStatus === newStatus) return toast.error(`Already in ${newStatus}!`, {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
 
     setIsSubmitting(true);
     try {
@@ -93,15 +116,36 @@ function ComplaintDetails({ complaint, role }) {
 
       if (response.ok) {
         setLocalStatus(newStatus);
-        toast.success(`Status updated to ${newStatus}`);
+        toast.success(`Status updated to ${newStatus}`, {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         await refetchComplaintsAdmin();
         handleCloseModal();
       } else {
-        toast.error("Failed to update status.");
+        toast.error("Failed to update status.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (error) {
       console.error("Update error:", error);
-      toast.error("Network error.");
+      toast.error("Network error.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -126,21 +170,42 @@ function ComplaintDetails({ complaint, role }) {
 
       if (response.ok) {
         setLocalIsReported(true);
-        toast.warning("Complaint reported to Super Admin.");
+        toast.warning("Complaint reported to Super Admin.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
         await refetchComplaintsAdmin();
       } else {
-        toast.error("Failed to report complaint.");
+        toast.error("Failed to report complaint.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
       }
     } catch (error) {
       console.error("Reporting error:", error);
-      toast.error("Network error while reporting.");
+      toast.error("Network error while reporting.", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="clickedComp rounded-4 bg-light border-2 overflow-hidden">
+    <div className="clickedComp rounded-4 border-2 overflow-hidden">
       <div
         className="text-start p-4 detailedComplain my-auto"
         style={{ maxHeight: "77vh", overflowY: "scroll" }}
@@ -149,7 +214,7 @@ function ComplaintDetails({ complaint, role }) {
           <p className=" fw-normal m-0 text-wrap" style={{ fontSize: "1.3rem" }}>
             {complaint.complaintTitle}
           </p>
-          <span className="createdDate text-nowrap text-muted" style={{ fontSize: "0.9rem" }}>
+          <span className="createdDate text-nowrap opacity-75" style={{ fontSize: "0.9rem" }}>
             {new Date(complaint.createdAt).toLocaleDateString("en-GB", {
               day: "numeric",
               month: "long",
@@ -230,7 +295,7 @@ function ComplaintDetails({ complaint, role }) {
         {user.role === "Admin" && !isResolvedOrRejected && (
           <div className="d-flex justify-content-end">
             <button
-              className="btn-outline-dark btn px-2 py-1 d-flex align-items-center"
+              className={`btn px-2 py-1 d-flex align-items-center ${theme === "light" ? "btn-outline-dark" : "btn-outline-light"} rounded-2`}
               onClick={handleReport}
               disabled={isActionDisabled || localIsReported}
               style={{ fontSize: "0.75rem" }}
@@ -283,12 +348,12 @@ function ComplaintDetails({ complaint, role }) {
             <div className="modal-backdrop fade show"></div>
             <div className="modal fade show" style={{ display: "block" }}>
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content">
-                  <div className="modal-header">
+                <div className="modal-content" style={{backgroundColor:"var(--bg-surface)", color:"var(--text-primary)"}}>
+                  <div className="modal-header" data-bs-theme={theme} style={{ borderBottom: `1px solid var(--light-hover)` }}>
                     <h5 className="modal-title">Rejection Reason</h5>
                     <button
                       type="button"
-                      className="btn-close"
+                      className={`btn-close`}
                       onClick={handleCloseModal}
                     ></button>
                   </div>
@@ -301,7 +366,7 @@ function ComplaintDetails({ complaint, role }) {
                       placeholder="Why is this being rejected?"
                     ></textarea>
                   </div>
-                  <div className="modal-footer">
+                  <div className="modal-footer" style={{ borderTop: `1px solid var(--light-hover)` }}>
                     <button
                       className="btn btn-danger"
                       disabled={isSubmitting || !reason.trim()}

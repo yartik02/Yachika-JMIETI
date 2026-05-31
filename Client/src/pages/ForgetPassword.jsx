@@ -45,7 +45,14 @@ const ForgotPassword = () => {
       });
 
       // const data = await res.json();
-      if (!res.ok) return toast.error(data.msg || "Failed to send OTP");
+      if (!res.ok) return toast.error(data.msg || "Failed to send OTP", {
+        style: {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-primary)",
+          width: "fit-content",
+          maxWidth: "40vw",
+        },
+      });
 
       setMessage("OTP sent successfully!");
       // console.log("data of otp generation",data);

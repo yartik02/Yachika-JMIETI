@@ -57,8 +57,8 @@ const ComplaintSection = () => {
   
   return (
     <section
-      className="complaintView mx-auto bg-white rounded-4 p-lg-4 p-2"
-      style={{ width: "100%" }}
+      className="complaintView mx-auto rounded-4 p-lg-4 p-2"
+      style={{ backgroundColor: "var(--bg-main)" }}
     >
 
     <div className="sortingSection p-lg-3 p-0">
@@ -114,7 +114,7 @@ const ComplaintSection = () => {
               />
             ))
           ) : (
-            <p className="text-muted p-3">
+            <p className="text-center opacity-75 p-3">
               No complaints match the current filters or search term.
             </p>
           )}

@@ -17,7 +17,7 @@ const About = () => {
           <h1 className="display-6 heading fw-bold mb-4 text-center">
             Empowering Student Voices for a <span className="text-gradient">Better Campus</span>
           </h1>
-          <p className="fs-6 fw-light text-muted mb-4 text-center mx-auto">
+          <p className="fs-6 w-75 fw-light opacity-75 mb-4 text-center mx-auto">
             We believe every student's voice matters. Our platform bridges the gap between students and administration, 
             creating a transparent and efficient system for addressing campus concerns.
           </p>

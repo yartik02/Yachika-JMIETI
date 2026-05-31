@@ -246,6 +246,10 @@ const sendOtpToMail = async (req, res) => {
     });
     console.log("Message sent:", info.messageId);
 
+    if (!info || info.rejected.length > 0) {
+      console.error("Failed to send OTP email.");
+      return res.status(500).json({ msg: "Failed to send OTP email." });
+    }
     res.status(200).json({
       msg: "OTP generated and email sent successfully!",
       expiresIn: "5 minutes",

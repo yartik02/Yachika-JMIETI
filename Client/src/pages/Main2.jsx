@@ -35,8 +35,8 @@ function Main2() {
   return (
     <section className="main2 py-5 p-lg-5 px-sm-2 w-100" style={{ backgroundColor: "#1a267d16" }}>
       <div className="head my-5 py-lg-5 d-flex flex-column align-items-center text-center">
-        <p className="fs-3 fw-bold">Why Choose Yachika@JMIETI?</p>
-        <p className="fw-light text-dark w-75 text-muted opacity-75">
+        <p className="fs-3 fw-bold">Why Choose <span className="text-gradient">Yachika@JMIETI?</span></p>
+        <p className="fw-light w-75 opacity-75">
           Designed specifically for JMIETI family, our platform ensures your voice is heard and your concerns are addressed promptly and
           effectively.
         </p>
@@ -45,7 +45,7 @@ function Main2() {
           <div className="row justify-content-center g-4">
             {data.map((item, idx) => (
               <div className="col-12 col-md-6 col-lg-3" key={idx}>
-                <div className="p-4 bg-white rounded-4 xtra">
+                <div className="p-4 rounded-4 xtra">
                   <span
                     className="p-3 rounded-4 d-inline-block"
                     style={{ backgroundColor: item.backgroundColor }}
@@ -61,7 +61,7 @@ function Main2() {
                       <path d={item.path} />
                     </svg>
                   </span>
-                  <p className="fw-bold mt-4 mb-1 mx-0">{item.title}</p>
+                  <p className="fw-bold mt-3 mb-1 mx-0">{item.title}</p>
                   <p
                     className="fw-light text-secondary mx-0"
                     style={{ fontSize: "0.8rem" }}

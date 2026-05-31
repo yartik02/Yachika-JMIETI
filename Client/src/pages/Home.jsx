@@ -62,7 +62,7 @@ const Home = () => {
           />
         </picture>
         <button
-          className="btn1 mb-4 rounded-pill fw-light"
+          className="btn1 mb-4 rounded-pill fw-light btn-click-animation"
           onClick={handleClick}
         >
           SUBMIT A COMPLAINT

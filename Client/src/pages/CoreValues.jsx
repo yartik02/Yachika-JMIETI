@@ -136,7 +136,7 @@ const CoreValues = () => {
               </p>
             </div>
             <Link to={url} onClick={handleClick}>
-              <p className="cta-button d-inline-flex rounded-pill mb-4 text-white align-items-center text-gradient">
+              <p className="cta-button btn-click-animation d-inline-flex rounded-pill mb-4 text-white align-items-center text-gradient">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

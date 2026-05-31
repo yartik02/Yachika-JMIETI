@@ -8,10 +8,13 @@ import {
   PolicyAlert,
 } from "./PolicySectionCompos";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../utils/useTheme.jsx";
+import { light, dark } from "../utils/Icons.jsx"
 
 function PrivacyPolicy() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [selectedValue, setSelectedValue] = useState("Go to Section");
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const sections = [
     { id: "section-1", title: "Information We Collect" },
@@ -32,14 +35,46 @@ function PrivacyPolicy() {
   };
 
   return (
-    <div id="PPs" className="PrivacyPolicies py-5 border position-relative">
+    <div id="PPs" className="PrivacyPolicies py-5 position-relative">
+      {/* Theme Toggle Button */}
+        <div className="my-auto p-3 position-absolute top-0 end-0">
+          <div
+            className="p-1 rounded-circle"
+            style={{
+              backgroundColor: "var(--bg-surface)",
+            }}
+          >
+            <p
+              className="d-flex align-items-center m-0 p-0 p-2 rounded-circle btn-click-animation theme-toggle-btn"
+              role="button"
+              onClick={toggleTheme}
+              style={{ cursor: "pointer", height: "fit-content" }}
+              title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {theme === "light" ? dark : light}
+              </svg>
+            </p>
+          </div>
+        </div>
+
       <div className="headerPP d-flex align-items-center justify-content-center mb-1 mb-lg-5">
-        <button onClick={() => navigate(-1)} className="rounded-5 backBtn">
+        <button onClick={() => navigate(-1)} className="rounded-5 backBtn btn-click-animation">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="35"
             height="35"
-            fill="#1a2786ff"
+            fill="var(--accent-primary)"
             className="bi bi-arrow-left"
             viewBox="0 0 16 16"
           >
@@ -52,7 +87,7 @@ function PrivacyPolicy() {
 
         <span
           className="badge bg-primary bg-opacity-10 fw-normal align-self-start p-2 px-3 rounded-pill fs-6"
-          style={{ color: "#2648c2ff" }}
+          style={{ color: "var(--accent-primary)" }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +112,7 @@ function PrivacyPolicy() {
           <div
             className="sticky-top text-start m-0 py-4 rounded-2"
             style={{
-              backgroundColor: "#090f3d",
+              backgroundColor: "var(--accent-primary)",
               top: "-0.5rem",
               width: "100%",
               zIndex: "3",
@@ -113,7 +148,7 @@ function PrivacyPolicy() {
               role="button"
               onClick={() => handleToggleDropdown("Go to Section")}
               aria-expanded={isOpen}
-              style={{ backgroundColor: "#16206eff" }}
+              style={{ backgroundColor: "var(--accent-primary)" }}
             >
               {selectedValue}
               <svg
@@ -135,7 +170,7 @@ function PrivacyPolicy() {
               <div
                 className="menus mt-1 p-2 rounded-3 text-white position-absolute w-100"
                 style={{
-                  backgroundColor: "#16206eff",
+                  backgroundColor: "var(--accent-primary)",
                   zIndex: "3",
                   boxShadow: "rgb(0 0 0 / 58%) -1px 13px 20px 5px",
                 }}
@@ -179,7 +214,7 @@ function PrivacyPolicy() {
             {/* --- Header --- */}
             <header className="pb-3 border-bottom">
               <h1 className="display-5 fw-bold">Privacy Policy</h1>
-              <p className="lead text-muted">Welcome to Yachika@JMIETI</p>
+              <p className="lead opacity-75">Welcome to Yachika@JMIETI</p>
               <div className="d-flex flex-wrap gap-2">
                 {/* <span className="badge text-bg-light border border-secondary-subtle">Effective: [Insert Date]</span> */}
                 <span
@@ -203,12 +238,12 @@ function PrivacyPolicy() {
 
             <div
               className="row justify-content-center p-0 rounded-4 mt-lg-5"
-              style={{ backgroundColor: "#a8b2ff1e" }}
+              style={{ backgroundColor: "var(--light-hover)" }}
             >
               <div className="col-lg-10 col-xl-9 mt-4">
                 {/* --- Section 1 (Card Grid) --- */}
                 <PolicySection title="1. Information We Collect">
-                  <p className="text-body-secondary">
+                  <p className="opacity-75">
                     When you sign up or use Yachika@JMIETI, we may collect the
                     following data:
                   </p>
@@ -263,7 +298,7 @@ function PrivacyPolicy() {
                   id="section-3"
                   title="2. How We Use Your Information"
                 >
-                  <p className="text-body-secondary">
+                  <p className="">
                     We use your information to:
                   </p>
                   <div className="mt-4">
@@ -304,7 +339,7 @@ function PrivacyPolicy() {
                   id="section-4"
                   title="3. Anonymity and Transparency"
                 >
-                  <p className="text-body-secondary">
+                  <p className="">
                     Yachika@JMIETI respects your right to privacy.
                   </p>
                   <PolicyAlert
@@ -336,7 +371,7 @@ function PrivacyPolicy() {
                   id="section-5"
                   title="4. Data Storage and Security"
                 >
-                  <p className="text-body-secondary">
+                  <p className="">
                     All user and complaint data are securely stored in MongoDB
                     databases. We employ industry-standard security practices
                     to:
@@ -365,7 +400,7 @@ function PrivacyPolicy() {
 
                 {/* --- Section 5 --- */}
                 <PolicySection id="section-6" title="5. User Rights">
-                  <p className="text-body-secondary">
+                  <p className="">
                     As a user, you have the right to:
                   </p>
                   <ul className="list-unstyled ps-0 mt-3">
@@ -392,7 +427,7 @@ function PrivacyPolicy() {
 
                 {/* ... Other sections (6, 7, 8, 9) ... */}
                 <PolicySection id="section-7" title="6. Cookies and Analytics">
-                  <p className="text-body-secondary">
+                  <p className="">
                     Yachika@JMIETI may use minimal cookies for maintaining login
                     sessions and improving functionality.  
                     <strong>
@@ -402,7 +437,7 @@ function PrivacyPolicy() {
                 </PolicySection>
 
                 <PolicySection id="section-8" title="7. Third-Party Access">
-                  <p className="text-body-secondary">
+                  <p className="">
                     Only authorized JMIETI administrators and developers have
                     access to stored data for maintenance and support purposes.
                     We do not share your information with external organizations
@@ -413,7 +448,7 @@ function PrivacyPolicy() {
 
                 {/* --- Section 8 --- */}
                 <PolicySection id="section-9" title="8. Public Access and Use">
-                  <p className="text-body-secondary">
+                  <p className="">
                     While the platform is publicly accessible, only verified
                     JMIETI students and staff can create or track complaints.
                     Visitors may view general information about the platform but
@@ -423,7 +458,7 @@ function PrivacyPolicy() {
 
                 {/* --- Section 9 --- */}
                 <PolicySection id="section-10" title="9. Policy Updates">
-                  <p className="text-body-secondary">
+                  <p className="">
                     This Privacy Policy may be updated from time to time to
                     reflect system improvements or legal requirements. Users
                     will be notified of major updates through the platform.
@@ -432,7 +467,7 @@ function PrivacyPolicy() {
 
                 {/* --- Section 10 (Card Style) --- */}
                 <section className="mb-5">
-                  <div className="cta-card text-center border-0 bg-body-tertiary rounded-4">
+                  <div className="cta-card text-center border-0 bg-body- rounded-4">
                     <div className="card-body p-4 p-md-5">
                       <h2 className="h4 fw-bold mb-2 text-gradient">
                         Contact Us
@@ -444,8 +479,8 @@ function PrivacyPolicy() {
                       </p>
                       <a
                         href="mailto:supportYachika@jmieti.edu.in"
-                        className="btn btn-primary btn-lg mt-2 d-flex mx-auto"
-                        style={{ fontSize: "0.9rem", width: "fit-content" }}
+                        className="btn btn-lg mt-2 d-flex mx-auto text-light btn-click-animation"
+                        style={{ fontSize: "0.9rem", width: "fit-content", backgroundColor:"var(--accent-primary)" }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

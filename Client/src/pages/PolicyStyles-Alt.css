@@ -1,6 +1,6 @@
 .policy-section-heading {
   font-weight: 600;
-  color: var(--bs-dark);
+  color: var(--text-primary);
   padding-bottom: 0.75rem;
   /* Creates a more prominent, modern underline */
   border-bottom: 3px solid var(--bs-primary-border-subtle); 

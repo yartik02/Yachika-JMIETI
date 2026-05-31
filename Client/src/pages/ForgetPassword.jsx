@@ -140,11 +140,11 @@ const ForgotPassword = () => {
     >
       {/* backbtn */}
       <button
-        className="back-btn shadow-lg z-3 p-2 px-3 rounded-pill border-0"
+        className="back-btn shadow-lg z-3 p-2 px-3 rounded-pill border-0 btn-click-animation"
         onClick={() => navigate("/login")}
         aria-label="Go back"
       >
-        <svg width="24" height="24" fill="#090f3d" viewBox="0 0 16 16">
+        <svg width="24" height="24" fill="var(--accent-primary)" viewBox="0 0 16 16">
           <path
             fillRule="evenodd"
             d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
@@ -152,7 +152,7 @@ const ForgotPassword = () => {
         </svg>
       </button>
 
-      <div className="forgot-password-card">
+      <div className="forgot-password-card" style={{backgroundColor:"var(--bg-surface)" }}>
         <h3 className="fw-bolder mb-0">Reset Your Password</h3>
         <p className="subtitle mb-4">Yachika@JMIETI Account Recovery</p>
 
@@ -163,10 +163,11 @@ const ForgotPassword = () => {
         {step === 1 && (
           <form onSubmit={handleSendOTP}>
             <div className="input-group text-start">
-              <label>Email Address</label>
+              <label className="opacity-75" style={{color:"var(--text-primary)"}}>Email Address</label>
               <input
                 type="email"
-                className="rounded-3"
+                className="rounded-3 modalInput focus-ring" 
+                style={{color:"var(--text-primary)", backgroundColor:"transparent"}}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
@@ -175,7 +176,7 @@ const ForgotPassword = () => {
 
             <button
               type="submit"
-              className="login_btn p-2 w-100 rounded-3"
+              className="login_btn p-2 w-100 rounded-3 btn-click-animation"
               disabled={loading}
             >
               {loading ? "Sending OTP..." : "Send OTP"}
@@ -187,24 +188,26 @@ const ForgotPassword = () => {
         {step === 2 && (
           <form onSubmit={handleVerifyOTP}>
             <div className="input-group text-start">
-              <label>Enter OTP</label>
+              <label className="opacity-75" style={{color:"var(--text-primary)"}}>Enter OTP</label>
               <input
                 type="text"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
+                className="rounded-3 modalInput focus-ring" 
+                style={{color:"var(--text-primary)", backgroundColor:"transparent"}}
                 placeholder="6-digit code"
                 maxLength="6"
                 required
               />
             </div>
 
-            <button className="primary-btn" disabled={loading}>
+            <button className="login_btn p-2 w-100 rounded-3 btn-click-animation" disabled={loading}>
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
 
             <button
               type="button"
-              className="secondary-btn"
+              className="secondary-btn btn-click-animation"
               onClick={() => setStep(1)}
             >
               Back to Email
@@ -216,26 +219,32 @@ const ForgotPassword = () => {
         {step === 3 && (
           <form onSubmit={handleResetPassword}>
             <div className="input-group text-start">
-              <label>New Password</label>
+              <label className="opacity-75" style={{color:"var(--text-primary)"}}>New Password</label>
               <input
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
+                className="rounded-3 modalInput focus-ring" 
+                style={{color:"var(--text-primary)", backgroundColor:"transparent"}}
+                placeholder="Enter new password... "
                 required
               />
             </div>
 
             <div className="input-group text-start">
-              <label>Confirm Password</label>
+              <label className="opacity-75" style={{color:"var(--text-primary)"}}>Confirm Password</label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                className="rounded-3 modalInput focus-ring" 
+                style={{color:"var(--text-primary)", backgroundColor:"transparent"}}
+                placeholder="Confirm new password... "
                 required
               />
             </div>
 
-            <button className="primary-btn" disabled={loading}>
+            <button className="login_btn p-2 w-100 rounded-3 btn-click-animation" disabled={loading}>
               {loading ? "Updating..." : "Update Password"}
             </button>
           </form>

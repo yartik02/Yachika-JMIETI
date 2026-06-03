@@ -18,7 +18,7 @@ const MyComplaintCard = ({ complaint }) => {
     >
       <div className="d-flex justify-content-between ">
         <h4 className="stone-title m-0">{complaint.complaintTitle}</h4>
-        <div className="text-nowrap opacity-75" style={{fontSize:"0.8rem"}}>{formattedDate}</div>
+        <div className="opacity-75 text-nowrap" style={{fontSize:"0.8rem"}}>{formattedDate}</div>
       </div>
 
       <div className="tags d-flex justify-content-between align-items-center my-sm-2 my-xs-5 my-md-2 my-lg-2">
@@ -44,11 +44,11 @@ const MyComplaintCard = ({ complaint }) => {
 
         <div className="stone-footer d-flex flex-sm-row flex-column p-0 justify-content-end" style={{width:"fit-content", maxWidth:"320px"}}>
           <div
-            className="border border-secondary text-nowrap border-opacity-10 bg-secondary bg-opacity-10 py-1 px-2 rounded-3 d-flex align-items-center gap-1"
+            className="border border-secondary text-nowrap border-opacity-10 bg-secondary bg-opacity-10 py-1 px-2 rounded-3"
             style={{ fontSize: "0.8rem", width: "fit-content" }}
           >
             <strong className="me-1">Category: </strong>
-            <span className="text-wrap" style={{maxWidth:"200px"}}>
+            <span className="text-wrap text-lg-nowrap text-md-nowrap">
               {complaint.category} - {complaint.subCategory}
             </span>
           </div>

@@ -195,11 +195,11 @@ const getNotifications = async (req, res, next) => {
 
 const sendOtpToMail = async (req, res) => {
   const { name, email } = req.body;
-  console.log("contoller hitted!");
+  // console.log("contoller hitted!");
   
 
   const studentExist = await student.findOne({ email});
-  console.log(Boolean(studentExist));
+  // console.log(Boolean(studentExist));
   if(Boolean(studentExist)){
     return res.status(500).json({msg:"Student with this email alraedy exist!"})
   }

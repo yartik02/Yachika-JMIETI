@@ -10,8 +10,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/auth.jsx";
 import backImage from "../assets/backgroundImageComplaintForm.png";
-import "./CompliantSorting.css";
+import "./CompliantForm.css";
 import { Error } from "../pages/Error.jsx";
+import { useTheme } from "../utils/useTheme.jsx";
 
 const subCategoryMap = {
   Infrastructure: [
@@ -61,6 +62,7 @@ const priorityOptions = ["Low", "Medium", "High"];
 
 function ComplaintForm() {
   const { user, token, refetchComplaints } = useAuth();
+  const { theme } = useTheme();
   if (!user || !token) {
     return <Error />;
   }
@@ -160,7 +162,7 @@ function ComplaintForm() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       return;
@@ -174,7 +176,7 @@ function ComplaintForm() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         return;
@@ -197,7 +199,7 @@ function ComplaintForm() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         setFormData({
@@ -224,7 +226,7 @@ function ComplaintForm() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         console.error("Server responded with an error:", errorData);
@@ -236,7 +238,7 @@ function ComplaintForm() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
     }
@@ -266,7 +268,7 @@ function ComplaintForm() {
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-disabled={disabled}
-        style={{ minHeight: "38px", cursor: disabled ? "not-allowed" : "pointer", color: "var(--text-primary)", border: "1px solid var(--light-hover)" }}
+        style={{ minHeight: "38px", cursor: disabled ? "not-allowed" : "pointer", color: "var(--text-primary)", border: `1px solid ${theme === 'light' ? 'var(--text-primary)' : 'var(--light-hover)'}` }}
       >
         {displayValue}
         <svg
@@ -316,20 +318,24 @@ function ComplaintForm() {
 
   return (
     <div
-      className="py-5 complaintForm"
-      style={{ backgroundImage: `url(${backImage})`, backgroundSize: "cover" }}
+      className="py-5 complaintForm mesh-container"
+      // style={{ backgroundImage: `url(${backImage})`, backgroundSize: "cover" }}
     >
+      {/* Animated Background Elements */}
+      <div className="orb orb-1"></div>
+      <div className="orb orb-2"></div>
+
       <div className="px-5 position-relative">
         <button
           onClick={() => navigate(-1)}
           className="rounded-5 position-absolute top-0 start-0 mx-5"
-          style={{ backgroundColor: "transparent", border: "none" }}
+          style={{ backgroundColor: "transparent", border: "none"}}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
             height="40"
-            fill="#1a257d"
+            fill="var(--accent-primary)"
             className="bi bi-arrow-left back"
             viewBox="0 0 16 16"
           >
@@ -340,10 +346,10 @@ function ComplaintForm() {
           </svg>
         </button>
       </div>
-      <div className="card backImg shadow-lg mx-auto text-start my-5">
+      <div className="card backImg shadow-lg mx-auto text-start my-5 glass-panel">
         <div
           className="card-header p-3 rounded-3 text-white"
-          style={{ backgroundColor: "#1a257d" }}
+          style={{ backgroundColor: "var(--accent-primary)" }}
         >
           <h2 className="mb-0 text-center header">Submit a New Complaint</h2>
         </div>

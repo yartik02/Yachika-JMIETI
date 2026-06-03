@@ -29,7 +29,6 @@
  color: var(--text-primary);
  opacity: 0.9
 }
-/* Add these styles to your existing CSS file */
 
 .dropdown-arrow {
  transition: transform 0.2s ease-in-out;
@@ -187,7 +186,6 @@
 }
 
 
-
 .detailedComplain::-webkit-scrollbar {
  width: 3px;
 }
@@ -196,3 +194,22 @@
  background: #131dad;
  border-radius: 100px;
 } 
+
+/* forward btn in complaint details */
+
+.btn-theme-dynamic {
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+  background-color: transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-theme-dynamic:hover:not(:disabled) {
+  background-color: var(--text-primary);
+  color: var(--bg-surface); /* Inverts the text color on hover */
+}
+
+.btn-theme-dynamic:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

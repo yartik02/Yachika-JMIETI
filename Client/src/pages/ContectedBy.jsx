@@ -4,8 +4,10 @@ import { trashIcon } from "../utils/Icons";
 
 const ContactedUsers = () => {
   const [allContacts, setAllContacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getAllContacts = async () => {
+    setIsLoading(true);
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
@@ -29,10 +31,13 @@ const ContactedUsers = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       }
       );
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,7 +65,7 @@ const ContactedUsers = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         setAllContacts((prev) => prev.filter((msg) => msg._id !== msgId));
@@ -70,7 +75,7 @@ const ContactedUsers = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       }
@@ -80,7 +85,7 @@ const ContactedUsers = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       console.error("Delete error:", error);
@@ -104,7 +109,13 @@ const ContactedUsers = () => {
       </div>
 
       <div className="row px-3">
-        {allContacts.length === 0 ? (
+        {isLoading ? (<div className="d-flex flex-column justify-content-center align-items-center mt-5">
+          <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading&hellip;</span>
+        </div>
+        <p className="mt-2 fs-5 opacity-75" style={{ color: "var(--text-primary)"}}>Loading messages&hellip;</p>
+        </div>
+      ) : allContacts.length === 0 ? (
           <div className="mt-5 fs-5 d-flex flex-column justify-content-center align-items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -246,16 +257,3 @@ const GridIcon = () => (
     <path d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1m9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1m0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0z" />
   </svg>
 );
-
-// const TrashIcon = () => (
-//   <svg
-//     xmlns="http://www.w3.org/2000/svg"
-//     width="16"
-//     height="16"
-//     fill="currentColor"
-//     className="me-2"
-//     viewBox="0 0 16 16"
-//   >
-//     <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-//   </svg>
-// );

@@ -1,0 +1,59 @@
+/* ComplaintForm.css */
+
+:root {
+    --card-bg: rgba(255, 255, 255, 0.233);
+    --card-border: rgba(255, 255, 255, 0.449);
+    --text-main: #1f2937;
+    --text-muted: #006aff;
+}
+
+[data-theme="dark"] {
+    --card-bg: rgba(30, 31, 35, 0.449);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+@property --wave-phase {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* 2. Container and Animated Orbs */
+.mesh-container {
+    height: 100vh;
+    background-color: var(--bg-main);
+    opacity: 0.8;
+    background-image: 
+        repeating-radial-gradient(
+            circle at 0% 0%, 
+            transparent var(--wave-phase), 
+            var(--bg-main) calc(60px + var(--wave-phase))
+        ), 
+        repeating-linear-gradient(#444CF755, #444CF7);
+        
+    /* Execute the animation continuously */
+    animation: waveLift 0.8s linear infinite;
+}
+
+@keyframes waveLift {
+    0% {
+        --wave-phase: 0px;
+    }
+    100% {
+        --wave-phase: 60px; 
+    }
+}
+
+.glass-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--card-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    color: var(--text-main);
+    transition: all 0.5s ease;
+}

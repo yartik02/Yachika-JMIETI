@@ -26,7 +26,7 @@ const Home = () => {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           },
         },
       );
@@ -38,7 +38,7 @@ const Home = () => {
               backgroundColor: "var(--bg-surface)",
               color: "var(--text-primary)",
               width: "100%",
-              maxWidth: "40vw",
+              minWidth: "40vw",
             },
           },
         );

@@ -26,7 +26,7 @@ const AllStudents = ({ role }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   // --- SUSPENSION MODAL STATE ---
   const [showSuspendPrompt, setShowSuspendPrompt] = useState(false);
   const [curStudentId, setCurStudentId] = useState(null);
@@ -83,23 +83,23 @@ const AllStudents = ({ role }) => {
 
       if (response.ok) {
         toast.success("Student deleted successfully!", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
         setAllStudents((prev) => prev.filter((student) => student._id !== studentId));
       } else {
         toast.error("Failed to delete student.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
       }
     } catch (error) {
       toast.error("An error occurred, try again later!", {
@@ -107,7 +107,7 @@ const AllStudents = ({ role }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       console.error("Delete error:", error);
@@ -121,7 +121,7 @@ const AllStudents = ({ role }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       return;
@@ -137,30 +137,30 @@ const AllStudents = ({ role }) => {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ 
-            studentId, 
+          body: JSON.stringify({
+            studentId,
             reason: suspendReason,
-            durationInDays: suspendDuration 
+            durationInDays: suspendDuration
           }),
         }
       );
 
       if (response.ok) {
         toast.success(`Student suspended ${suspendDuration === "permanent" ? "permanently" : "successfully"}!`, {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
         setAllStudents((prevStudents) =>
           prevStudents.map((student) =>
             student._id === studentId
-              ? { 
-                  ...student, 
-                  suspensionDetails: { ...student.suspensionDetails, isSuspended: true } 
-                } 
+              ? {
+                ...student,
+                suspensionDetails: { ...student.suspensionDetails, isSuspended: true }
+              }
               : student
           )
         );
@@ -172,13 +172,13 @@ const AllStudents = ({ role }) => {
         setCurStudentId(null);
       } else {
         toast.error("Failed to suspend student.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
       }
     } catch (error) {
       toast.error("An error occurred, try again later!", {
@@ -186,8 +186,8 @@ const AllStudents = ({ role }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
-          
+          minWidth: "40vw",
+
         },
       });
       console.error("Suspend error:", error);
@@ -270,8 +270,11 @@ const AllStudents = ({ role }) => {
 
       <hr className="mx-auto w-100" style={{ color: "var(--text-dashboard-name)" }} />
 
-      {isLoading ? (
-        <p className="mt-5 fs-5 text-muted">Loading students...</p>
+      {isLoading ? (<>
+        <div className="spinner-border mt-5" role="status">
+          <span className="visually-hidden">Loading&hellip;</span>
+        </div>
+        <p className="mt-2 fs-5 opacity-75" style={{ color: "var(--text-primary)" }}>Loading students&hellip;</p></>
       ) : filteredStudents.length === 0 ? (
         <p className="mt-5 fs-5 text-muted">
           {searchQuery ? "No students match your search criteria." : "No students registered yet."}
@@ -309,10 +312,10 @@ const AllStudents = ({ role }) => {
                       <hr className="my-2 opacity-25" />
 
                       <div className="bottom d-flex align-items-center justify-content-between">
-                          <p className="m-0 text-truncate" style={{ fontSize: "0.85rem" }}>
-                            <span className="fw-bold me-2" style={{color:"var(--text-dashboard-name)"}}>Registered:</span> {formattedCreatedAt}
-                          </p>
-                          
+                        <p className="m-0 text-truncate" style={{ fontSize: "0.85rem" }}>
+                          <span className="fw-bold me-2" style={{ color: "var(--text-dashboard-name)" }}>Registered:</span> {formattedCreatedAt}
+                        </p>
+
                         {role === "SuperAdmin" && !isCurrentlySuspended && (
                           <button
                             className="btn btn-outline-danger text-truncate rounded-4 text-center"
@@ -395,7 +398,7 @@ const AllStudents = ({ role }) => {
                       onClick={() => {
                         setShowSuspendPrompt(false);
                         setSuspendReason("");
-                        setSuspendDuration("7"); 
+                        setSuspendDuration("7");
                       }}
                     >
                       Cancel

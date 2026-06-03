@@ -16,7 +16,7 @@ export default function Logout() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
 

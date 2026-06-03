@@ -41,7 +41,7 @@ const FeedbackForm = ({ complaintId }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
                 refetchComplaints();
@@ -51,7 +51,7 @@ const FeedbackForm = ({ complaintId }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
             }
@@ -63,7 +63,7 @@ const FeedbackForm = ({ complaintId }) => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         } finally {

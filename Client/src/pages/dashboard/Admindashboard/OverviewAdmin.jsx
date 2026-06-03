@@ -6,9 +6,11 @@ import "./new.css";
 const Overview = () => {
     const [recentComplaints, setRecentComplaints] = useState([]);
     const token = localStorage.getItem("authToken");
+    const [loading, setLoading] = useState(false);
 
     const getRecentComplaints = async () => {
         try {
+            setLoading(true);
             const response = await fetch(
               `${import.meta.env.VITE_API_BASE_URL}/api/admin/getRecentComplaints`,
               {
@@ -20,6 +22,9 @@ const Overview = () => {
             setRecentComplaints(data.map((item, index) => ({ ...item, index })));
         } catch (error) {
             console.error("Error fetching recent complaints:", error);
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -40,7 +45,13 @@ const Overview = () => {
             </div>
 
             <main className="garden-content m-0 py-3 px-1 px-lg-4 mt-0" style={{ borderRadius:"0 0 20px 20px"}}>
-                {recentComplaints.length > 0 ? (
+                {loading ? (
+                    <div className="d-flex justify-content-center align-items-center py-5">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : recentComplaints.length > 0 ? (
                     <div className="d-flex flex-column mb-4 stones-grid mx-xs-2 mx-lg-0">
                         {recentComplaints.map((complaint) => (
                             <ComplaintCard key={complaint._id} complaint={complaint} />

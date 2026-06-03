@@ -3,9 +3,6 @@
   user-select: none;
 }
 
-/* =========================================
-   1. GLOBAL THEME TOKENS (THE ARCHITECTURE)
-   ========================================= */
 :root {
   /* Backgrounds */
   --bg-main: #f2f5fe;
@@ -506,9 +503,11 @@ form select:focus {
   transition: all 0.2s ease-in-out;
 }
 
-/* =========================================
-   4. MEDIA QUERIES
-   ========================================= */
+.ProfileimgStudent{
+  width: 40px;
+  height: 40px;
+}
+
 @media (max-width: 900px) {
   .logo, .nav-items, .menuItems {
     font-size: 0.5rem;
@@ -591,5 +590,15 @@ form select:focus {
 @media (min-width: 290px) {
   .main1Badge {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  input.form-control {
+    font-size: 0.78rem;
+  }
+  .ProfileimgStudent{
+    width: 30px;
+    height: 30px;
   }
 }

@@ -158,7 +158,7 @@ function Contact() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
       return;
@@ -188,7 +188,7 @@ function Contact() {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           },
         });
         // console.log(res_Data);
@@ -200,7 +200,7 @@ function Contact() {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           },
         });
       }
@@ -211,7 +211,7 @@ function Contact() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }

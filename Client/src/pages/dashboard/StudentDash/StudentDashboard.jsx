@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import male2img from "../../../assets/new male avatar.jpg";
 import femaleimg from "../../../assets/Girl_img_avatar.png";
 import othersimg from "../../../assets/others avatar.avif";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../store/auth";
 import HomeStudent from "./HomeStudent";
 import MyComplaints from "./MyComplaints";
@@ -17,7 +17,7 @@ import {
   notifications,
   userProfile,
   light,
-  dark
+  dark,
 } from "../../../utils/Icons.jsx";
 
 const btngrpData = [
@@ -43,14 +43,10 @@ const btngrpData = [
   },
 ];
 
-
 function StudentDashboard() {
   const [student, setStudent] = useState(null);
-  const navigate = useNavigate();
   const { allComplaints, user } = useAuth();
-  const [userData, setUserData] = useState(true);
   const [activeTab, setActiveTab] = useState(btngrpData[0].name);
-  const [loading, setLoading] = useState(true);
   const { toggleTheme, theme } = useTheme();
   useEffect(() => {
     if (user && !student) {
@@ -87,10 +83,6 @@ function StudentDashboard() {
     }
   }
 
-  const handlebtnClick = (btnName) => {
-    setActiveTab(btnName);
-  };
-
   const ProfileData = [
     { label: "Name", value: student.name },
     { label: "Roll Number", value: student.rollNo },
@@ -112,14 +104,12 @@ function StudentDashboard() {
           <img
             src={imgSrc}
             alt="Student Avatar"
-            className="ProfileimgStudent rounded-circle me-3"
+            className="ProfileimgStudent rounded-circle me-md-3 me-lg-3 me-2"
             style={{
-              width: "40px",
-              height: "40px",
               border: "3px solid var(--text-dashboard-name)",
             }}
           />
-          {student.name}'s Dashboard
+          {student.name}'s Dash<span className="newCompBtn">board</span>
         </h4>
 
         <div className="headBtns d-flex align-items-center gap-3">
@@ -171,7 +161,7 @@ function StudentDashboard() {
               <path d="M21 12H9" />
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
             </svg>
-            Log Out
+            <span className="newCompBtn">Log Out</span>
           </Link>
         </div>
       </div>

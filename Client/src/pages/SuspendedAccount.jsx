@@ -74,7 +74,7 @@ const SuspendedPage = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       return;
@@ -105,7 +105,7 @@ const SuspendedPage = () => {
               backgroundColor: "var(--bg-surface)",
               color: "var(--text-primary)",
               width: "fit-content",
-              maxWidth: "40vw",
+              minWidth: "40vw",
             },
           },
         );
@@ -118,7 +118,7 @@ const SuspendedPage = () => {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           },
         });
       }
@@ -129,7 +129,7 @@ const SuspendedPage = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
     } finally {

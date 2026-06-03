@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../src/store/auth";
 import { useTheme } from "../utils/useTheme.jsx";
 
-function ComplaintDetails({ complaint, role }) {
+function ComplaintDetails({ complaint }) {
   const { token, refetchComplaintsAdmin, user } = useAuth();
   const { theme } = useTheme();
 
@@ -45,7 +45,7 @@ function ComplaintDetails({ complaint, role }) {
   const isActionDisabled = isSubmitting || isResolvedOrRejected;
   const statusClass = `status-${(localStatus || "").toLowerCase()}`;
   const priorityClass = `priority-${(complaint.priority || "").toLowerCase()}`;
-  
+
   const hasValidFeedback = complaint.feedback && complaint.feedback.trim() !== "";
   const showResolvedBlock = localStatus === "Resolved" && (complaint.rating !== 0 || hasValidFeedback);
   const showRejectedBlock = localStatus === "Rejected" && complaint.rating === 0 && hasValidFeedback;
@@ -76,29 +76,29 @@ function ComplaintDetails({ complaint, role }) {
   const updateStatus = async (newStatus, additionalData = {}) => {
     if (isSubmitting) return;
     if (localStatus === "Resolved") return toast.error("Already resolved!", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+      style: {
+        backgroundColor: "var(--bg-surface)",
+        color: "var(--text-primary)",
+        width: "fit-content",
+        minWidth: "40vw",
+      },
+    });
     if (localStatus === "Rejected") return toast.error("Already rejected!", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+      style: {
+        backgroundColor: "var(--bg-surface)",
+        color: "var(--text-primary)",
+        width: "fit-content",
+        minWidth: "40vw",
+      },
+    });
     if (localStatus === newStatus) return toast.error(`Already in ${newStatus}!`, {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+      style: {
+        backgroundColor: "var(--bg-surface)",
+        color: "var(--text-primary)",
+        width: "fit-content",
+        minWidth: "40vw",
+      },
+    });
 
     setIsSubmitting(true);
     try {
@@ -117,24 +117,24 @@ function ComplaintDetails({ complaint, role }) {
       if (response.ok) {
         setLocalStatus(newStatus);
         toast.success(`Status updated to ${newStatus}`, {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
         await refetchComplaintsAdmin();
         handleCloseModal();
       } else {
         toast.error("Failed to update status.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
       }
     } catch (error) {
       console.error("Update error:", error);
@@ -143,7 +143,7 @@ function ComplaintDetails({ complaint, role }) {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
     } finally {
@@ -171,23 +171,23 @@ function ComplaintDetails({ complaint, role }) {
       if (response.ok) {
         setLocalIsReported(true);
         toast.warning("Complaint reported to Super Admin.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
         await refetchComplaintsAdmin();
       } else {
         toast.error("Failed to report complaint.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          maxWidth: "40vw",
-        },
-      });
+          style: {
+            backgroundColor: "var(--bg-surface)",
+            color: "var(--text-primary)",
+            width: "fit-content",
+            minWidth: "40vw",
+          },
+        });
       }
     } catch (error) {
       console.error("Reporting error:", error);
@@ -196,7 +196,7 @@ function ComplaintDetails({ complaint, role }) {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
     } finally {
@@ -285,7 +285,7 @@ function ComplaintDetails({ complaint, role }) {
         {/* REJECTED BLOCK */}
         {showRejectedBlock && (
           <div className="row mb-2 mt-2 p-2 bg-danger bg-opacity-10 border border-danger-subtle rounded-3">
-            <p className="col-12 d-flex m-0 flex-column text-danger" style={{fontSize:"0.9rem"}}>
+            <p className="col-12 d-flex m-0 flex-column text-danger" style={{ fontSize: "0.9rem" }}>
               <span className="fw-semibold">Reason for Rejection</span> {complaint.feedback}
             </p>
           </div>
@@ -295,7 +295,7 @@ function ComplaintDetails({ complaint, role }) {
         {user.role === "Admin" && !isResolvedOrRejected && (
           <div className="d-flex justify-content-end">
             <button
-              className={`btn px-2 py-1 d-flex align-items-center ${theme === "light" ? "btn-outline-dark" : "btn-outline-light"} rounded-2`}
+              className="btn px-2 py-1 d-flex align-items-center btn-theme-dynamic rounded-2"
               onClick={handleReport}
               disabled={isActionDisabled || localIsReported}
               style={{ fontSize: "0.75rem" }}
@@ -348,7 +348,7 @@ function ComplaintDetails({ complaint, role }) {
             <div className="modal-backdrop fade show"></div>
             <div className="modal fade show" style={{ display: "block" }}>
               <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content" style={{backgroundColor:"var(--bg-surface)", color:"var(--text-primary)"}}>
+                <div className="modal-content" style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-primary)" }}>
                   <div className="modal-header" data-bs-theme={theme} style={{ borderBottom: `1px solid var(--light-hover)` }}>
                     <h5 className="modal-title">Rejection Reason</h5>
                     <button

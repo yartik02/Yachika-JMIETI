@@ -217,7 +217,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -227,7 +227,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -237,7 +237,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -250,7 +250,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -290,7 +290,7 @@ function Signup() {
               backgroundColor: "var(--bg-surface)",
               color: "var(--text-primary)",
               width: "100%",
-              maxWidth: "40vw",
+              minWidth: "40vw",
             },
           },
         );
@@ -302,7 +302,7 @@ function Signup() {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           }
         });
       }
@@ -313,7 +313,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     } finally {
@@ -332,7 +332,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -390,7 +390,7 @@ function Signup() {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "fit-content",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           },
         });
         navigate("/login");
@@ -418,7 +418,7 @@ function Signup() {
                 backgroundColor: "var(--bg-surface)",
                 color: "var(--text-primary)",
                 width: "100%",
-                maxWidth: "40vw",
+                minWidth: "40vw",
               },
             },
           );
@@ -431,7 +431,7 @@ function Signup() {
               backgroundColor: "var(--bg-surface)",
               color: "var(--text-primary)",
               width: "100%",
-              maxWidth: "40vw",
+              minWidth: "40vw",
             }
           }
         );
@@ -445,7 +445,7 @@ function Signup() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     } finally {
@@ -497,7 +497,7 @@ function Signup() {
       </div>
 
       {/* --- Right Form Section --- */}
-      <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-sm-5">
+      <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-3">
         <div
           className="rounded-4 p-4 shadow-lg w-100 "
           style={{
@@ -574,7 +574,7 @@ function Signup() {
 
                 <div className="my-3 text-start">
                   <label>Gender:</label>
-                  <div className="options d-flex gap-5">
+                  <div className="options d-flex gap-4 gap-md-3 gap-lg-5">
                     {genders.map((option, idx) => (
                       <div key={idx} className="form-check">
                         <input

@@ -19,7 +19,7 @@ function PolicySection({ id, title, children }) {
  * A card-based list item, perfect for a grid layout.
  * Used for: Section 1
  */
-function InfoCard({ icon, title, children, variant = 'primary', path }) {
+function InfoCard({ title, children, variant = 'primary', path }) {
 
     let iconColor;
     if(variant==='danger'){
@@ -36,11 +36,11 @@ function InfoCard({ icon, title, children, variant = 'primary', path }) {
     }
   return (
     <div className="col-lg-6 col-md-6 mb-4 d-flex align-items-stretch">
-      <div className="card policy-card shadow-sm border-1 border-0 w-100 p-3" style={{ backgroundColor:"var(--bg-glass)", color:"var(--text-primary)"}}>
+      <div className="card policy-card shadow-sm w-100 p-4" style={{ backgroundColor:"var(--bg-glass)", color:"var(--text-primary)", border: `1px solid var(--light-hover)` }}>
         <div className="card-body p-0">
-          <div className={`icon-circle bg-${variant} border-1 border-${variant} bg-opacity-10 text-${variant} mb-3 shadow-sm mx-auto`}>
+          <div className={`icon-circle bg-${variant} bg-opacity-10 text-${variant} mb-3 shadow-sm mx-auto`}>
             {/* <i className={`bi ${icon} fs-4`}></i> */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill={`${iconColor}`} className={`${icon} m-0`} viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill={`${iconColor}`} viewBox="0 0 16 16">
               <path d={path}/>
             </svg>
           </div>
@@ -72,7 +72,7 @@ function UsageStep({ number, children }) {
  * A simple, clean list item with a colored checkmark.
  * Used for: Section 5
  */
-function InfoListItem({ children, variant = 'success' }) {
+function InfoListItem({ children }) {
   return (
     <li className="d-flex align-items-center mb-2 ">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#198754" className="bi bi-check-circle-fill me-3" viewBox="0 0 16 16">

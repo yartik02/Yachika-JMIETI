@@ -73,7 +73,7 @@ const CoreValues = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
     }
@@ -129,7 +129,7 @@ const CoreValues = () => {
             <div className="texts mx-auto mb-4 p-0">
               <h6 className="display-6 fw-bold mt-4 text-center w-100" style={{maxWidth:"1000px"}}>
                 Ready to Make Your Voice  
-                <span className="text-gradient">Heard?</span>
+                <span className="text-gradient"> Heard?</span>
               </h6>
               <p className="fs-6 fw-normal text-center mx-auto w-100" style={{maxWidth:"660px"}}>
                 Join our community of students who are already using Yachika@JMIETI to improve their campus experience.

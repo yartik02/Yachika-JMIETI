@@ -48,7 +48,7 @@ export default function Signin() {
   const navigate = useNavigate();
   const formRef = useRef(null);
   const { storeTokenInLocalStorage } = useAuth();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -78,7 +78,7 @@ export default function Signin() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
       return;
@@ -112,7 +112,7 @@ export default function Signin() {
                 backgroundColor: "var(--bg-surface)",
                 color: "var(--text-primary)",
                 width: "fit-content",
-                maxWidth: "40vw",
+                minWidth: "40vw",
               },
             }),
             setTimeout(() => {
@@ -127,7 +127,7 @@ export default function Signin() {
                 backgroundColor: "var(--bg-surface)",
                 color: "var(--text-primary)",
                 width: "fit-content",
-                maxWidth: "40vw",
+                minWidth: "40vw",
               },
             }),
             setTimeout(() => {
@@ -143,7 +143,7 @@ export default function Signin() {
                 backgroundColor: "var(--bg-surface)",
                 color: "var(--text-primary)",
                 width: "fit-content",
-                maxWidth: "40vw",
+                minWidth: "40vw",
               },
             },
           );
@@ -164,7 +164,7 @@ export default function Signin() {
               backgroundColor: "var(--bg-surface)",
               color: "var(--text-primary)",
               width: "100%",
-              maxWidth: "40vw",
+              minWidth: "40vw",
             }
           });
           (storeTokenInLocalStorage(errorData.token),
@@ -174,7 +174,7 @@ export default function Signin() {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
             width: "100%",
-            maxWidth: "40vw",
+            minWidth: "40vw",
           }
         });
         return;
@@ -188,15 +188,16 @@ export default function Signin() {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "100%",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         }
       });
       return;
     } finally {
       setLoading(false);
     }
+  };
 
-    if (loading) {
+  if (loading) {
       return (
         <div className="text-center loading my-5">
           <div className="spinner-border" role="status"></div>
@@ -204,16 +205,6 @@ export default function Signin() {
         </div>
       );
     }
-
-    toast.error("Invalid Email or Password!", {
-      style: {
-        backgroundColor: "var(--bg-surface)",
-        color: "var(--text-primary)",
-        width: "100%",
-        maxWidth: "40vw",
-      }
-    });
-  };
 
   return (
     <div className="login row m-0" style={{ minHeight: "100vh" }}>
@@ -249,11 +240,11 @@ export default function Signin() {
               <img src={logo} alt="Yachika Logo" width={75} />
             </p>
           </div>
-          <div className="ms-4">
-            <p className="text-white mb-1 fs-3 fw-bold text-start">
+          <div className="ms-4 fs-5 fs-md-3 fs-lg-3">
+            <p className="text-white mb-1 fw-bold text-start">
               Yachika@JMIETI
             </p>
-            <p className="text-white mb-0">
+            <p className="text-light mb-0" style={{  fontSize: "0.90rem" }}>
               Raising Concerns Made Easy, Because Every Issue Matters.
             </p>
           </div>
@@ -261,7 +252,7 @@ export default function Signin() {
       </div>
 
       {/* Right Section */}
-      <div className="col-md-6 d-flex justify-content-center align-items-center p-5">
+      <div className="col-md-6 d-flex justify-content-center align-items-center p-lg-5 p-md-5 p-2">
         <div
           className="rounded-4 p-4 shadow-lg w-100"
           style={{

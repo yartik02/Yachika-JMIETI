@@ -82,7 +82,7 @@ const SuspensionAppeals = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         console.error("Error fetching appeals:", error);
@@ -112,7 +112,7 @@ const SuspensionAppeals = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
       return;
@@ -150,7 +150,7 @@ const SuspensionAppeals = () => {
                 backgroundColor: "var(--bg-surface)",
                 color: "var(--text-primary)",
                 width: "fit-content",
-                maxWidth: "40vw",
+                minWidth: "40vw",
               },
             },
           );
@@ -162,7 +162,7 @@ const SuspensionAppeals = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
         closeActionModal();
@@ -174,7 +174,7 @@ const SuspensionAppeals = () => {
           backgroundColor: "var(--bg-surface)",
           color: "var(--text-primary)",
           width: "fit-content",
-          maxWidth: "40vw",
+          minWidth: "40vw",
         },
       });
     } finally {

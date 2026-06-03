@@ -9,7 +9,7 @@ import {
 } from "./PolicySectionCompos";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../utils/useTheme.jsx";
-import { light, dark } from "../utils/Icons.jsx"
+import { light, dark } from "../utils/Icons.jsx";
 
 function PrivacyPolicy() {
   const [openDropdown, setOpenDropdown] = useState(null);
@@ -37,39 +37,42 @@ function PrivacyPolicy() {
   return (
     <div id="PPs" className="PrivacyPolicies py-5 position-relative">
       {/* Theme Toggle Button */}
-        <div className="my-auto p-3 position-absolute top-0 end-0">
-          <div
-            className="p-1 rounded-circle"
-            style={{
-              backgroundColor: "var(--bg-surface)",
-            }}
+      <div className="my-auto p-3 position-absolute top-0 end-0">
+        <div
+          className="p-1 rounded-circle"
+          style={{
+            backgroundColor: "var(--bg-main)",
+          }}
+        >
+          <p
+            className="d-flex align-items-center m-0 p-0 p-2 rounded-circle btn-click-animation theme-toggle-btn"
+            role="button"
+            onClick={toggleTheme}
+            style={{ cursor: "pointer", height: "fit-content" }}
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
           >
-            <p
-              className="d-flex align-items-center m-0 p-0 p-2 rounded-circle btn-click-animation theme-toggle-btn"
-              role="button"
-              onClick={toggleTheme}
-              style={{ cursor: "pointer", height: "fit-content" }}
-              title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {theme === "light" ? dark : light}
-              </svg>
-            </p>
-          </div>
+              {theme === "light" ? dark : light}
+            </svg>
+          </p>
         </div>
+      </div>
 
       <div className="headerPP d-flex align-items-center justify-content-center mb-1 mb-lg-5">
-        <button onClick={() => navigate(-1)} className="rounded-5 backBtn btn-click-animation">
+        <button
+          onClick={() => navigate(-1)}
+          className="rounded-5 backBtn btn-click-animation"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="35"
@@ -113,17 +116,24 @@ function PrivacyPolicy() {
             className="sticky-top text-start m-0 py-4 rounded-2"
             style={{
               backgroundColor: "var(--accent-primary)",
-              top: "-0.5rem",
+              top: "1rem",
               width: "100%",
               zIndex: "3",
               boxShadow: "rgb(0 0 0 / 41%) 0px 0px 50px",
-              height: "fit-content",
+              maxHeight: "calc(100vh - 2rem)",
+              display: "flex",
+              flexDirection: "column",
             }}
           >
             <h4 className="fw-light text-light mb-0 px-3 fs-2">Sections</h4>
             <nav
               className="flex-column my-4 border-start ps-0 py-1 px-4 ms-lg-4 ms-md-2 bg-transparent text-white"
-              style={{ width: "fit-content", boxShadow: "none" }}
+              style={{
+                width: "fit-content",
+                flexGrow: 1,
+                boxShadow: "none",
+                overflowY: "auto",
+              }}
             >
               {sections.map((section) => (
                 <a
@@ -218,8 +228,8 @@ function PrivacyPolicy() {
               <div className="d-flex flex-wrap gap-2">
                 {/* <span className="badge text-bg-light border border-secondary-subtle">Effective: [Insert Date]</span> */}
                 <span
-                  className="text-primary bg-primary bg-opacity-10 border border-primary-subtle px-2 py-1 rounded-3"
-                  style={{ fontSize: "0.8rem" }}
+                  className="text-primary bg-primary bg-opacity-10 px-2 py-1 rounded-3"
+                  style={{ fontSize: "0.8rem", border:"1px solid var(--light-hover)" }}
                 >
                   Last Updated: 1 Nov, 2025
                 </span>
@@ -238,7 +248,7 @@ function PrivacyPolicy() {
 
             <div
               className="row justify-content-center p-0 rounded-4 mt-lg-5"
-              style={{ backgroundColor: "var(--light-hover)" }}
+              style={{ backgroundColor: "var(--bg-surface)" }}
             >
               <div className="col-lg-10 col-xl-9 mt-4">
                 {/* --- Section 1 (Card Grid) --- */}
@@ -249,7 +259,6 @@ function PrivacyPolicy() {
                   </p>
                   <div className="row mt-4" id="section-2">
                     <InfoCard
-                      icon="bi bi-person-fill"
                       title="Personal Information"
                       variant="primary"
                       path="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
@@ -258,7 +267,6 @@ function PrivacyPolicy() {
                       Password, etc.
                     </InfoCard>
                     <InfoCard
-                      icon="bi bi-file-earmark-text-fill"
                       title="Complaint Details"
                       variant="info"
                       path={
@@ -269,7 +277,6 @@ function PrivacyPolicy() {
                       category, and optional attachments.
                     </InfoCard>
                     <InfoCard
-                      icon="bi bi-shield-check"
                       title="Anonymity Preference"
                       variant="success"
                       path={
@@ -280,7 +287,6 @@ function PrivacyPolicy() {
                       certain complaints.
                     </InfoCard>
                     <InfoCard
-                      icon="bi bi-laptop"
                       title="Technical Data"
                       variant="danger"
                       path={
@@ -298,9 +304,7 @@ function PrivacyPolicy() {
                   id="section-3"
                   title="2. How We Use Your Information"
                 >
-                  <p className="">
-                    We use your information to:
-                  </p>
+                  <p className="">We use your information to:</p>
                   <div className="mt-4">
                     <UsageStep number="01">
                       Create and manage your Yachika@JMIETI account.
@@ -400,9 +404,7 @@ function PrivacyPolicy() {
 
                 {/* --- Section 5 --- */}
                 <PolicySection id="section-6" title="5. User Rights">
-                  <p className="">
-                    As a user, you have the right to:
-                  </p>
+                  <p className="">As a user, you have the right to:</p>
                   <ul className="list-unstyled ps-0 mt-3">
                     <InfoListItem>
                       Access and update your personal information.
@@ -411,13 +413,11 @@ function PrivacyPolicy() {
                       Request deletion of your account.
                     </InfoListItem>
                     <InfoListItem>
-                      File complaints anonymously  
-                      <span className="nextLineText">
-                        (where applicable).
-                      </span>  
+                      File complaints anonymously
+                      <span className="nextLineText">(where applicable).</span>
                     </InfoListItem>
                     <InfoListItem>
-                      Withdraw consent for data usage  
+                      Withdraw consent for data usage
                       <span className="nextLineText">
                         (subject to institutional policies).
                       </span>
@@ -429,7 +429,7 @@ function PrivacyPolicy() {
                 <PolicySection id="section-7" title="6. Cookies and Analytics">
                   <p className="">
                     Yachika@JMIETI may use minimal cookies for maintaining login
-                    sessions and improving functionality.  
+                    sessions and improving functionality.
                     <strong>
                       We do not use tracking or advertising cookies.
                     </strong>
@@ -472,15 +472,21 @@ function PrivacyPolicy() {
                       <h2 className="h4 fw-bold mb-2 text-gradient">
                         Contact Us
                       </h2>
-                      <p className="text-muted w-75 mx-auto"
-                        style={{ fontSize: "0.9rem" }}>
+                      <p
+                        className="text-muted w-75 mx-auto"
+                        style={{ fontSize: "0.9rem" }}
+                      >
                         For questions, concerns, or requests related to this
                         Privacy Policy, please reach out to us.
                       </p>
                       <a
                         href="mailto:supportYachika@jmieti.edu.in"
                         className="btn btn-lg mt-2 d-flex mx-auto text-light btn-click-animation"
-                        style={{ fontSize: "0.9rem", width: "fit-content", backgroundColor:"var(--accent-primary)" }}
+                        style={{
+                          fontSize: "0.9rem",
+                          width: "fit-content",
+                          backgroundColor: "var(--accent-primary)",
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

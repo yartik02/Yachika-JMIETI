@@ -6,7 +6,7 @@ const TabButtonGroup = ({ tabs, activeTab, onTabChange, theme }) => {
       className="btngrp d-flex justify-content-between bg-secondary bg-opacity-10 p-1 rounded-5 flex-sm-row"
       style={{ width: "100%", height: "fit-content" }}
     >
-      {tabs.map((btn, index) => (
+      {tabs.map((btn) => (
         <button
           key={btn.name}
           className={`rounded-5 w-25 p-1 d-flex align-items-center justify-content-center ${

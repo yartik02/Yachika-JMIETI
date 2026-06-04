@@ -10,7 +10,7 @@
 
 /* Add a slight grow effect on hover for better feedback */
 .star-rating button:hover {
-  transform: scale(1.1);
+  transform: scale(1.25);
 }
 
 .star-on {

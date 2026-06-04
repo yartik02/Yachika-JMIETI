@@ -39,7 +39,7 @@ export const AutoEscalationOfComplaints = () => {
           rollno: complaint.createdByRollno, 
           message: "Update: Your complaint has been pending for 7 days and has been automatically escalated to the Super Admin for review.",
           complaintTitle: complaint.complaintTitle,
-          complaintPriority: complaint.priority,       
+          complaintPriority: complaint.priority,     
           complaintCategory: complaint.category,       
           complaintSubCategory: complaint.subCategory,
           complaintCreatedAt: complaint.createdAt,    

@@ -108,7 +108,7 @@ const ContactedUsers = () => {
         />
       </div>
 
-      <div className="row px-3">
+      <div className="row px-3 w-100">
         {isLoading ? (<div className="d-flex flex-column justify-content-center align-items-center mt-5">
           <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading&hellip;</span>

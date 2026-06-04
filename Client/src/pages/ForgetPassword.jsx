@@ -41,10 +41,10 @@ const ForgotPassword = () => {
       const res = await fetch(`${API_BASE}/sendOtpToMail`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, name:"Student" }),
+        body: JSON.stringify({ email: email, name:"Student", type: "forgot-password" }),
       });
 
-      // const data = await res.json();
+      const data = await res.json();
       if (!res.ok) return toast.error(data.msg || "Failed to send OTP", {
         style: {
           backgroundColor: "var(--bg-surface)",
@@ -55,8 +55,6 @@ const ForgotPassword = () => {
       });
 
       setMessage("OTP sent successfully!");
-      // console.log("data of otp generation",data);
-      console.log("data of otp mail", res);
 
       setStep(2);
     } catch (err) {
@@ -192,6 +190,7 @@ const ForgotPassword = () => {
               <input
                 type="text"
                 value={otp}
+                name="otp"
                 onChange={(e) => setOtp(e.target.value)}
                 className="rounded-3 modalInput focus-ring" 
                 style={{color:"var(--text-primary)", backgroundColor:"transparent"}}

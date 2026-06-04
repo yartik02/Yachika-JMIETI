@@ -7,7 +7,10 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
     Priority: "All Priority",
     Category: "All Categories",
   });
+  
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownContainerRef = useRef(null);
 
@@ -34,6 +37,16 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
     };
   }, [handleClickOutside]);
 
+  // --- DEBOUNCE LOGIC ---
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 300);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
   const handleToggleDropdown = useCallback((name) => {
     setOpenDropdown((prevOpen) => (prevOpen === name ? null : name));
   }, []);
@@ -49,7 +62,6 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
   const handleExport = useCallback(() => {
     if (confirm("Are you sure you want to export all complaints?")) {
       const wb = XLSX.utils.book_new();
-      // Exporting the raw array passed to the component
       const ws = XLSX.utils.json_to_sheet(rawComplaints); 
       XLSX.utils.book_append_sheet(wb, ws, "Complaints");
       XLSX.writeFile(wb, exportFileName);
@@ -69,8 +81,9 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
     if (filters.Category !== "All Categories") {
       complaintsToFilter = complaintsToFilter.filter((c) => c.category === filters.Category);
     }
-    if (searchTerm.trim() !== "") {
-      const lowerCaseSearch = searchTerm.toLowerCase();
+    
+    if (debouncedSearchTerm.trim() !== "") {
+      const lowerCaseSearch = debouncedSearchTerm.toLowerCase();
       complaintsToFilter = complaintsToFilter.filter(
         (c) =>
           (c.complaintTitle && c.complaintTitle.toLowerCase().includes(lowerCaseSearch)) ||
@@ -83,9 +96,8 @@ function ComplaintFilterBar({ rawComplaints, onFilterChange, exportFileName = "C
     complaintsToFilter.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     return complaintsToFilter;
-  }, [rawComplaints, filters, searchTerm]);
+  }, [rawComplaints, filters, debouncedSearchTerm]);
 
-  // Send the filtered results back to the parent component whenever they change
   useEffect(() => {
     onFilterChange(filteredComplaints);
   }, [filteredComplaints, onFilterChange]);

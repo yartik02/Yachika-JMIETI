@@ -19,7 +19,6 @@ const ComplaintSection = () => {
   
     // 2. State to hold the filtered data returned from the Filter Bar
     const [filteredComplaints, setFilteredComplaints] = useState([]);
-    
     const [clickedComplaint, setClickedComplaint] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
   

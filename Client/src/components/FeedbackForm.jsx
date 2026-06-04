@@ -9,7 +9,6 @@ const FeedbackForm = ({ complaintId }) => {
     const [hover, setHover] = useState(0); // For the star hover effect
     const [feedback, setFeedback] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [message, setMessage] = useState(""); // To show "Thank you!"
     const { token, refetchComplaints } = useAuth();
 
     const handleSubmit = async (e) => {
@@ -71,14 +70,6 @@ const FeedbackForm = ({ complaintId }) => {
         }
     };
 
-    if (message) {
-        return (
-            <div className={`alert ${message.includes("Error") ? 'alert-danger' : 'alert-success'} mt-3`}>
-                {message}
-            </div>
-        );
-    }
-
     return (
         <form onSubmit={handleSubmit} className="mt-3">
             <div className="mb-2">
@@ -92,7 +83,7 @@ const FeedbackForm = ({ complaintId }) => {
                   <button
                     type="button"
                     key={ratingValue}
-                    className={isStarOn ? "star-on" : "star-off"}
+                    className={`${isStarOn ? "star-on" : "star-off"} me-1`}
                     onClick={() => setRating(ratingValue)}
                     onMouseEnter={() => setHover(ratingValue)}
                     onMouseLeave={() => setHover(0)}

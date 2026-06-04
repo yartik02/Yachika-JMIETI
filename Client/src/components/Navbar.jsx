@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "../assets/YachikaLogo.png";
 import Menu from "./Menu";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import { useTheme } from "../utils/useTheme.jsx";
+import { light, dark } from "../utils/Icons.jsx";
 import.meta.env.VITE_ADMIN_MAIL;
 import.meta.env.VITE_SUPER_ADMIN_MAIL;
 
@@ -12,27 +13,6 @@ const navData = [
   { name: "About Us", path: "/about" },
   { name: "Contact Us", path: "/contactUs" },
 ];
-
-const navIcons = {
-  light: (
-    <>
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2" />
-      <path d="M12 20v2" />
-      <path d="m4.93 4.93 1.41 1.41" />
-      <path d="m17.66 17.66 1.41 1.41" />
-      <path d="M2 12h2" />
-      <path d="M20 12h2" />
-      <path d="m6.34 17.66-1.41 1.41" />
-      <path d="m19.07 4.93-1.41 1.41" />
-    </>
-  ),
-  dark: (
-    <>
-      <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
-    </>
-  ),
-};
 
 function Navbar() {
   const { user } = useAuth();
@@ -122,7 +102,7 @@ function Navbar() {
           {isLoggedIn && !isSuspended ? (
             <Link
               to="/logout"
-              className="py-1 btn d-flex align-items-center btn-outline-danger ms-2"
+              className="py-1 btn d-flex align-items-center btn-outline-danger mx-2"
               title="Log Out"
             >
               <svg
@@ -183,7 +163,7 @@ function Navbar() {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              {theme === "light" ? navIcons.dark : navIcons.light}
+              {theme === "light" ? dark : light}
             </svg>
           </p>
         </li>
@@ -206,7 +186,7 @@ function Navbar() {
               d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
             />
           </svg>
-          <Menu navData={navData} navIcons={navIcons} />
+          <Menu navData={navData}/>
         </span>
       </ul>
     </nav>

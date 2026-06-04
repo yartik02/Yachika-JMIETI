@@ -145,7 +145,6 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
 
     if (
       !formData.name ||
@@ -180,10 +179,8 @@ function Contact() {
       );
 
       if (response.ok) {
-        const res_Data = await response.json(); // Parse success data
-
         setFormData({ name: "", email: "", subject: "", message: "" });
-        toast.success("Message sent successfully!", { autoClose: 2000 }, {
+        toast.success("Message sent successfully!", { autoClose: 2000,
           style: {
             backgroundColor: "var(--bg-surface)",
             color: "var(--text-primary)",
@@ -191,7 +188,6 @@ function Contact() {
             minWidth: "40vw",
           },
         });
-        // console.log(res_Data);
       } else {
         // If the response was not ok, parse the error message from the body.
         const errorData = await response.json();

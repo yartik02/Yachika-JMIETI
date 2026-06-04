@@ -267,6 +267,7 @@ function Signup() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
+          type: "signup", 
         }),
       });
 

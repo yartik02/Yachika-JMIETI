@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../store/auth.jsx";
 import { useTheme } from "../utils/useTheme.jsx";
+import { light, dark } from "../utils/Icons.jsx";
 import.meta.env.VITE_ADMIN_MAIL;
 import.meta.env.VITE_SUPER_ADMIN_MAIL;
 
-function Menu({ navData, navIcons }) {
+function Menu({ navData }) {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const isLoggedIn = !!user;
@@ -49,7 +50,7 @@ function Menu({ navData, navIcons }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                {theme === "light" ? navIcons.dark : navIcons.light}
+                {theme === "light" ? dark : light}
               </svg>
             </p>
             <button

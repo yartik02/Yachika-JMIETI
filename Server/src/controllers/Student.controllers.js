@@ -66,7 +66,6 @@ const signup = async (req, res) => {
 };
 
 //login logic
-
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -137,7 +136,6 @@ const login = async (req, res) => {
 };
 
 //user logic ie get data of the logged user from DB
-
 const user = async (req, res) => {
   try {
     const userData = req.user;
@@ -194,13 +192,11 @@ const getNotifications = async (req, res, next) => {
 };
 
 const sendOtpToMail = async (req, res) => {
-  const { name, email } = req.body;
-  // console.log("contoller hitted!");
-  
+  const { name, email, type } = req.body;
 
   const studentExist = await student.findOne({ email});
   // console.log(Boolean(studentExist));
-  if(Boolean(studentExist)){
+  if(Boolean(studentExist) && type === "signup"){
     return res.status(500).json({msg:"Student with this email alraedy exist!"})
   }
   

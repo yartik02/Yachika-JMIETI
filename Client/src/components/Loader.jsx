@@ -1,11 +1,10 @@
-import React,{ useState} from 'react';
-// import styled from 'styled-components';
+import React from 'react';
 import '../components/Loader.css';
 
 const Loader = () => {
     
   return (
-    <section className="loadingspinner m-0 d-flex justify-content-center align-items-center w-100" style={{ height:"100vh", backgroundColor: "#f2f5fe"}}>
+    <section className="loadingspinner m-0 d-flex justify-content-center align-items-center w-100" style={{ height:"100vh", backgroundColor: "var(--bg-main)"}}>
       
       <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" className="pencil">
         <defs>

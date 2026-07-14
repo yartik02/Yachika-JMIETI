@@ -8,7 +8,6 @@ import HomeStudent from "./HomeStudent";
 import MyComplaints from "./MyComplaints";
 import Notifications from "./Notifications";
 import { Error } from "../../Error";
-import Loader from "../../../components/Loader";
 import { useTheme } from "../../../utils/useTheme.jsx";
 import TabButtonGroup from "../TabBtnGroup";
 import {
@@ -94,8 +93,7 @@ function StudentDashboard() {
   return (
     <div className="my-5 studentDashboard mx-auto">
       <div
-        className="head container mb-4 p-0 d-flex justify-content-between align-items-center text-capitalize"
-        style={{ width: "100%" }}
+        className="mx-auto head container mb-4 d-flex justify-content-between align-items-center text-capitalize"
       >
         <h4
           className="text-start my-auto fw-light"

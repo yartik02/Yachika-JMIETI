@@ -63,7 +63,7 @@ const Icons = {
 
 function Signup() {
   const navigate = useNavigate();
-  const { storeTokenInLocalStorage } = useAuth();
+  const { user } = useAuth();
   const dropdownContainerRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -358,6 +358,7 @@ function Signup() {
       const response = await fetch(`${API_BASE}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Required so the server can set the cookie
         body: JSON.stringify({
           name: formData.name,
           rollno: formData.rollno,
@@ -370,8 +371,7 @@ function Signup() {
       });
 
       if (response.ok) {
-        const res_Data = await response.json();
-        storeTokenInLocalStorage(res_Data.token);
+        // Cookie is set by the server — no localStorage needed
 
         // Reset form
         setFormData({

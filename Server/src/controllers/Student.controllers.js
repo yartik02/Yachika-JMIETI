@@ -43,8 +43,6 @@ const signup = async (req, res) => {
     });
     res.status(200).json({
       msg: "Student signed up successfully!",
-      token: studentCreated.generateToken(),
-      studentID: studentCreated._id.toString(),
     });
   } catch (error) {
     console.error("🔥 Signup error:", error.message);
@@ -80,9 +78,15 @@ const login = async (req, res) => {
         if (!isAdminMatch) {
           return res.status(401).json({ msg: "Invalid email or password" });
         }
+        const adminJwtToken = await adminExist.admingenerateToken();
+        res.cookie("authToken", adminJwtToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
         return res.status(200).json({
           msg: "Admin login successful",
-          token: await adminExist.admingenerateToken(),
           adminID: adminExist._id.toString(),
           adminName: adminExist.name,
           role: adminExist.role,
@@ -112,15 +116,25 @@ const login = async (req, res) => {
     }
 
     //2. check for the suspension
+    // Generate the JWT for this student
+    const studentJwtToken = await studentExist.generateToken();
+
+    // Set the JWT in a secure, HttpOnly cookie
+    res.cookie("authToken", studentJwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
     if (isMatch && studentExist.suspensionDetails && studentExist.isSuspended) {
       return res.status(403).json({
         message: "Your account is suspended. You cannot perform this action.",
-        token: await studentExist.generateToken(),
+        isSuspended: true,
       });
     } else {
       return res.status(200).json({
         msg: "Student logged in successfully!",
-        token: await studentExist.generateToken(),
         studentID: studentExist._id.toString(),
         studentName: studentExist.name,
         rollno: studentExist.rollno,
@@ -411,10 +425,28 @@ const submitAppeal = async (req, res) => {
   }
 };
 
+// Logout: clear the authToken cookie server-side
+const logout = (req, res) => {
+  try {
+    // Clear the cookie by setting the same options and maxAge=0
+    res.cookie("authToken", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 0, // Expires immediately
+    });
+    return res.status(200).json({ msg: "Logged out successfully." });
+  } catch (error) {
+    console.error("Logout error:", error);
+    return res.status(500).json({ msg: "Internal Server Error during logout." });
+  }
+};
+
 export {
   home,
   signup,
   login,
+  logout,
   getAllComplaints,
   user,
   contactUs,

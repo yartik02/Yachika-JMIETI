@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import express from "express";
+import cookieParser from "cookie-parser";
 import authRouter from "./src/routes/auth-router.js";
 import router from "./src/routes/complaint-router.js";
 import adminRoute from "./src/routes/admin-router.js";
@@ -14,10 +15,18 @@ const app = express();
 const corsOptions = {
     origin: process.env.FRONT_END_URL,
     methods: ["GET","POST","PUT","DELETE", "PATCH", "HEAD", "OPTIONS"],
-    credentials:true,
+    credentials: true, // Required for cookies to be sent cross-origin
 }
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser()); // Required to read req.cookies
+
+// Security headers
+app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("X-Frame-Options", "DENY");
+    next();
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/complaints", router);

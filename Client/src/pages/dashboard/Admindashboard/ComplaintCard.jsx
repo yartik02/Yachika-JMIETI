@@ -5,13 +5,13 @@ const ComplaintCard = ({ complaint }) => {
   const priorityClass = `priority-${(complaint.priority || "").toLowerCase()}`;
 
   return (
-    <div className="stone-card d-flex flex-lg-row flex-column justify-content-lg-between align-items-lg-center rounded-4 p-3 text-start" style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)" }}>
-      <div className="d-flex flex-column align-items-start" style={{maxWidth:"70%"}}>
+    <div className="stone-card d-flex flex-row justify-content-between align-items-lg-center rounded-4 p-3 text-start" style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--light-hover)" }}>
+      <div className="d-flex flex-column justify-content-center align-items-start" style={{maxWidth:"70%"}}>
         <h3 className="stone-title m-0">{complaint.complaintTitle}</h3>
         <p className="m-0 opacity-75 text-truncate w-100">{complaint.complaintBody}</p>
       </div>
 
-      <div className="stone-footer d-flex gap-3">
+      <div className="stone-footer d-flex flex-column flex-md-row flex-lg-row align-items-center gap-2">
         <div
           className={`status-indicator d-flex align-items-center ${statusClass}`}
         >
@@ -20,7 +20,6 @@ const ComplaintCard = ({ complaint }) => {
         </div>
         <div
           className={`priority-tag text-center ${priorityClass}`}
-          style={{ width: "fit-content" }}
         >
           {complaint.priority}
         </div>

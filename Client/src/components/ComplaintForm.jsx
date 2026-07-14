@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../store/auth.jsx";
-import backImage from "../assets/backgroundImageComplaintForm.png";
 import "./CompliantForm.css";
 import { Error } from "../pages/Error.jsx";
 import { useTheme } from "../utils/useTheme.jsx";
@@ -61,11 +60,8 @@ const categoryOptions = Object.keys(subCategoryMap);
 const priorityOptions = ["Low", "Medium", "High"];
 
 function ComplaintForm() {
-  const { user, token, refetchComplaints } = useAuth();
+  const { user, refetchComplaints } = useAuth();
   const { theme } = useTheme();
-  if (!user || !token) {
-    return <Error />;
-  }
 
   const [formData, setFormData] = useState({
     createdByName: "",
@@ -80,7 +76,7 @@ function ComplaintForm() {
     priority: "",
     isAnonymous: false,
   });
-  const navigate = useNavigate(); // --- DROPDOWN LOGIC ---
+  const navigate = useNavigate(); 
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownContainerRef = useRef(null);
@@ -100,6 +96,10 @@ function ComplaintForm() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [handleClickOutside]);
+
+  const availableSubcategories = useMemo(() => {
+    return subCategoryMap[formData.category] || [];
+  }, [formData.category]);
 
   const handleToggleDropdown = useCallback((name) => {
     setOpenDropdown((prevOpen) => (prevOpen === name ? null : name));
@@ -135,6 +135,10 @@ function ComplaintForm() {
     }
   }, [user]);
 
+  if (!user) {
+    return <Error />;
+  }
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -169,26 +173,14 @@ function ComplaintForm() {
     }
 
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        toast.error("You must be logged in to submit a complaint.", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          minWidth: "40vw",
-        },
-      });
-        return;
-      }
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/complaints/complaint-Submission`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
           body: JSON.stringify(formData),
         },
       );
@@ -243,11 +235,6 @@ function ComplaintForm() {
       });
     }
   };
-
-  const availableSubcategories = useMemo(() => {
-    return subCategoryMap[formData.category] || [];
-  }, [formData.category]);
-
   const renderDropdown = ({
     name,
     options,
@@ -353,8 +340,8 @@ function ComplaintForm() {
         >
           <h2 className="mb-0 text-center header">Submit a New Complaint</h2>
         </div>
-        <div className="card-body" style={{ color: "var(--text-primary)" }}>
-          <form onSubmit={handleSubmit} autoComplete="false">
+        <div className="card-body" style={{ color: "var(--text-main)" }}>
+          <form onSubmit={handleSubmit} autoComplete="off">
             <div className="mb-3">
               <input
                 type="text"

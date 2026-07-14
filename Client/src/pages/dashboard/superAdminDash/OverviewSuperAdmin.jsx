@@ -6,7 +6,6 @@ import "../Admindashboard/new.css";
 const OverviewSuperAdmin = () => {
   const { theme } = useTheme();
   const [recentComplaints, setRecentComplaints] = useState([]);
-  const token = localStorage.getItem("authToken");
 
   const getRecentComplaints = async () => {
     try {
@@ -14,7 +13,7 @@ const OverviewSuperAdmin = () => {
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/getRecentComplaints`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         },
       );
       const data = await response.json();

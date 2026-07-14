@@ -1,86 +1,69 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [token, setToken] = useState(localStorage.getItem("authToken"));
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const [allComplaints, setAllComplaints] = useState([]); 
-    const [allAdminsComplaints, setAllAdminsComplaints] = useState([]); 
+    const [allComplaints, setAllComplaints] = useState([]);
+    const [allAdminsComplaints, setAllAdminsComplaints] = useState([]);
+    const [isAuthChecked, setIsAuthChecked] = useState(false); // tracks whether initial auth check is done
 
-    const storeTokenInLocalStorage = (serverToken) => {
-        localStorage.setItem("authToken", serverToken);
-        setToken(serverToken);
-    }
-
-    const LogoutUser = () => {
-        setToken(null);
-        setUser(null);
-        setAllComplaints([]); 
-        localStorage.removeItem("authToken");
-    }
+    const isLoggedIn = !!user;
+    const LogoutUser = useCallback(async () => {
+        try {
+            await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`,
+                {
+                    method: "POST",
+                    credentials: "include", // Send the cookie so server can verify & clear it
+                }
+            );
+        } catch (error) {
+            console.error("Logout request failed:", error);
+        } finally {
+            setUser(null);
+            setAllComplaints([]);
+            setAllAdminsComplaints([]);
+            navigate("/login");
+        }
+    }, []);
 
     const userAuthentication = useCallback(async () => {
-        if (!token) return; // Don't run if no token
         try {
             const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/auth/user`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${token}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/auth/user`,
+                {
+                    method: "GET",
+                    credentials: "include", // Browser automatically sends the HttpOnly cookie
                 },
-              },
             );
             if (response.ok) {
                 const data = await response.json();
                 setUser(data.userData);
+            } else {
+                setUser(null); // Cookie invalid or expired — treat as logged out
             }
         } catch (error) {
             console.error("Error during user authentication:", error);
+            setUser(null);
+        } finally {
+            setIsAuthChecked(true);
         }
-    }, [token]);
-
-    const fetchAllComplaints = useCallback(async () => {
-        if (!token) return;
-        try {
-            const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/admin/getAllComplaints`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              },
-            );
-            if (response.ok) {
-                const data = await response.json();
-                setAllComplaints(data);
-                // console.log("Complaints data in store:", data);
-            } else {
-                setAllComplaints([]);
-            }
-        } catch (error) {
-            console.error("Error fetching complaints:", error);
-            setAllComplaints([]);
-        }
-    }, [token]);
+    }, []);
 
     const refetchComplaints = useCallback(async () => {
-        if (!token) return;
         try {
             const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/auth/getAllComplaints`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${token}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/auth/getAllComplaints`,
+                {
+                    method: "GET",
+                    credentials: "include",
                 },
-              },
             );
             if (response.ok) {
                 const data = await response.json();
                 setAllComplaints([...data]);
-                // console.log("Complaints data in store:", data);
             } else {
                 setAllComplaints([]);
             }
@@ -88,63 +71,50 @@ export const AuthProvider = ({ children }) => {
             console.error("Error fetching complaints:", error);
             setAllComplaints([]);
         }
-    }, [token]);
+    }, []);
 
     const refetchComplaintsAdmin = useCallback(async () => {
-        if (!token) return;
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaintsAdmins`,
                 {
                     method: "GET",
-                    headers: { Authorization: `Bearer ${token}` },
+                    credentials: "include",
                 },
             );
             if (response.ok) {
                 const data = await response.json();
-                // FIX: Update the Admin state, not the student state
-                setAllAdminsComplaints(data); 
+                setAllAdminsComplaints(data);
             }
         } catch (error) {
             console.error("Error refetching admin complaints:", error);
         }
-    }, [token]);
+    }, []);
 
     const updateComplaintLocally = (updatedComplaint) => {
         setAllComplaints((prevComplaints) => {
-            // Find the index of the complaint that was just updated
             const index = prevComplaints.findIndex(c => c._id === updatedComplaint._id);
-            
-            // If it's not found, just return the old list
             if (index === -1) {
                 return prevComplaints;
             }
-
-            // Create a new array (for React state update)
             const newComplaints = [...prevComplaints];
-            // Replace the old complaint with the new, updated one
             newComplaints[index] = updatedComplaint;
-            
             return newComplaints;
         });
     };
 
     const getAllComplaintsAdmins = useCallback(async () => {
-        if (!token) return;
         try {
             const response = await fetch(
-              `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaintsAdmins`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: `Bearer ${token}`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/admin/allComplaintsAdmins`,
+                {
+                    method: "GET",
+                    credentials: "include",
                 },
-              },
             );
             if (response.ok) {
                 const data = await response.json();
                 setAllAdminsComplaints(data);
-                // console.log("Complaints data in store:", data);
             } else {
                 setAllAdminsComplaints([]);
             }
@@ -152,22 +122,28 @@ export const AuthProvider = ({ children }) => {
             console.error("Error fetching complaints:", error);
             setAllAdminsComplaints([]);
         }
-    }, [token]);
+    }, []);
 
+    // On mount: verify session via cookie (replaces localStorage.getItem("authToken") on load)
     useEffect(() => {
-        if (token) {
-            userAuthentication();
-            refetchComplaints(); 
+        userAuthentication();
+    }, [userAuthentication]);
+
+    // Once user is set, fetch their data
+    useEffect(() => {
+        if (user) {
+            refetchComplaints();
             getAllComplaintsAdmins();
         }
-    }, [token, userAuthentication, refetchComplaints, getAllComplaintsAdmins]); 
+    }, [user, refetchComplaints, getAllComplaintsAdmins]);
 
-    return(
-        <AuthContext.Provider value={{ 
-            storeTokenInLocalStorage, 
-            LogoutUser, 
-            user, 
-            token, 
+    return (
+        <AuthContext.Provider value={{
+            LogoutUser,
+            user,
+            isLoggedIn,
+            isAuthChecked,
+            userAuthentication,
             allComplaints,
             refetchComplaints,
             refetchComplaintsAdmin,

@@ -47,7 +47,7 @@ export default function Signin() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const formRef = useRef(null);
-  const { storeTokenInLocalStorage } = useAuth();
+  const { LogoutUser, userAuthentication } = useAuth();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -91,6 +91,7 @@ export default function Signin() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include", // Required so the server can set the cookie
           body: JSON.stringify({
             email: email,
             password: password,
@@ -100,41 +101,37 @@ export default function Signin() {
 
       if (response.ok) {
         const res_data = await response.json();
-        // console.log("Response data:", res_data);
-
-        storeTokenInLocalStorage(res_data.token);
-        // console.log("User data:", res_data);
+        // Cookie is already set by the server — refresh client user state
+        try {
+          await userAuthentication();
+        } catch (err) {
+          console.warn("userAuthentication after login failed:", err);
+        }
 
         if (res_data.role === "Admin") {
-          return (
-            toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
-              style: {
-                backgroundColor: "var(--bg-surface)",
-                color: "var(--text-primary)",
-                width: "fit-content",
-                minWidth: "40vw",
-              },
-            }),
-            setTimeout(() => {
-              navigate(`/dashboard/admin`);
-            }, 1000),
-            setFormData({ email: "", password: "" })
-          );
+          toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "fit-content",
+              minWidth: "40vw",
+            },
+          });
+          setFormData({ email: "", password: "" });
+          setTimeout(() => navigate(`/dashboard/admin`), 500);
+          return;
         } else if (res_data.role === "SuperAdmin") {
-          return (
-            toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
-              style: {
-                backgroundColor: "var(--bg-surface)",
-                color: "var(--text-primary)",
-                width: "fit-content",
-                minWidth: "40vw",
-              },
-            }),
-            setTimeout(() => {
-              navigate(`/dashboard/superAdmin`);
-            }, 1000),
-            setFormData({ email: "", password: "" })
-          );
+          toast.success(`Welcome ${res_data.adminName}, Login successful!`, {
+            style: {
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--text-primary)",
+              width: "fit-content",
+              minWidth: "40vw",
+            },
+          });
+          setFormData({ email: "", password: "" });
+          setTimeout(() => navigate(`/dashboard/superAdmin`), 500);
+          return;
         } else {
           toast.success(
             `Welcome back,  ${res_data.studentName}! Let’s fix some campus chaos!`,
@@ -147,10 +144,8 @@ export default function Signin() {
               },
             },
           );
-          setTimeout(() => {
-            navigate(`/studentDashboard/${res_data.rollno}`);
-          }, 1000);
           setFormData({ email: "", password: "" });
+          setTimeout(() => navigate(`/studentDashboard/${res_data.rollno}`), 500);
           return;
         }
       } else {
@@ -167,8 +162,7 @@ export default function Signin() {
               minWidth: "40vw",
             }
           });
-          (storeTokenInLocalStorage(errorData.token),
-            navigate("/suspended-account"));
+          navigate("/suspended-account");
         } else toast.error(errorData.message || "Invalid Email or Password!", {
           style: {
             backgroundColor: "var(--bg-surface)",

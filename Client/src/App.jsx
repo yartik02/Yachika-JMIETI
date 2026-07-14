@@ -12,7 +12,7 @@ import Signup from "./pages/SignUp";
 import StudentDashboard from "./pages/dashboard/StudentDash/StudentDashboard";
 import AdminDashboard from "./pages/dashboard/Admindashboard/AdminDashboard";
 import ComplaintForm from "./components/ComplaintForm";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Error } from "./pages/Error";
 import Logout from "./components/Logout";

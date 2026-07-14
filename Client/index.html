@@ -1,6 +1,23 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var theme = saved
+            ? saved
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      :root { --bg-main: #f2f5fe; }
+      [data-theme="dark"] { --bg-main: #121212; }
+    </style>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./src/assets/YachikaLogo.png" />
     <link rel="preload" as="image" href="./src/assets/Banner_JMIETI5.png" />
@@ -226,7 +243,7 @@
           }
         }
       </style>
-      <section class="loadingspinner d-flex justify-content-center align-items-center" style="width: 100vw;height: 100vh; background-color: #f2f5fe;">
+      <section class="loadingspinner d-flex justify-content-center align-items-center" style="width: 100vw;height: 100vh; background-color: var(--bg-main);">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="200px"

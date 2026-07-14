@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../store/auth";
 import "./SuspendedAcc.css";
 import { toast } from "react-toastify";
 import {useTheme } from "../utils/useTheme.jsx"
@@ -39,9 +38,8 @@ const ChevronIcon = ({ isOpen }) => (
     />
   </svg>
 );
-
+  
 const SuspensionAppeals = () => {
-  const { token } = useAuth();
   const [appeals, setAppeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
@@ -64,9 +62,9 @@ const SuspensionAppeals = () => {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
+            credentials: "include",
           },
         );
         const data = await response.json();
@@ -92,7 +90,7 @@ const SuspensionAppeals = () => {
     };
 
     fetchAppeals();
-  }, [token]);
+  }, []);
 
   const toggleAccordion = (id) => {
     setExpandedId((prevId) => (prevId === id ? null : id));
@@ -129,8 +127,8 @@ const SuspensionAppeals = () => {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
+            credentials: "include",
             body: JSON.stringify({
               studentId: modalConfig.studentId,
               action: modalConfig.type,
@@ -165,6 +163,7 @@ const SuspensionAppeals = () => {
           minWidth: "40vw",
         },
       });
+      console.log(error)
         closeActionModal();
       }
     } catch (error) {

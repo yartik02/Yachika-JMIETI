@@ -60,12 +60,17 @@ const btngrpData = [
 ];
 
 function SuperAdminDashboard() {
-  const { user } = useAuth();
+  const { user, isAuthChecked } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   const [activeTab, setActiveTab] = useState(btngrpData[0].name);
   const [activeView, setActiveView] = useState(null); // Null means tabs are showing
   const [showProfile, setShowProfile] = useState(false);
+
+  // Wait for the cookie-based session check to finish before deciding access
+  if (!isAuthChecked) {
+    return null; // or a spinner
+  }
 
   if (!user || user.role !== "SuperAdmin") {
     return <Error />;

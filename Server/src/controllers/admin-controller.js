@@ -23,8 +23,6 @@ const AdminSignup = async (req, res) => {
     });
     res.status(200).json({
       msg: "Admin signed up successfully!",
-      token: await adminCreated.admingenerateToken(),
-      userID: adminCreated._id.toString(),
     });
   } catch (error) {
     console.error("🔥 Signup error:", error.message);
@@ -44,9 +42,15 @@ const adminLogin = async (req, res) => {
     const adminExist = await admin.findOne({ email });
     // console.log("adminExist:",adminExist);
     if (adminExist) {
+      const adminJwt = await adminExist.admingenerateToken();
+      res.cookie("authToken", adminJwt, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
       return res.status(200).json({
         msg: "Admin login successfull",
-        token: await adminExist.admingenerateToken(),
         adminID: adminExist._id.toString(),
       });
     }

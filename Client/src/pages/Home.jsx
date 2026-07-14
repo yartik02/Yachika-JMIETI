@@ -10,10 +10,8 @@ import { useAuth } from "../store/auth.jsx";
 
 // let tokenExist =null, isLoggedIn;
 const Home = () => {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
   const navigate = useNavigate();
-  const tokenExist = localStorage.getItem("authToken");
-  const isLoggedIn = !!tokenExist;
 
   const handleClick = () => {
     if (isLoggedIn) {

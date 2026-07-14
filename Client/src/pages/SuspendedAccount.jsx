@@ -32,7 +32,7 @@ const formatExpiryDate = (isoString) => {
 };
 
 const SuspendedPage = () => {
-  const { user, token } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
@@ -89,8 +89,8 @@ const SuspendedPage = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
           body: JSON.stringify({ appealText }),
         },
       );

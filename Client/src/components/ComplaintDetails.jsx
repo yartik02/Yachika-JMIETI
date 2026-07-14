@@ -5,7 +5,8 @@ import { useAuth } from "../../src/store/auth";
 import { useTheme } from "../utils/useTheme.jsx";
 
 function ComplaintDetails({ complaint }) {
-  const { token, refetchComplaintsAdmin, user } = useAuth();
+  const { refetchComplaintsAdmin, user } = useAuth();
+
   const { theme } = useTheme();
 
   const [localStatus, setLocalStatus] = useState("");
@@ -108,8 +109,8 @@ function ComplaintDetails({ complaint }) {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
           body: JSON.stringify({ status: newStatus, ...additionalData }),
         }
       );
@@ -163,8 +164,8 @@ function ComplaintDetails({ complaint }) {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
+          credentials: "include",
         }
       );
 

@@ -31,7 +31,6 @@ const MyComplaintCard = ({ complaint }) => {
         </div>
         <div
           className={`priority-tag text-center ${priorityClass}`}
-          style={{ width: "fit-content" }}
         >
           {complaint.priority}
         </div>

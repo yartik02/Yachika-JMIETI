@@ -1,7 +1,6 @@
 import React, { useState } from "react"; // Removed useEffect and useRef
 import adminPic from "../../../assets/Boyimg_avatar.png";
 import { Error } from "../../Error";
-import { toast } from "react-toastify";
 import Overview from "./OverviewAdmin";
 import ComplaintSection from "./ComplaintSection";
 import Analytics from "./Analytics";
@@ -10,6 +9,7 @@ import { useAuth } from "../../../store/auth";
 import AllStudents from "../../AllStudents";
 import ContectedBy from "../../ContectedBy";
 import SideMenu from "../SideMenuAdmin.jsx";
+import Loader from "../../../components/Loader";
 import { useTheme } from "../../../utils/useTheme.jsx";
 import TabButtonGroup from "../TabBtnGroup.jsx";
 import { AdminOverview, analytics, settings, complaints, light, dark } from "../../../utils/Icons.jsx";
@@ -54,21 +54,21 @@ const btngrpData = [
 
 
 function AdminDashboard() {
-  const { user } = useAuth();
+  const { user, isAuthChecked } = useAuth();
   const { toggleTheme, theme } = useTheme();
 
   const [activeTab, setActiveTab] = useState(btngrpData[0].name);
   const [activeView, setActiveView] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
 
-  if (!user || user.role !== "Admin") {
-    return <Error />;
+  // Wait for the cookie-based session check to finish before deciding access
+  if (!isAuthChecked) {
+    return <Loader />; // show loader while we verify session
   }
 
-  // Navigation Handlers
-  const handlebtnClick = (btnName) => {
-    setActiveTab(btnName);
-  };
+  if (!user || (user.role !== "Admin" && user.role !== "SuperAdmin")) {
+    return <Error />;
+  }
 
   const handleItemClick = (viewName) => {
     setActiveView(viewName);
@@ -98,7 +98,7 @@ function AdminDashboard() {
         menuItems={menuItems}
         handleItemClick={handleItemClick}
         activeView={activeView}
-        role="Admin"
+        role={user.role}
       />
 
       {/* Main Dashboard Area */}
@@ -107,7 +107,7 @@ function AdminDashboard() {
         style={{ minWidth: 0, overflowX: "clip", backgroundColor: "var(--bg-main)" }}
       >
         <div
-          className="text-center mb-4 d-flex justify-content-between align-items-center"
+          className="text-center head mb-4 d-flex justify-content-between align-items-center"
           style={{ width: "100%" }}
         >
           <h4
@@ -276,7 +276,7 @@ function AdminDashboard() {
             >
               <button
                 onClick={goTomainDash}
-                className="rounded-5 position-absolute top-0 end-0 m-5 btn-click-animation"
+                className="rounded-5 position-absolute top-0 end-0 m-lg-5 m-3 btn-click-animation"
                 style={{
                   backgroundColor: "transparent",
                   border: "none",
@@ -299,7 +299,7 @@ function AdminDashboard() {
                 </svg>
               </button>
               <div
-                className="p-lg-5 py-sm-3 rounded-4 shadow-sm"
+                className="p-lg-5 p-md-3 p-3 rounded-4 shadow-sm"
                 style={{ minHeight: "50vh", overflowX: "auto", backgroundColor: "var(--bg-main)", color: "var(--text-primary)" }}
               >
                 {activeView === "All Students" && <AllStudents  role={user.role}/>}

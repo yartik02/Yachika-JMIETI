@@ -156,7 +156,7 @@
 .complaintForm input:active,
 .complaintForm textarea:focus,
 .complaintForm textarea:active {
-  color: var(--text-inverse);
+  color: var(--text-main);
 }
 
 @media (max-width:770px) {

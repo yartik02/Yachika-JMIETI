@@ -23,17 +23,17 @@ const adminMiddleware = (req, res, next) => {
 
 const verifyAdminToken = (req, res, next) => {
     try {
-        // 1. Extract the token from the Authorization header
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({ msg: "Access Denied! No token provided." });
+        // 1. Extract the token from the HttpOnly secure cookie.
+        // Falls back to 'authToken' for development (HTTP/localhost).
+        const token = req.cookies["__Host-authToken"] || req.cookies["authToken"];
+
+        if (!token) {
+            return res.status(401).json({ msg: "Access Denied! No session found. Please log in." });
         }
 
-        const token = authHeader.split(" ")[1];
-
-        // 2. Cryptographically verify the token
-        // If the token is expired, tampered with, or invalid, this throws an error and drops to the catch block
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        // 2. Cryptographically verify the token.
+        // Hardcode 'HS256' to prevent algorithm confusion attacks.
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, { algorithms: ["HS256"] });
 
         // 3. Ensure the decoded payload contains the email
         if (!decoded || !decoded.email) {

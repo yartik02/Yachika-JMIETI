@@ -98,20 +98,20 @@ const Notifications = () => {
   const [allNotifications, setAllNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isClearing, setIsClearing] = useState(false);
-  const { token, user, allComplaints } = useAuth();
+  const { user, allComplaints } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
 
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
   const getAllNotifications = useCallback(async () => {
-    if (!token || !user?.rollno) return;
+    if (!user?.rollno) return;
     try {
       const response = await fetch(
         `${API_URL}/api/auth/getNotifications?rollno=${user.rollno}`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         },
       );
       if (response.ok) {
@@ -123,22 +123,22 @@ const Notifications = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [token, user?.rollno, API_URL]);
+  }, [user?.rollno, API_URL]);
 
   const markAsReadInDatabase = useCallback(async () => {
-    if (!token || !user?.rollno) return;
+    if (!user?.rollno) return;
     try {
       await fetch(
         `${API_URL}/api/auth/markNotificationsAsRead?rollno=${user.rollno}`,
         {
           method: "PATCH",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         },
       );
     } catch (error) {
       console.error("Update error:", error);
     }
-  }, [token, user?.rollno, API_URL]);
+  }, [user?.rollno, API_URL]);
 
   useEffect(() => {
     getAllNotifications();
@@ -170,7 +170,7 @@ const Notifications = () => {
         `${API_URL}/api/auth/clearNotifications?rollno=${user.rollno}`,
         {
           method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         },
       );
       if (res.ok) {

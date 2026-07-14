@@ -4,6 +4,7 @@ import "./AboutEnd.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../store/auth.jsx";
 
 const coreData = [
   {
@@ -63,8 +64,8 @@ const coreData = [
 ];
 
 const CoreValues = () => {
-  const isToken = localStorage.getItem("authToken");
-  const url = isToken ? "/complaintSubmission" : "/login";
+  const { isLoggedIn } = useAuth();
+  const url = isLoggedIn ? "/complaintSubmission" : "/login";
 
   const handleClick = () => {
     if (url == "/login") {

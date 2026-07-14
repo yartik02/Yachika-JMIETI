@@ -34,7 +34,6 @@ const AllStudents = ({ role }) => {
   const [suspendDuration, setSuspendDuration] = useState("7"); // Default to 1 week
 
   const studentsPerPage = 6;
-  const token = localStorage.getItem("authToken");
 
   const getAllStudents = async () => {
     try {
@@ -42,7 +41,7 @@ const AllStudents = ({ role }) => {
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/allStudents`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         }
       );
       const data = await response.json();
@@ -69,50 +68,50 @@ const AllStudents = ({ role }) => {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  const deleteStudent = async (studentId) => {
-    if (!window.confirm("Are you sure you want to delete this student?")) return;
+  // const deleteStudent = async (studentId) => {
+  //   if (!window.confirm("Are you sure you want to delete this student?")) return;
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/admin/student/delete/${studentId}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+  //   try {
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_API_BASE_URL}/api/admin/student/delete/${studentId}`,
+  //       {
+  //         method: "DELETE",
+  //         credentials: "include",
+  //       }
+  //     );
 
-      if (response.ok) {
-        toast.success("Student deleted successfully!", {
-          style: {
-            backgroundColor: "var(--bg-surface)",
-            color: "var(--text-primary)",
-            width: "fit-content",
-            minWidth: "40vw",
-          },
-        });
-        setAllStudents((prev) => prev.filter((student) => student._id !== studentId));
-      } else {
-        toast.error("Failed to delete student.", {
-          style: {
-            backgroundColor: "var(--bg-surface)",
-            color: "var(--text-primary)",
-            width: "fit-content",
-            minWidth: "40vw",
-          },
-        });
-      }
-    } catch (error) {
-      toast.error("An error occurred, try again later!", {
-        style: {
-          backgroundColor: "var(--bg-surface)",
-          color: "var(--text-primary)",
-          width: "fit-content",
-          minWidth: "40vw",
-        },
-      });
-      console.error("Delete error:", error);
-    }
-  };
+  //     if (response.ok) {
+  //       toast.success("Student deleted successfully!", {
+  //         style: {
+  //           backgroundColor: "var(--bg-surface)",
+  //           color: "var(--text-primary)",
+  //           width: "fit-content",
+  //           minWidth: "40vw",
+  //         },
+  //       });
+  //       setAllStudents((prev) => prev.filter((student) => student._id !== studentId));
+  //     } else {
+  //       toast.error("Failed to delete student.", {
+  //         style: {
+  //           backgroundColor: "var(--bg-surface)",
+  //           color: "var(--text-primary)",
+  //           width: "fit-content",
+  //           minWidth: "40vw",
+  //         },
+  //       });
+  //     }
+  //   } catch (error) {
+  //     toast.error("An error occurred, try again later!", {
+  //       style: {
+  //         backgroundColor: "var(--bg-surface)",
+  //         color: "var(--text-primary)",
+  //         width: "fit-content",
+  //         minWidth: "40vw",
+  //       },
+  //     });
+  //     console.error("Delete error:", error);
+  //   }
+  // };
 
   const suspendStudent = async (studentId) => {
     if (!suspendReason.trim()) {
@@ -134,9 +133,9 @@ const AllStudents = ({ role }) => {
         {
           method: "PUT",
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             studentId,
             reason: suspendReason,

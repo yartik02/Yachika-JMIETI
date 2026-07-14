@@ -9,14 +9,11 @@ const ContactedUsers = () => {
   const getAllContacts = async () => {
     setIsLoading(true);
     try {
-      const token = localStorage.getItem("authToken");
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/allContactUsMessages`,
         {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: "include",
         },
       );
 
@@ -50,12 +47,11 @@ const ContactedUsers = () => {
       return;
 
     try {
-      const token = localStorage.getItem("authToken");
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/admin/delete/SingleContactUsMessage/${msgId}`,
         {
           method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: "include",
         },
       );
 

@@ -6,7 +6,7 @@ let cachedSuspendedStudents = 0;
 let hasFetchedStats = false;
 
 function OverviewSuperAdmin() {
-    const { token, allAdminsComplaints } = useAuth();
+    const { allAdminsComplaints } = useAuth();
     const [suspendedStudents, setSuspendedStudents] = useState(cachedSuspendedStudents);
 
     // 1. CALCULATE COMPLAINT STATS DYNAMICALLY (Zero API overhead, updates instantly)
@@ -32,12 +32,12 @@ function OverviewSuperAdmin() {
     // 2. FETCH SUSPENDED STUDENTS (Only runs once per session thanks to the cache)
     useEffect(() => {
         const fetchDashboardStats = async () => {
-            if (hasFetchedStats || !token) return; // Skip if already fetched
+            if (hasFetchedStats) return; // Skip if already fetched
 
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/getDashboardStats`, {
                     method: "GET",
-                    headers: { Authorization: `Bearer ${token}` },
+                    credentials: "include",
                 });
                 
                 if (response.ok) {
@@ -54,7 +54,7 @@ function OverviewSuperAdmin() {
         };
 
         fetchDashboardStats();
-    }, [token]);
+    }, []);
 
     const statsData = [
         {

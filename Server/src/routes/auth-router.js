@@ -4,6 +4,7 @@ import {
   home,
   signup,
   login,
+  logout,
   user,
   contactUs,
   getNotifications,
@@ -20,6 +21,7 @@ import { authMiddleware, checkNotSuspended } from "../middlewares/auth-middlewar
 router.route("/").get(home);
 router.route("/signup").post(signup);
 router.route("/login").post(login);
+router.route("/logout").post(authMiddleware, logout); // Server-side cookie clear
 router.route("/user").get(authMiddleware, user);
 // router.route("/complaints").post(complaintSubmission);
 router.route("/contactUs").post(contactUs);

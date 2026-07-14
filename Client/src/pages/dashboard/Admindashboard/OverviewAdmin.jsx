@@ -5,7 +5,6 @@ import "./new.css";
 
 const Overview = () => {
     const [recentComplaints, setRecentComplaints] = useState([]);
-    const token = localStorage.getItem("authToken");
     const [loading, setLoading] = useState(false);
 
     const getRecentComplaints = async () => {
@@ -15,7 +14,7 @@ const Overview = () => {
               `${import.meta.env.VITE_API_BASE_URL}/api/admin/getRecentComplaints`,
               {
                 method: "GET",
-                headers: { Authorization: `Bearer ${token}` },
+                credentials: "include",
               },
             );
             const data = await response.json();

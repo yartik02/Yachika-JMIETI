@@ -9,7 +9,7 @@ const FeedbackForm = ({ complaintId }) => {
     const [hover, setHover] = useState(0); // For the star hover effect
     const [feedback, setFeedback] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { token, refetchComplaints } = useAuth();
+    const { refetchComplaints } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,8 +25,8 @@ const FeedbackForm = ({ complaintId }) => {
                 method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
                 },
+                credentials: "include",
                 body: JSON.stringify({
                   rating: rating,
                   feedback: feedback,

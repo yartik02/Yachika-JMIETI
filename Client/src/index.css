@@ -309,7 +309,7 @@ footer {
   border: none;
   border-radius: 0%;
   border-bottom: 4px solid transparent;
-  color: var(--text-primary);
+  color: var(--text-main);
   transition: all 0.3s ease;
 }
 
@@ -321,7 +321,7 @@ footer {
 }
 
 .form-control ::placeholder {
-  color: var(--text-inverse); /* You might want to theme this later */
+  color: var(--text-main); /* You might want to theme this later */
 }
 
 .login input::placeholder, .signup input::placeholder {
@@ -508,6 +508,10 @@ form select:focus {
   height: 40px;
 }
 
+.newCompBtn{
+  margin-left: 5px;
+}
+
 @media (max-width: 900px) {
   .logo, .nav-items, .menuItems {
     font-size: 0.5rem;
@@ -537,7 +541,7 @@ form select:focus {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .studentDashboard .head h4 {
+  .head h4 {
     font-size: 0.98rem;
   }
   .btngrp button span, .newCompBtn {
